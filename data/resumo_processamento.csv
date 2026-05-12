@@ -1,0 +1,10 @@
+arquivo,codigo,doenca,linhas,municipios,anos,casos,status
+sinannet_cnv_botubr235149187_85_39_188.csv,BOTU,Botulismo,1116,62,2007-2025,145,ok
+sinannet_cnv_chagasbr235535187_85_39_188.csv,CHAGAS,Doença de Chagas Aguda,4731,249,2006-2024,5106,ok
+sinannet_cnv_colerabr235218187_85_39_188.csv,COLERA,Cólera,9,3,2011-2018,3,ok
+sinannet_cnv_coquebr235311187_85_39_188.csv,COQUE,Coqueluche,65598,2523,2000-2026,47875,ok
+sinannet_cnv_denguebbr235437187_85_39_188.csv,DENG,Dengue,77392,5528,2013-2026,18929559,ok
+sinannet_cnv_difteribr235447187_85_39_188.csv,DIFT,Difteria,1007,53,2007-2026,119,ok
+sinannet_cnv_exantbr235559187_85_39_188.csv,EXANT,Sarampo e Rubéola,88046,4634,2007-2025,251634,ok
+sinannet_cnv_hanswbr235033187_85_39_188.csv,HANS,Hanseníase,135694,5219,2001-2026,1016945,ok
+sinannet_cnv_tubercbr231026187_85_39_188.csv,TUBE,Tuberculose,138300,5532,2001-2025,2299996,ok

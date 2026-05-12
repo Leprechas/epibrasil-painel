@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EpiBrasil</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>EpiBrasil</h1>
+    <p>Painel epidemiológico estático com dados agregados por município, UF, ano e doença</p>
+  </div>
+  <span id="row-count" class="badge">carregando...</span>
+</header>
+
+<main class="layout">
+  <aside class="panel filters">
+    <h2>Filtros</h2>
+    <label>Doença<select id="disease"></select></label>
+    <label>Ano<select id="year"></select></label>
+    <label>UF<select id="uf"></select></label>
+    <label>Município<input id="mun" list="mun-list" placeholder="Digite o município"><datalist id="mun-list"></datalist></label>
+    <label>Indicador<select id="indicator"><option value="casos">Casos</option><option value="incidencia_100mil">Incidência / 100 mil</option></select></label>
+    <button id="apply">Atualizar painel</button>
+    <button id="clear" class="secondary">Limpar filtros</button>
+    <p class="note">Base atual: casos agregados por município-ano. Para incidência, adicione <code>populacao</code> ou <code>incidencia_100mil</code> ao CSV.</p>
+  </aside>
+
+  <section class="content">
+    <section class="cards">
+      <article class="card"><span>Casos</span><strong id="card-casos">—</strong></article>
+      <article class="card"><span>População</span><strong id="card-pop">—</strong></article>
+      <article class="card"><span>Incidência / 100 mil</span><strong id="card-inc">—</strong></article>
+      <article class="card"><span>Municípios</span><strong id="card-muns">—</strong></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel wide"><h2>Série histórica</h2><div id="series" class="chart"></div></article>
+      <article class="panel"><h2>Ranking de UFs</h2><div id="ufs" class="chart"></div></article>
+      <article class="panel wide"><h2>Ranking municipal</h2><div class="table-wrap"><table id="table"></table></div></article>
+    </section>
+  </section>
+</main>
+<footer>Protótipo técnico. Use apenas dados agregados. Não publique microdados identificáveis.</footer>
+<script src="app.js"></script>
+</body>
+</html>
