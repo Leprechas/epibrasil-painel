@@ -1,0 +1,755 @@
+doenca,doenca_nome,cod_mun6,municipio,uf,ano,casos
+FA,Febre Amarela,120001,Acrelândia,AC,2020,1
+FA,Febre Amarela,120038,Plácido de Castro,AC,2000,1
+FA,Febre Amarela,130010,Anori,AM,1996,1
+FA,Febre Amarela,130010,Anori,AM,2013,1
+FA,Febre Amarela,130010,Anori,AM,2024,1
+FA,Febre Amarela,130030,Autazes,AM,2017,1
+FA,Febre Amarela,130040,Barcelos,AM,1996,1
+FA,Febre Amarela,130040,Barcelos,AM,2002,1
+FA,Febre Amarela,130070,Boca do Acre,AM,1999,1
+FA,Febre Amarela,130080,Borba,AM,2001,2
+FA,Febre Amarela,130110,Careiro,AM,1996,1
+FA,Febre Amarela,130120,Coari,AM,2002,2
+FA,Febre Amarela,130120,Coari,AM,2005,1
+FA,Febre Amarela,130130,Codajás,AM,2005,1
+FA,Febre Amarela,130130,Codajás,AM,2019,1
+FA,Febre Amarela,130170,Humaitá,AM,2018,1
+FA,Febre Amarela,130185,Iranduba,AM,1996,1
+FA,Febre Amarela,130185,Iranduba,AM,2004,1
+FA,Febre Amarela,130185,Iranduba,AM,2006,1
+FA,Febre Amarela,130185,Iranduba,AM,2007,1
+FA,Febre Amarela,130190,Itacoatiara,AM,1999,3
+FA,Febre Amarela,130190,Itacoatiara,AM,2001,1
+FA,Febre Amarela,130190,Itacoatiara,AM,2004,1
+FA,Febre Amarela,130200,Itapiranga,AM,2016,1
+FA,Febre Amarela,130250,Manacapuru,AM,1996,2
+FA,Febre Amarela,130250,Manacapuru,AM,2000,1
+FA,Febre Amarela,130250,Manacapuru,AM,2002,1
+FA,Febre Amarela,130250,Manacapuru,AM,2007,1
+FA,Febre Amarela,130250,Manacapuru,AM,2016,1
+FA,Febre Amarela,130250,Manacapuru,AM,2023,1
+FA,Febre Amarela,130255,Manaquiri,AM,1996,2
+FA,Febre Amarela,130260,Manaus,AM,1996,1
+FA,Febre Amarela,130260,Manaus,AM,2004,1
+FA,Febre Amarela,130280,Maraã,AM,2023,1
+FA,Febre Amarela,130290,Maués,AM,2007,1
+FA,Febre Amarela,130320,Novo Airão,AM,1999,1
+FA,Febre Amarela,130320,Novo Airão,AM,2013,1
+FA,Febre Amarela,130353,Presidente Figueiredo,AM,1998,2
+FA,Febre Amarela,130353,Presidente Figueiredo,AM,2024,1
+FA,Febre Amarela,130356,Rio Preto da Eva,AM,1996,1
+FA,Febre Amarela,130356,Rio Preto da Eva,AM,2002,1
+FA,Febre Amarela,130360,Santa Isabel do Rio Negro,AM,1996,2
+FA,Febre Amarela,130360,Santa Isabel do Rio Negro,AM,1998,1
+FA,Febre Amarela,130406,Tabatinga,AM,1996,1
+FA,Febre Amarela,130410,Tapauá,AM,1996,1
+FA,Febre Amarela,130440,Urucurituba,AM,2003,1
+FA,Febre Amarela,290910,Coribe,BA,2000,10
+FA,Febre Amarela,530010,Brasília,DF,2000,2
+FA,Febre Amarela,530010,Brasília,DF,2007,1
+FA,Febre Amarela,530010,Brasília,DF,2008,5
+FA,Febre Amarela,530010,Brasília,DF,2017,2
+FA,Febre Amarela,320010,Afonso Cláudio,ES,2017,10
+FA,Febre Amarela,320030,Alfredo Chaves,ES,2017,9
+FA,Febre Amarela,320030,Alfredo Chaves,ES,2018,1
+FA,Febre Amarela,320035,Alto Rio Novo,ES,2017,1
+FA,Febre Amarela,320040,Anchieta,ES,2017,1
+FA,Febre Amarela,320060,Aracruz,ES,2017,1
+FA,Febre Amarela,320080,Baixo Guandu,ES,2017,5
+FA,Febre Amarela,320115,Brejetuba,ES,2017,9
+FA,Febre Amarela,320120,Cachoeiro de Itapemirim,ES,2017,1
+FA,Febre Amarela,320130,Cariacica,ES,2017,5
+FA,Febre Amarela,320130,Cariacica,ES,2018,1
+FA,Febre Amarela,320140,Castelo,ES,2017,6
+FA,Febre Amarela,320150,Colatina,ES,2017,20
+FA,Febre Amarela,320160,Conceição da Barra,ES,2017,1
+FA,Febre Amarela,320170,Conceição do Castelo,ES,2017,7
+FA,Febre Amarela,320190,Domingos Martins,ES,2017,24
+FA,Febre Amarela,320240,Guarapari,ES,2017,1
+FA,Febre Amarela,320245,Ibatiba,ES,2017,16
+FA,Febre Amarela,320255,Ibitirama,ES,2017,1
+FA,Febre Amarela,320265,Irupi,ES,2017,4
+FA,Febre Amarela,320270,Itaguaçu,ES,2017,4
+FA,Febre Amarela,320290,Itarana,ES,2017,5
+FA,Febre Amarela,320316,Laranja da Terra,ES,2017,4
+FA,Febre Amarela,320320,Linhares,ES,2017,1
+FA,Febre Amarela,320334,Marechal Floriano,ES,2017,15
+FA,Febre Amarela,320335,Marilândia,ES,2017,2
+FA,Febre Amarela,320370,Muniz Freire,ES,2017,5
+FA,Febre Amarela,320380,Muqui,ES,2017,1
+FA,Febre Amarela,320400,Pancas,ES,2017,5
+FA,Febre Amarela,320450,Santa Leopoldina,ES,2017,37
+FA,Febre Amarela,320455,Santa Maria de Jetibá,ES,2017,13
+FA,Febre Amarela,320460,Santa Teresa,ES,2017,10
+FA,Febre Amarela,320490,São Mateus,ES,2017,2
+FA,Febre Amarela,320495,São Roque do Canaã,ES,2017,5
+FA,Febre Amarela,320500,Serra,ES,2017,11
+FA,Febre Amarela,320500,Serra,ES,2018,1
+FA,Febre Amarela,320503,Vargem Alta,ES,2017,3
+FA,Febre Amarela,320506,Venda Nova do Imigrante,ES,2017,3
+FA,Febre Amarela,320510,Viana,ES,2017,5
+FA,Febre Amarela,320530,Vitória,ES,2017,2
+FA,Febre Amarela,520010,Abadiânia,GO,2008,1
+FA,Febre Amarela,520030,Alexânia,GO,2000,1
+FA,Febre Amarela,520030,Alexânia,GO,2015,1
+FA,Febre Amarela,520060,Alto Paraíso de Goiás,GO,1999,3
+FA,Febre Amarela,520060,Alto Paraíso de Goiás,GO,2000,7
+FA,Febre Amarela,520060,Alto Paraíso de Goiás,GO,2015,2
+FA,Febre Amarela,520082,Amaralina,GO,2000,2
+FA,Febre Amarela,520090,Amorinópolis,GO,2017,1
+FA,Febre Amarela,520280,Avelinópolis,GO,2000,1
+FA,Febre Amarela,520357,Bonópolis,GO,2000,1
+FA,Febre Amarela,520400,Cabeceiras,GO,2000,1
+FA,Febre Amarela,520420,Cachoeira de Goiás,GO,2000,1
+FA,Febre Amarela,520450,Caldas Novas,GO,2008,3
+FA,Febre Amarela,520510,Catalão,GO,2008,1
+FA,Febre Amarela,520530,Cavalcante,GO,2000,2
+FA,Febre Amarela,520552,Colinas do Sul,GO,1999,1
+FA,Febre Amarela,520580,Corumbá de Goiás,GO,2000,1
+FA,Febre Amarela,520590,Corumbaíba,GO,2000,1
+FA,Febre Amarela,520630,Cristianópolis,GO,2008,2
+FA,Febre Amarela,520640,Crixás,GO,2008,1
+FA,Febre Amarela,520660,Cumari,GO,2015,1
+FA,Febre Amarela,520725,Doverlândia,GO,2000,2
+FA,Febre Amarela,520790,Flores de Goiás,GO,2000,1
+FA,Febre Amarela,520860,Goianésia,GO,2007,1
+FA,Febre Amarela,520870,Goiânia,GO,2007,1
+FA,Febre Amarela,520870,Goiânia,GO,2016,1
+FA,Febre Amarela,520890,Goiás,GO,1999,1
+FA,Febre Amarela,521060,Itaguaru,GO,2000,1
+FA,Febre Amarela,521180,Jaraguá,GO,2000,1
+FA,Febre Amarela,521190,Jataí,GO,2007,2
+FA,Febre Amarela,521220,Jussara,GO,2000,1
+FA,Febre Amarela,521250,Luziânia,GO,2007,1
+FA,Febre Amarela,521250,Luziânia,GO,2008,2
+FA,Febre Amarela,521280,Mara Rosa,GO,2000,1
+FA,Febre Amarela,521290,Marzagão,GO,2008,1
+FA,Febre Amarela,521305,Mimoso de Goiás,GO,2000,2
+FA,Febre Amarela,521308,Minaçu,GO,1999,4
+FA,Febre Amarela,521308,Minaçu,GO,2000,1
+FA,Febre Amarela,521460,Niquelândia,GO,1999,1
+FA,Febre Amarela,521460,Niquelândia,GO,2000,4
+FA,Febre Amarela,521460,Niquelândia,GO,2015,1
+FA,Febre Amarela,521490,Nova Roma,GO,2000,2
+FA,Febre Amarela,521520,Novo Brasil,GO,2000,1
+FA,Febre Amarela,521560,Padre Bernardo,GO,2000,3
+FA,Febre Amarela,521560,Padre Bernardo,GO,2008,1
+FA,Febre Amarela,521730,Pirenópolis,GO,2007,1
+FA,Febre Amarela,521730,Pirenópolis,GO,2008,2
+FA,Febre Amarela,521760,Planaltina,GO,2000,7
+FA,Febre Amarela,521760,Planaltina,GO,2008,1
+FA,Febre Amarela,521890,Rubiataba,GO,2008,2
+FA,Febre Amarela,521925,Santa fé de Goiás,GO,2000,1
+FA,Febre Amarela,522000,São João D'aliança,GO,1999,1
+FA,Febre Amarela,522000,São João D'aliança,GO,2000,2
+FA,Febre Amarela,522010,São Luís de Montes Belos,GO,2016,1
+FA,Febre Amarela,522020,São Miguel do Araguaia,GO,2015,1
+FA,Febre Amarela,522045,Senador Canedo,GO,2016,1
+FA,Febre Amarela,522050,Serranópolis,GO,2000,1
+FA,Febre Amarela,522108,Teresina de Goiás,GO,2000,1
+FA,Febre Amarela,522160,Uruaçu,GO,2000,1
+FA,Febre Amarela,522160,Uruaçu,GO,2007,1
+FA,Febre Amarela,522170,Uruana,GO,2000,1
+FA,Febre Amarela,522230,Vila Propício,GO,2000,1
+FA,Febre Amarela,210060,Amarante do Maranhão,MA,1995,2
+FA,Febre Amarela,310040,Acaiaca,MG,2018,4
+FA,Febre Amarela,310060,Água Boa,MG,2017,1
+FA,Febre Amarela,310080,Aguanil,MG,2018,1
+FA,Febre Amarela,310110,Aimorés,MG,2017,5
+FA,Febre Amarela,310210,Alto Rio Doce,MG,2018,1
+FA,Febre Amarela,310220,Alvarenga,MG,2017,2
+FA,Febre Amarela,310230,Alvinópolis,MG,2018,1
+FA,Febre Amarela,310240,Alvorada de Minas,MG,2003,6
+FA,Febre Amarela,310250,Amparo do Serra,MG,2018,1
+FA,Febre Amarela,310290,Antônio Carlos,MG,2018,2
+FA,Febre Amarela,310340,Araçuaí,MG,2017,1
+FA,Febre Amarela,310490,Baependi,MG,2018,2
+FA,Febre Amarela,310540,Barão de Cocais,MG,2018,24
+FA,Febre Amarela,310560,Barbacena,MG,2018,2
+FA,Febre Amarela,310570,Barra Longa,MG,2017,1
+FA,Febre Amarela,310570,Barra Longa,MG,2018,1
+FA,Febre Amarela,310590,Barroso,MG,2018,1
+FA,Febre Amarela,310620,Belo Horizonte,MG,2018,3
+FA,Febre Amarela,310640,Belo Vale,MG,2018,3
+FA,Febre Amarela,310690,Bicas,MG,2018,2
+FA,Febre Amarela,310740,Bom Despacho,MG,2001,4
+FA,Febre Amarela,310750,Bom Jardim de Minas,MG,2018,1
+FA,Febre Amarela,310770,Bom Jesus do Amparo,MG,2018,1
+FA,Febre Amarela,310780,Bom Jesus do Galho,MG,2017,6
+FA,Febre Amarela,310890,Brazópolis,MG,2018,4
+FA,Febre Amarela,310900,Brumadinho,MG,2017,2
+FA,Febre Amarela,310900,Brumadinho,MG,2018,13
+FA,Febre Amarela,311000,Caeté,MG,2018,16
+FA,Febre Amarela,311050,Camanducaia,MG,2024,1
+FA,Febre Amarela,311060,Cambuí,MG,2018,1
+FA,Febre Amarela,311060,Cambuí,MG,2025,1
+FA,Febre Amarela,311070,Cambuquira,MG,2018,1
+FA,Febre Amarela,311170,Canaã,MG,2017,1
+FA,Febre Amarela,311230,Capelinha,MG,2017,1
+FA,Febre Amarela,311280,Capitólio,MG,2017,2
+FA,Febre Amarela,311290,Caputira,MG,2017,1
+FA,Febre Amarela,311300,Caraí,MG,2017,1
+FA,Febre Amarela,311310,Caranaíba,MG,2018,1
+FA,Febre Amarela,311320,Carandaí,MG,2018,2
+FA,Febre Amarela,311330,Carangola,MG,2017,2
+FA,Febre Amarela,311340,Caratinga,MG,2016,2
+FA,Febre Amarela,311340,Caratinga,MG,2017,32
+FA,Febre Amarela,311360,Careaçu,MG,2018,1
+FA,Febre Amarela,311390,Carmo da Cachoeira,MG,2018,1
+FA,Febre Amarela,311400,Carmo da Mata,MG,2017,1
+FA,Febre Amarela,311450,Carmópolis de Minas,MG,2018,2
+FA,Febre Amarela,311535,Catas Altas,MG,2018,1
+FA,Febre Amarela,311600,Chalé,MG,2017,2
+FA,Febre Amarela,311630,Cipotânea,MG,2018,2
+FA,Febre Amarela,311680,Coluna,MG,2017,3
+FA,Febre Amarela,311740,Conceição de Ipanema,MG,2017,3
+FA,Febre Amarela,311760,Conceição do Pará,MG,2001,1
+FA,Febre Amarela,311780,Conceição Dos Ouros,MG,2018,4
+FA,Febre Amarela,311800,Congonhas,MG,2018,3
+FA,Febre Amarela,311830,Conselheiro Lafaiete,MG,2018,11
+FA,Febre Amarela,311840,Conselheiro Pena,MG,2017,1
+FA,Febre Amarela,311850,Consolação,MG,2018,1
+FA,Febre Amarela,311860,Contagem,MG,2018,5
+FA,Febre Amarela,311870,Coqueiral,MG,2018,1
+FA,Febre Amarela,311940,Coronel Fabriciano,MG,2017,1
+FA,Febre Amarela,312120,Delfinópolis,MG,2016,2
+FA,Febre Amarela,312120,Delfinópolis,MG,2017,3
+FA,Febre Amarela,312170,Diogo de Vasconcelos,MG,2018,2
+FA,Febre Amarela,312200,Divino,MG,2017,1
+FA,Febre Amarela,312230,Divinópolis,MG,2018,1
+FA,Febre Amarela,312320,Dores do Indaiá,MG,2001,2
+FA,Febre Amarela,312352,Durandé,MG,2017,2
+FA,Febre Amarela,312385,Entre Folhas,MG,2016,1
+FA,Febre Amarela,312385,Entre Folhas,MG,2017,3
+FA,Febre Amarela,312400,Ervália,MG,2018,1
+FA,Febre Amarela,312410,Esmeraldas,MG,2017,1
+FA,Febre Amarela,312470,Estrela do Indaiá,MG,2001,3
+FA,Febre Amarela,312510,Extrema,MG,2025,1
+FA,Febre Amarela,312540,Felício Dos Santos,MG,2017,3
+FA,Febre Amarela,312590,Ferros,MG,2018,1
+FA,Febre Amarela,312595,Fervedouro,MG,2017,1
+FA,Febre Amarela,312640,Fortuna de Minas,MG,2017,1
+FA,Febre Amarela,312675,Franciscópolis,MG,2017,1
+FA,Febre Amarela,312680,Frei Gaspar,MG,2016,1
+FA,Febre Amarela,312680,Frei Gaspar,MG,2017,13
+FA,Febre Amarela,312738,Goianá,MG,2017,1
+FA,Febre Amarela,312740,Gonçalves,MG,2025,1
+FA,Febre Amarela,312800,Guanhães,MG,2003,3
+FA,Febre Amarela,312820,Guaraciaba,MG,2018,7
+FA,Febre Amarela,312840,Guarani,MG,2018,1
+FA,Febre Amarela,312920,Heliodora,MG,2018,1
+FA,Febre Amarela,313055,Imbé de Minas,MG,2016,4
+FA,Febre Amarela,313055,Imbé de Minas,MG,2017,7
+FA,Febre Amarela,313090,Inhapim,MG,2016,1
+FA,Febre Amarela,313090,Inhapim,MG,2017,4
+FA,Febre Amarela,313120,Ipanema,MG,2016,2
+FA,Febre Amarela,313120,Ipanema,MG,2017,18
+FA,Febre Amarela,313130,Ipatinga,MG,2017,2
+FA,Febre Amarela,313170,Itabira,MG,2018,11
+FA,Febre Amarela,313190,Itabirito,MG,2018,15
+FA,Febre Amarela,313220,Itaguara,MG,2018,1
+FA,Febre Amarela,313230,Itaipé,MG,2017,1
+FA,Febre Amarela,313270,Itambacuri,MG,2016,4
+FA,Febre Amarela,313270,Itambacuri,MG,2017,13
+FA,Febre Amarela,313320,Itanhomi,MG,2017,2
+FA,Febre Amarela,313380,Itaúna,MG,2018,3
+FA,Febre Amarela,313390,Itaverava,MG,2018,4
+FA,Febre Amarela,313410,Itueta,MG,2017,5
+FA,Febre Amarela,313490,Jacutinga,MG,2018,1
+FA,Febre Amarela,313520,Januária,MG,2017,2
+FA,Febre Amarela,313540,Jeceaba,MG,2018,1
+FA,Febre Amarela,313580,Jequitinhonha,MG,2017,1
+FA,Febre Amarela,313620,João Monlevade,MG,2018,2
+FA,Febre Amarela,313655,José Raydan,MG,2017,6
+FA,Febre Amarela,313660,Nova União,MG,2018,1
+FA,Febre Amarela,313670,Juiz de Fora,MG,2017,1
+FA,Febre Amarela,313670,Juiz de Fora,MG,2018,40
+FA,Febre Amarela,313700,Ladainha,MG,2016,7
+FA,Febre Amarela,313700,Ladainha,MG,2017,45
+FA,Febre Amarela,313740,Lagoa Dourada,MG,2018,1
+FA,Febre Amarela,313770,Lajinha,MG,2017,17
+FA,Febre Amarela,313780,Lambari,MG,2018,1
+FA,Febre Amarela,313830,Leandro Ferreira,MG,2001,7
+FA,Febre Amarela,313830,Leandro Ferreira,MG,2002,1
+FA,Febre Amarela,313860,Lima Duarte,MG,2018,7
+FA,Febre Amarela,313880,Luz,MG,2001,1
+FA,Febre Amarela,313900,Machado,MG,2018,1
+FA,Febre Amarela,313920,Malacacheta,MG,2016,3
+FA,Febre Amarela,313920,Malacacheta,MG,2017,4
+FA,Febre Amarela,313940,Manhuaçu,MG,2017,11
+FA,Febre Amarela,313950,Manhumirim,MG,2017,3
+FA,Febre Amarela,313980,Mar de Espanha,MG,2017,1
+FA,Febre Amarela,313980,Mar de Espanha,MG,2018,1
+FA,Febre Amarela,313990,Maria da fé,MG,2025,1
+FA,Febre Amarela,314000,Mariana,MG,2017,2
+FA,Febre Amarela,314000,Mariana,MG,2018,39
+FA,Febre Amarela,314020,Maripá de Minas,MG,2018,2
+FA,Febre Amarela,314050,Martinho Campos,MG,2001,2
+FA,Febre Amarela,314053,Martins Soares,MG,2017,1
+FA,Febre Amarela,314060,Materlândia,MG,2003,1
+FA,Febre Amarela,314070,Mateus Leme,MG,2018,4
+FA,Febre Amarela,314080,Matias Barbosa,MG,2018,7
+FA,Febre Amarela,314090,Matipó,MG,2017,1
+FA,Febre Amarela,314160,Mercês,MG,2018,3
+FA,Febre Amarela,314180,Minas Novas,MG,2017,3
+FA,Febre Amarela,314230,Moeda,MG,2018,2
+FA,Febre Amarela,314340,Monte Sião,MG,2024,1
+FA,Febre Amarela,314340,Monte Sião,MG,2025,1
+FA,Febre Amarela,314390,Muriaé,MG,2018,1
+FA,Febre Amarela,314400,Mutum,MG,2017,6
+FA,Febre Amarela,314430,Nanuque,MG,2017,2
+FA,Febre Amarela,314437,Natalândia,MG,2000,1
+FA,Febre Amarela,314440,Natércia,MG,2018,1
+FA,Febre Amarela,314480,Nova Lima,MG,2017,2
+FA,Febre Amarela,314480,Nova Lima,MG,2018,34
+FA,Febre Amarela,314520,Nova Serrana,MG,2001,4
+FA,Febre Amarela,314530,Novo Cruzeiro,MG,2016,1
+FA,Febre Amarela,314530,Novo Cruzeiro,MG,2017,34
+FA,Febre Amarela,314590,Ouro Branco,MG,2018,12
+FA,Febre Amarela,314610,Ouro Preto,MG,2018,17
+FA,Febre Amarela,314620,Ouro Verde de Minas,MG,2017,1
+FA,Febre Amarela,314630,Padre Paraíso,MG,2017,1
+FA,Febre Amarela,314660,Paiva,MG,2018,1
+FA,Febre Amarela,314710,Pará de Minas,MG,2001,1
+FA,Febre Amarela,314730,Paraisópolis,MG,2018,4
+FA,Febre Amarela,314770,Passa Tempo,MG,2018,2
+FA,Febre Amarela,314780,Passa-vinte,MG,2018,1
+FA,Febre Amarela,314830,Paula Cândido,MG,2018,1
+FA,Febre Amarela,314840,Paulistas,MG,2016,2
+FA,Febre Amarela,314860,Peçanha,MG,2017,1
+FA,Febre Amarela,314880,Pedra do Anta,MG,2018,2
+FA,Febre Amarela,314930,Pedro Leopoldo,MG,2018,1
+FA,Febre Amarela,314950,Pequeri,MG,2018,2
+FA,Febre Amarela,315010,Piau,MG,2018,3
+FA,Febre Amarela,315015,Piedade de Caratinga,MG,2016,4
+FA,Febre Amarela,315015,Piedade de Caratinga,MG,2017,6
+FA,Febre Amarela,315080,Piranga,MG,2018,11
+FA,Febre Amarela,315090,Piranguçu,MG,2018,1
+FA,Febre Amarela,315140,Pitangui,MG,2001,1
+FA,Febre Amarela,315160,Planura,MG,2000,1
+FA,Febre Amarela,315180,Poços de Caldas,MG,2025,1
+FA,Febre Amarela,315190,Pocrane,MG,2017,1
+FA,Febre Amarela,315210,Ponte Nova,MG,2017,1
+FA,Febre Amarela,315210,Ponte Nova,MG,2018,5
+FA,Febre Amarela,315230,Porto Firme,MG,2018,11
+FA,Febre Amarela,315240,Poté,MG,2016,2
+FA,Febre Amarela,315240,Poté,MG,2017,24
+FA,Febre Amarela,315250,Pouso Alegre,MG,2025,1
+FA,Febre Amarela,315310,Presidente Bernardes,MG,2018,8
+FA,Febre Amarela,315390,Raposos,MG,2018,1
+FA,Febre Amarela,315400,Raul Soares,MG,2017,1
+FA,Febre Amarela,315415,Reduto,MG,2017,1
+FA,Febre Amarela,315440,Ressaquinha,MG,2018,1
+FA,Febre Amarela,315480,Rio Acima,MG,2018,13
+FA,Febre Amarela,315520,Rio Espera,MG,2018,1
+FA,Febre Amarela,315530,Rio Manso,MG,2018,2
+FA,Febre Amarela,315540,Rio Novo,MG,2018,1
+FA,Febre Amarela,315570,Rio Piracicaba,MG,2018,1
+FA,Febre Amarela,315580,Rio Pomba,MG,2018,1
+FA,Febre Amarela,315590,Rio Preto,MG,2018,7
+FA,Febre Amarela,315670,Sabará,MG,2017,1
+FA,Febre Amarela,315670,Sabará,MG,2018,13
+FA,Febre Amarela,315680,Sabinópolis,MG,2003,23
+FA,Febre Amarela,315720,Santa Bárbara,MG,2018,16
+FA,Febre Amarela,315725,Santa Bárbara do Leste,MG,2017,7
+FA,Febre Amarela,315727,Santa Bárbara do Monte Verde,MG,2018,1
+FA,Febre Amarela,315780,Santa Luzia,MG,2018,3
+FA,Febre Amarela,315820,Santa Maria do Suaçuí,MG,2017,6
+FA,Febre Amarela,315860,Santana do Deserto,MG,2018,1
+FA,Febre Amarela,315890,Santana do Manhuaçu,MG,2017,3
+FA,Febre Amarela,315910,Santana Dos Montes,MG,2018,1
+FA,Febre Amarela,315930,Santa Rita de Jacutinga,MG,2018,3
+FA,Febre Amarela,315935,Santa Rita de Minas,MG,2017,2
+FA,Febre Amarela,315950,Santa Rita do Itueto,MG,2017,8
+FA,Febre Amarela,315960,Santa Rita do Sapucaí,MG,2018,2
+FA,Febre Amarela,316000,Santo Antônio do Aventureiro,MG,2018,2
+FA,Febre Amarela,316040,Santo Antônio do Monte,MG,2001,4
+FA,Febre Amarela,316070,Santos Dumont,MG,2018,5
+FA,Febre Amarela,316100,São Domingos do Prata,MG,2018,2
+FA,Febre Amarela,316190,São Gonçalo do Rio Abaixo,MG,2018,4
+FA,Febre Amarela,316200,São Gonçalo do Sapucaí,MG,2018,1
+FA,Febre Amarela,316210,São Gotardo,MG,2001,2
+FA,Febre Amarela,316280,São João Evangelista,MG,2017,2
+FA,Febre Amarela,316350,São José do Jacuri,MG,2017,2
+FA,Febre Amarela,316360,São José do Mantimento,MG,2017,3
+FA,Febre Amarela,316380,São Miguel do Anta,MG,2018,1
+FA,Febre Amarela,316430,São Roque de Minas,MG,2017,1
+FA,Febre Amarela,316440,São Sebastião da Bela Vista,MG,2018,1
+FA,Febre Amarela,316450,São Sebastião do Maranhão,MG,2016,3
+FA,Febre Amarela,316450,São Sebastião do Maranhão,MG,2017,10
+FA,Febre Amarela,316520,São Thomé Das Letras,MG,2018,12
+FA,Febre Amarela,316540,Sapucaí-mirim,MG,2018,5
+FA,Febre Amarela,316540,Sapucaí-mirim,MG,2025,1
+FA,Febre Amarela,316555,Setubinha,MG,2017,18
+FA,Febre Amarela,316570,Senador Firmino,MG,2018,2
+FA,Febre Amarela,316600,Senhora de Oliveira,MG,2018,2
+FA,Febre Amarela,316610,Senhora do Porto,MG,2003,6
+FA,Febre Amarela,316710,Serro,MG,2002,5
+FA,Febre Amarela,316710,Serro,MG,2003,20
+FA,Febre Amarela,316740,Silvianópolis,MG,2025,1
+FA,Febre Amarela,316750,Simão Pereira,MG,2018,2
+FA,Febre Amarela,316760,Simonésia,MG,2017,12
+FA,Febre Amarela,316780,Soledade de Minas,MG,2025,1
+FA,Febre Amarela,316850,Teixeiras,MG,2018,3
+FA,Febre Amarela,316860,Teófilo Otoni,MG,2016,2
+FA,Febre Amarela,316860,Teófilo Otoni,MG,2017,17
+FA,Febre Amarela,316990,Ubá,MG,2009,1
+FA,Febre Amarela,316990,Ubá,MG,2018,1
+FA,Febre Amarela,317005,Ubaporanga,MG,2016,2
+FA,Febre Amarela,317005,Ubaporanga,MG,2017,3
+FA,Febre Amarela,317040,Unaí,MG,2008,1
+FA,Febre Amarela,317060,Vargem Bonita,MG,2017,1
+FA,Febre Amarela,317065,Vargem Grande do Rio Pardo,MG,2017,2
+FA,Febre Amarela,317120,Vespasiano,MG,2018,1
+FA,Febre Amarela,317130,Viçosa,MG,2018,9
+FA,Febre Amarela,500020,Água Clara,MS,2008,3
+FA,Febre Amarela,500124,Aral Moreira,MS,2008,1
+FA,Febre Amarela,500220,Bonito,MS,2008,3
+FA,Febre Amarela,500220,Bonito,MS,2015,1
+FA,Febre Amarela,500320,Corumbá,MS,2010,1
+FA,Febre Amarela,500540,Maracaju,MS,2008,1
+FA,Febre Amarela,500660,Ponta Porã,MS,1996,1
+FA,Febre Amarela,500710,Ribas do Rio Pardo,MS,2008,1
+FA,Febre Amarela,510180,Barra do Garças,MT,2000,1
+FA,Febre Amarela,510180,Barra do Garças,MT,2017,1
+FA,Febre Amarela,510250,Cáceres,MT,2003,3
+FA,Febre Amarela,510260,Campinápolis,MT,1999,2
+FA,Febre Amarela,510330,Comodoro,MT,2001,1
+FA,Febre Amarela,510350,Diamantino,MT,2000,1
+FA,Febre Amarela,510370,Feliz Natal,MT,2009,1
+FA,Febre Amarela,510410,Guarantã do Norte,MT,2008,1
+FA,Febre Amarela,510510,Juara,MT,2007,1
+FA,Febre Amarela,510515,Juína,MT,2000,1
+FA,Febre Amarela,510558,Marcelândia,MT,1998,1
+FA,Febre Amarela,510590,Nobres,MT,2000,1
+FA,Febre Amarela,510621,Nova Canaã do Norte,MT,2000,1
+FA,Febre Amarela,510624,Nova Ubiratã,MT,2006,1
+FA,Febre Amarela,510628,Novo São Joaquim,MT,2008,1
+FA,Febre Amarela,510642,Peixoto de Azevedo,MT,1999,1
+FA,Febre Amarela,510680,Porto Dos Gaúchos,MT,2000,1
+FA,Febre Amarela,510682,Porto Esperidião,MT,2001,1
+FA,Febre Amarela,510706,Querência,MT,2000,1
+FA,Febre Amarela,510795,Tangará da Serra,MT,2003,1
+FA,Febre Amarela,510800,Tapurah,MT,2003,1
+FA,Febre Amarela,510830,União do Sul,MT,2009,1
+FA,Febre Amarela,510880,Nova Guarita,MT,1999,2
+FA,Febre Amarela,150020,Acará,PA,2013,1
+FA,Febre Amarela,150030,Afuá,PA,1998,17
+FA,Febre Amarela,150030,Afuá,PA,1999,17
+FA,Febre Amarela,150030,Afuá,PA,2007,1
+FA,Febre Amarela,150030,Afuá,PA,2015,1
+FA,Febre Amarela,150030,Afuá,PA,2019,1
+FA,Febre Amarela,150030,Afuá,PA,2021,2
+FA,Febre Amarela,150030,Afuá,PA,2022,1
+FA,Febre Amarela,150040,Alenquer,PA,2017,4
+FA,Febre Amarela,150050,Almeirim,PA,1997,2
+FA,Febre Amarela,150070,Anajás,PA,2000,1
+FA,Febre Amarela,150085,Anapu,PA,2019,1
+FA,Febre Amarela,150110,Bagre,PA,2011,1
+FA,Febre Amarela,150125,Bannach,PA,1998,1
+FA,Febre Amarela,150172,Novo Brasil,PA,2024,1
+FA,Febre Amarela,150180,Breves,PA,1999,14
+FA,Febre Amarela,150180,Breves,PA,2002,1
+FA,Febre Amarela,150180,Breves,PA,2008,1
+FA,Febre Amarela,150180,Breves,PA,2010,1
+FA,Febre Amarela,150180,Breves,PA,2019,1
+FA,Febre Amarela,150180,Breves,PA,2025,42
+FA,Febre Amarela,150210,Cametá,PA,2025,1
+FA,Febre Amarela,150270,Conceição do Araguaia,PA,1995,1
+FA,Febre Amarela,150270,Conceição do Araguaia,PA,1999,2
+FA,Febre Amarela,150304,Floresta do Araguaia,PA,1998,1
+FA,Febre Amarela,150309,Goianésia do Pará,PA,2001,1
+FA,Febre Amarela,150310,Gurupá,PA,1998,1
+FA,Febre Amarela,150310,Gurupá,PA,2003,1
+FA,Febre Amarela,150310,Gurupá,PA,2015,1
+FA,Febre Amarela,150360,Itaituba,PA,1998,1
+FA,Febre Amarela,150390,Juruti,PA,2001,1
+FA,Febre Amarela,150390,Juruti,PA,2017,1
+FA,Febre Amarela,150450,Melgaço,PA,2025,1
+FA,Febre Amarela,150480,Monte Alegre,PA,2014,1
+FA,Febre Amarela,150480,Monte Alegre,PA,2017,3
+FA,Febre Amarela,150506,Novo Repartimento,PA,2008,1
+FA,Febre Amarela,150510,Óbidos,PA,1998,1
+FA,Febre Amarela,150520,Oeiras do Pará,PA,2021,1
+FA,Febre Amarela,150553,Parauapebas,PA,2004,2
+FA,Febre Amarela,150553,Parauapebas,PA,2008,1
+FA,Febre Amarela,150613,Redenção,PA,1998,1
+FA,Febre Amarela,150613,Redenção,PA,1999,1
+FA,Febre Amarela,150658,Santa Maria Das Barreiras,PA,1999,2
+FA,Febre Amarela,150680,Santarém,PA,2019,1
+FA,Febre Amarela,150795,Tailândia,PA,2011,1
+FA,Febre Amarela,410020,Adrianópolis,PR,2019,2
+FA,Febre Amarela,410120,Antonina,PR,2019,2
+FA,Febre Amarela,410950,Guaraqueçaba,PR,2019,2
+FA,Febre Amarela,410960,Guaratuba,PR,2019,1
+FA,Febre Amarela,411325,Laranjal,PR,2008,2
+FA,Febre Amarela,411620,Morretes,PR,2019,2
+FA,Febre Amarela,411820,Paranaguá,PR,2019,1
+FA,Febre Amarela,412080,Quatro Barras,PR,2019,1
+FA,Febre Amarela,412550,São José Dos Pinhais,PR,2019,1
+FA,Febre Amarela,330010,Angra Dos Reis,RJ,2018,66
+FA,Febre Amarela,330030,Barra do Piraí,RJ,2018,11
+FA,Febre Amarela,330050,Bom Jardim,RJ,2018,1
+FA,Febre Amarela,330060,Bom Jesus do Itabapoana,RJ,2017,2
+FA,Febre Amarela,330080,Cachoeiras de Macacu,RJ,2017,1
+FA,Febre Amarela,330080,Cachoeiras de Macacu,RJ,2018,3
+FA,Febre Amarela,330110,Cantagalo,RJ,2018,7
+FA,Febre Amarela,330120,Carmo,RJ,2018,2
+FA,Febre Amarela,330130,Casimiro de Abreu,RJ,2017,8
+FA,Febre Amarela,330160,Duas Barras,RJ,2017,1
+FA,Febre Amarela,330160,Duas Barras,RJ,2018,13
+FA,Febre Amarela,330180,Engenheiro Paulo de Frontin,RJ,2018,6
+FA,Febre Amarela,330185,Guapimirim,RJ,2017,1
+FA,Febre Amarela,330185,Guapimirim,RJ,2018,1
+FA,Febre Amarela,330190,Itaboraí,RJ,2018,1
+FA,Febre Amarela,330205,Italva,RJ,2018,1
+FA,Febre Amarela,330225,Itatiaia,RJ,2018,4
+FA,Febre Amarela,330240,Macaé,RJ,2017,5
+FA,Febre Amarela,330260,Mangaratiba,RJ,2018,2
+FA,Febre Amarela,330270,Maricá,RJ,2017,3
+FA,Febre Amarela,330270,Maricá,RJ,2018,2
+FA,Febre Amarela,330290,Miguel Pereira,RJ,2018,5
+FA,Febre Amarela,330330,Niterói,RJ,2018,1
+FA,Febre Amarela,330340,Nova Friburgo,RJ,2018,20
+FA,Febre Amarela,330350,Nova Iguaçu,RJ,2018,1
+FA,Febre Amarela,330370,Paraíba do Sul,RJ,2018,1
+FA,Febre Amarela,330380,Paraty,RJ,2018,10
+FA,Febre Amarela,330385,Paty do Alferes,RJ,2018,4
+FA,Febre Amarela,330390,Petrópolis,RJ,2018,4
+FA,Febre Amarela,330395,Pinheiral,RJ,2018,1
+FA,Febre Amarela,330400,Piraí,RJ,2018,3
+FA,Febre Amarela,330410,Porciúncula,RJ,2017,2
+FA,Febre Amarela,330420,Resende,RJ,2018,7
+FA,Febre Amarela,330430,Rio Bonito,RJ,2018,2
+FA,Febre Amarela,330440,Rio Claro,RJ,2018,6
+FA,Febre Amarela,330450,Rio Das Flores,RJ,2018,6
+FA,Febre Amarela,330460,Santa Maria Madalena,RJ,2017,1
+FA,Febre Amarela,330480,São Fidélis,RJ,2017,1
+FA,Febre Amarela,330490,São Gonçalo,RJ,2018,1
+FA,Febre Amarela,330515,São José do Vale do Rio Preto,RJ,2018,2
+FA,Febre Amarela,330540,Sapucaia,RJ,2018,1
+FA,Febre Amarela,330560,Silva Jardim,RJ,2017,1
+FA,Febre Amarela,330560,Silva Jardim,RJ,2018,5
+FA,Febre Amarela,330570,Sumidouro,RJ,2018,13
+FA,Febre Amarela,330580,Teresópolis,RJ,2018,22
+FA,Febre Amarela,330590,Trajano de Moraes,RJ,2018,4
+FA,Febre Amarela,330600,Três Rios,RJ,2018,1
+FA,Febre Amarela,330610,Valença,RJ,2017,2
+FA,Febre Amarela,330610,Valença,RJ,2018,33
+FA,Febre Amarela,330620,Vassouras,RJ,2018,5
+FA,Febre Amarela,330630,Volta Redonda,RJ,2018,1
+FA,Febre Amarela,110020,Porto Velho,RO,1997,1
+FA,Febre Amarela,110020,Porto Velho,RO,2001,1
+FA,Febre Amarela,140005,Alto Alegre,RR,1994,1
+FA,Febre Amarela,140005,Alto Alegre,RR,1998,5
+FA,Febre Amarela,140005,Alto Alegre,RR,2002,1
+FA,Febre Amarela,140017,Cantá,RR,1999,1
+FA,Febre Amarela,140017,Cantá,RR,2001,1
+FA,Febre Amarela,140023,Caroebe,RR,2007,1
+FA,Febre Amarela,140028,Iracema,RR,1998,1
+FA,Febre Amarela,140030,Mucajaí,RR,1998,1
+FA,Febre Amarela,140030,Mucajaí,RR,2002,1
+FA,Febre Amarela,140030,Mucajaí,RR,2005,1
+FA,Febre Amarela,140045,Pacaraima,RR,1995,1
+FA,Febre Amarela,140047,Rorainópolis,RR,2023,1
+FA,Febre Amarela,140070,Uiramutã,RR,1999,2
+FA,Febre Amarela,430150,Augusto Pestana,RS,2008,1
+FA,Febre Amarela,430250,Bossoroca,RS,2008,1
+FA,Febre Amarela,430750,Espumoso,RS,2009,1
+FA,Febre Amarela,431020,Ijuí,RS,2009,1
+FA,Febre Amarela,431115,Jóia,RS,2008,1
+FA,Febre Amarela,431455,Pirapó,RS,2008,1
+FA,Febre Amarela,431455,Pirapó,RS,2009,1
+FA,Febre Amarela,431680,Santa Cruz do Sul,RS,2009,7
+FA,Febre Amarela,431750,Santo Ângelo,RS,2008,1
+FA,Febre Amarela,431750,Santo Ângelo,RS,2009,2
+FA,Febre Amarela,432270,Vera Cruz,RS,2009,4
+FA,Febre Amarela,420060,Águas Mornas,SC,2021,2
+FA,Febre Amarela,420110,Anitápolis,SC,2021,1
+FA,Febre Amarela,420240,Blumenau,SC,2020,7
+FA,Febre Amarela,420240,Blumenau,SC,2021,1
+FA,Febre Amarela,420320,Camboriú,SC,2020,1
+FA,Febre Amarela,420750,Indaial,SC,2020,4
+FA,Febre Amarela,420810,Itaiópolis,SC,2019,1
+FA,Febre Amarela,420890,Jaraguá do Sul,SC,2020,1
+FA,Febre Amarela,420910,Joinville,SC,2019,1
+FA,Febre Amarela,421230,Paulo Lopes,SC,2021,1
+FA,Febre Amarela,421320,Pomerode,SC,2020,3
+FA,Febre Amarela,421580,São Bento do Sul,SC,2020,1
+FA,Febre Amarela,421590,São Bonifácio,SC,2021,1
+FA,Febre Amarela,421780,Taió,SC,2021,1
+FA,Febre Amarela,421900,Urussanga,SC,2021,1
+FA,Febre Amarela,000000,,SP,2017,6
+FA,Febre Amarela,000000,,SP,2018,1
+FA,Febre Amarela,350030,Aguaí,SP,2018,1
+FA,Febre Amarela,350040,Águas da Prata,SP,2017,2
+FA,Febre Amarela,350050,Águas de Lindóia,SP,2025,1
+FA,Febre Amarela,350060,Águas de São Pedro,SP,2025,1
+FA,Febre Amarela,350170,Américo Brasiliense,SP,2017,2
+FA,Febre Amarela,350190,Amparo,SP,2017,4
+FA,Febre Amarela,350190,Amparo,SP,2025,1
+FA,Febre Amarela,350270,Apiaí,SP,2019,1
+FA,Febre Amarela,350390,Arujá,SP,2018,11
+FA,Febre Amarela,350410,Atibaia,SP,2017,10
+FA,Febre Amarela,350410,Atibaia,SP,2018,40
+FA,Febre Amarela,350450,Avaré,SP,2009,1
+FA,Febre Amarela,350460,Bady Bassitt,SP,2016,1
+FA,Febre Amarela,350540,Barra do Turvo,SP,2019,10
+FA,Febre Amarela,350590,Batatais,SP,2017,1
+FA,Febre Amarela,350710,Bom Jesus Dos Perdões,SP,2018,3
+FA,Febre Amarela,350760,Bragança Paulista,SP,2017,1
+FA,Febre Amarela,350760,Bragança Paulista,SP,2018,2
+FA,Febre Amarela,350760,Bragança Paulista,SP,2025,2
+FA,Febre Amarela,350790,Brotas,SP,2025,2
+FA,Febre Amarela,350800,Buri,SP,2009,5
+FA,Febre Amarela,350850,Caçapava,SP,2018,3
+FA,Febre Amarela,350850,Caçapava,SP,2025,6
+FA,Febre Amarela,350860,Cachoeira Paulista,SP,2018,1
+FA,Febre Amarela,350860,Cachoeira Paulista,SP,2019,1
+FA,Febre Amarela,350900,Caieiras,SP,2017,2
+FA,Febre Amarela,350900,Caieiras,SP,2018,1
+FA,Febre Amarela,350925,Cajati,SP,2019,5
+FA,Febre Amarela,350950,Campinas,SP,2017,1
+FA,Febre Amarela,350950,Campinas,SP,2025,3
+FA,Febre Amarela,350960,Campo Limpo Paulista,SP,2018,5
+FA,Febre Amarela,350990,Cananéia,SP,2019,4
+FA,Febre Amarela,351050,Caraguatatuba,SP,2018,1
+FA,Febre Amarela,351300,Cotia,SP,2018,9
+FA,Febre Amarela,351480,Eldorado,SP,2018,2
+FA,Febre Amarela,351480,Eldorado,SP,2019,14
+FA,Febre Amarela,351500,Embu Das Artes,SP,2018,2
+FA,Febre Amarela,351510,Embu-guaçu,SP,2018,7
+FA,Febre Amarela,351518,Espírito Santo do Pinhal,SP,2018,3
+FA,Febre Amarela,351630,Francisco Morato,SP,2018,3
+FA,Febre Amarela,351640,Franco da Rocha,SP,2017,1
+FA,Febre Amarela,351640,Franco da Rocha,SP,2018,7
+FA,Febre Amarela,351870,Guarujá,SP,2018,1
+FA,Febre Amarela,351880,Guarulhos,SP,2018,28
+FA,Febre Amarela,351970,Ibiúna,SP,2018,14
+FA,Febre Amarela,352020,Igaratá,SP,2018,3
+FA,Febre Amarela,352030,Iguape,SP,2018,5
+FA,Febre Amarela,352050,Indaiatuba,SP,2017,1
+FA,Febre Amarela,352120,Iporanga,SP,2018,1
+FA,Febre Amarela,352120,Iporanga,SP,2019,18
+FA,Febre Amarela,352210,Itanhaém,SP,2018,1
+FA,Febre Amarela,352215,Itaóca,SP,2019,1
+FA,Febre Amarela,352220,Itapecerica da Serra,SP,2018,7
+FA,Febre Amarela,352260,Itapira,SP,2018,1
+FA,Febre Amarela,352330,Itariri,SP,2018,8
+FA,Febre Amarela,352340,Itatiba,SP,2017,2
+FA,Febre Amarela,352340,Itatiba,SP,2018,4
+FA,Febre Amarela,352340,Itatiba,SP,2025,1
+FA,Febre Amarela,352350,Itatinga,SP,2009,3
+FA,Febre Amarela,352360,Itirapina,SP,2025,1
+FA,Febre Amarela,352400,Itupeva,SP,2018,1
+FA,Febre Amarela,352460,Jacupiranga,SP,2018,1
+FA,Febre Amarela,352460,Jacupiranga,SP,2019,4
+FA,Febre Amarela,352490,Jambeiro,SP,2025,3
+FA,Febre Amarela,352520,Jarinu,SP,2017,1
+FA,Febre Amarela,352520,Jarinu,SP,2018,9
+FA,Febre Amarela,352550,Joanópolis,SP,2018,1
+FA,Febre Amarela,352550,Joanópolis,SP,2024,1
+FA,Febre Amarela,352550,Joanópolis,SP,2025,10
+FA,Febre Amarela,352590,Jundiaí,SP,2017,1
+FA,Febre Amarela,352590,Jundiaí,SP,2018,2
+FA,Febre Amarela,352610,Juquiá,SP,2018,1
+FA,Febre Amarela,352610,Juquiá,SP,2019,1
+FA,Febre Amarela,352620,Juquitiba,SP,2018,3
+FA,Febre Amarela,352760,Luís Antônio,SP,2008,1
+FA,Febre Amarela,352850,Mairiporã,SP,2017,29
+FA,Febre Amarela,352850,Mairiporã,SP,2018,139
+FA,Febre Amarela,352990,Miracatu,SP,2018,8
+FA,Febre Amarela,353050,Mococa,SP,2017,1
+FA,Febre Amarela,353080,Mogi Mirim,SP,2018,1
+FA,Febre Amarela,353120,Monte Alegre do Sul,SP,2017,6
+FA,Febre Amarela,353120,Monte Alegre do Sul,SP,2018,2
+FA,Febre Amarela,353170,Monteiro Lobato,SP,2018,10
+FA,Febre Amarela,353170,Monteiro Lobato,SP,2025,1
+FA,Febre Amarela,353200,Morungaba,SP,2018,1
+FA,Febre Amarela,353230,Natividade da Serra,SP,2018,1
+FA,Febre Amarela,353240,Nazaré Paulista,SP,2017,2
+FA,Febre Amarela,353240,Nazaré Paulista,SP,2018,30
+FA,Febre Amarela,353240,Nazaré Paulista,SP,2025,4
+FA,Febre Amarela,353475,Ouroeste,SP,2000,1
+FA,Febre Amarela,353560,Paraibuna,SP,2025,1
+FA,Febre Amarela,353620,Pariquera-açu,SP,2019,6
+FA,Febre Amarela,353680,Pedra Bela,SP,2025,2
+FA,Febre Amarela,353710,Pedreira,SP,2025,2
+FA,Febre Amarela,353720,Pedro de Toledo,SP,2018,1
+FA,Febre Amarela,353760,Peruíbe,SP,2018,3
+FA,Febre Amarela,353780,Piedade,SP,2018,6
+FA,Febre Amarela,353800,Pindamonhangaba,SP,2025,1
+FA,Febre Amarela,353860,Piracaia,SP,2018,10
+FA,Febre Amarela,353860,Piracaia,SP,2025,3
+FA,Febre Amarela,353870,Piracicaba,SP,2017,1
+FA,Febre Amarela,353870,Piracicaba,SP,2018,1
+FA,Febre Amarela,353880,Piraju,SP,2009,14
+FA,Febre Amarela,353980,Poá,SP,2018,1
+FA,Febre Amarela,354060,Porto Feliz,SP,2018,1
+FA,Febre Amarela,354260,Registro,SP,2019,2
+FA,Febre Amarela,354280,Ribeira,SP,2019,1
+FA,Febre Amarela,354300,Ribeirão Branco,SP,2019,1
+FA,Febre Amarela,354340,Ribeirão Preto,SP,2016,1
+FA,Febre Amarela,354530,Salto de Pirapora,SP,2018,1
+FA,Febre Amarela,354570,Santa Albertina,SP,2000,1
+FA,Febre Amarela,354640,Santa Cruz do Rio Pardo,SP,2017,1
+FA,Febre Amarela,354680,Santa Isabel,SP,2018,12
+FA,Febre Amarela,354690,Santa Lúcia,SP,2016,1
+FA,Febre Amarela,354750,Santa Rita do Passa Quatro,SP,2018,1
+FA,Febre Amarela,354750,Santa Rita do Passa Quatro,SP,2025,1
+FA,Febre Amarela,354780,Santo André,SP,2018,1
+FA,Febre Amarela,354860,São Bento do Sapucaí,SP,2018,2
+FA,Febre Amarela,354870,São Bernardo do Campo,SP,2018,2
+FA,Febre Amarela,354880,São Caetano do Sul,SP,2018,2
+FA,Febre Amarela,354890,São Carlos,SP,2008,1
+FA,Febre Amarela,354890,São Carlos,SP,2025,1
+FA,Febre Amarela,354910,São João da Boa Vista,SP,2017,1
+FA,Febre Amarela,354910,São João da Boa Vista,SP,2018,1
+FA,Febre Amarela,354910,São João da Boa Vista,SP,2023,1
+FA,Febre Amarela,354990,São José Dos Campos,SP,2018,9
+FA,Febre Amarela,354990,São José Dos Campos,SP,2025,1
+FA,Febre Amarela,354995,São Lourenço da Serra,SP,2018,1
+FA,Febre Amarela,355020,São Miguel Arcanjo,SP,2018,1
+FA,Febre Amarela,355030,São Paulo,SP,2017,4
+FA,Febre Amarela,355030,São Paulo,SP,2018,29
+FA,Febre Amarela,355060,São Roque,SP,2018,4
+FA,Febre Amarela,355070,São Sebastião,SP,2018,3
+FA,Febre Amarela,355080,São Sebastião da Grama,SP,2023,2
+FA,Febre Amarela,355100,São Vicente,SP,2018,1
+FA,Febre Amarela,355120,Sarutaiá,SP,2009,5
+FA,Febre Amarela,355160,Serra Negra,SP,2019,1
+FA,Febre Amarela,355160,Serra Negra,SP,2024,1
+FA,Febre Amarela,355180,Sete Barras,SP,2019,1
+FA,Febre Amarela,355200,Silveiras,SP,2018,1
+FA,Febre Amarela,355210,Socorro,SP,2017,1
+FA,Febre Amarela,355210,Socorro,SP,2024,1
+FA,Febre Amarela,355210,Socorro,SP,2025,3
+FA,Febre Amarela,355330,Tambaú,SP,2018,2
+FA,Febre Amarela,355350,Tapiraí,SP,2018,1
+FA,Febre Amarela,355410,Taubaté,SP,2018,2
+FA,Febre Amarela,355410,Taubaté,SP,2025,1
+FA,Febre Amarela,355480,Tremembé,SP,2018,1
+FA,Febre Amarela,355495,Tuiuti,SP,2017,1
+FA,Febre Amarela,355495,Tuiuti,SP,2025,1
+FA,Febre Amarela,355540,Ubatuba,SP,2018,11
+FA,Febre Amarela,355620,Valinhos,SP,2018,7
+FA,Febre Amarela,355620,Valinhos,SP,2025,1
+FA,Febre Amarela,355635,Vargem,SP,2025,1
+FA,Febre Amarela,355640,Vargem Grande do Sul,SP,2022,1
+FA,Febre Amarela,355650,Várzea Paulista,SP,2018,2
+FA,Febre Amarela,170040,Almas,TO,2000,2
+FA,Febre Amarela,170100,Ananás,TO,1999,1
+FA,Febre Amarela,170240,Arraias,TO,2000,2
+FA,Febre Amarela,170270,Aurora do Tocantins,TO,2000,1
+FA,Febre Amarela,170384,Campos Lindos,TO,1999,9
+FA,Febre Amarela,170384,Campos Lindos,TO,2000,1
+FA,Febre Amarela,170765,Figueirópolis,TO,1999,1
+FA,Febre Amarela,170930,Guaraí,TO,1999,1
+FA,Febre Amarela,170950,Gurupi,TO,2022,1
+FA,Febre Amarela,171360,Monte do Carmo,TO,2025,1
+FA,Febre Amarela,171620,Paranã,TO,1999,1
+FA,Febre Amarela,171650,Pedro Afonso,TO,1999,1
+FA,Febre Amarela,171850,Recursolândia,TO,1999,2
+FA,Febre Amarela,172025,São Salvador do Tocantins,TO,2022,1
+FA,Febre Amarela,172210,Xambioá,TO,2017,1
