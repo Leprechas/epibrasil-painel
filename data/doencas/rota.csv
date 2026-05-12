@@ -1,0 +1,901 @@
+doenca,doenca_nome,cod_mun6,municipio,uf,ano,casos
+ROTA,Rotavírus,120010,Brasileia,AC,2009,0
+ROTA,Rotavírus,120010,Brasileia,AC,2010,5
+ROTA,Rotavírus,120010,Brasileia,AC,2011,3
+ROTA,Rotavírus,120010,Brasileia,AC,2012,2
+ROTA,Rotavírus,120010,Brasileia,AC,2013,1
+ROTA,Rotavírus,120010,Brasileia,AC,2014,1
+ROTA,Rotavírus,120010,Brasileia,AC,2015,10
+ROTA,Rotavírus,120010,Brasileia,AC,2016,9
+ROTA,Rotavírus,120010,Brasileia,AC,2017,3
+ROTA,Rotavírus,120010,Brasileia,AC,2018,3
+ROTA,Rotavírus,120010,Brasileia,AC,2019,0
+ROTA,Rotavírus,120010,Brasileia,AC,2020,0
+ROTA,Rotavírus,120010,Brasileia,AC,2021,0
+ROTA,Rotavírus,120010,Brasileia,AC,2022,0
+ROTA,Rotavírus,120010,Brasileia,AC,2023,0
+ROTA,Rotavírus,120010,Brasileia,AC,2024,0
+ROTA,Rotavírus,120010,Brasileia,AC,2025,0
+ROTA,Rotavírus,120010,Brasileia,AC,2026,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2009,8
+ROTA,Rotavírus,120040,Rio Branco,AC,2010,6
+ROTA,Rotavírus,120040,Rio Branco,AC,2011,20
+ROTA,Rotavírus,120040,Rio Branco,AC,2012,27
+ROTA,Rotavírus,120040,Rio Branco,AC,2013,8
+ROTA,Rotavírus,120040,Rio Branco,AC,2014,3
+ROTA,Rotavírus,120040,Rio Branco,AC,2015,5
+ROTA,Rotavírus,120040,Rio Branco,AC,2016,4
+ROTA,Rotavírus,120040,Rio Branco,AC,2017,1
+ROTA,Rotavírus,120040,Rio Branco,AC,2018,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2019,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2020,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2021,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2022,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2023,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2024,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2025,0
+ROTA,Rotavírus,120040,Rio Branco,AC,2026,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2009,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2010,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2011,2
+ROTA,Rotavírus,120050,Sena Madureira,AC,2012,13
+ROTA,Rotavírus,120050,Sena Madureira,AC,2013,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2014,8
+ROTA,Rotavírus,120050,Sena Madureira,AC,2015,1
+ROTA,Rotavírus,120050,Sena Madureira,AC,2016,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2017,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2018,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2019,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2020,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2021,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2022,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2023,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2024,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2025,0
+ROTA,Rotavírus,120050,Sena Madureira,AC,2026,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2009,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2010,11
+ROTA,Rotavírus,270130,Cajueiro,AL,2011,5
+ROTA,Rotavírus,270130,Cajueiro,AL,2012,1
+ROTA,Rotavírus,270130,Cajueiro,AL,2013,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2014,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2015,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2016,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2017,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2018,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2019,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2020,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2021,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2022,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2023,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2024,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2025,0
+ROTA,Rotavírus,270130,Cajueiro,AL,2026,0
+ROTA,Rotavírus,270430,Maceio,AL,2009,0
+ROTA,Rotavírus,270430,Maceio,AL,2010,14
+ROTA,Rotavírus,270430,Maceio,AL,2011,3
+ROTA,Rotavírus,270430,Maceio,AL,2012,1
+ROTA,Rotavírus,270430,Maceio,AL,2013,2
+ROTA,Rotavírus,270430,Maceio,AL,2014,0
+ROTA,Rotavírus,270430,Maceio,AL,2015,0
+ROTA,Rotavírus,270430,Maceio,AL,2016,0
+ROTA,Rotavírus,270430,Maceio,AL,2017,0
+ROTA,Rotavírus,270430,Maceio,AL,2018,0
+ROTA,Rotavírus,270430,Maceio,AL,2019,0
+ROTA,Rotavírus,270430,Maceio,AL,2020,0
+ROTA,Rotavírus,270430,Maceio,AL,2021,0
+ROTA,Rotavírus,270430,Maceio,AL,2022,0
+ROTA,Rotavírus,270430,Maceio,AL,2023,0
+ROTA,Rotavírus,270430,Maceio,AL,2024,0
+ROTA,Rotavírus,270430,Maceio,AL,2025,0
+ROTA,Rotavírus,270430,Maceio,AL,2026,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2009,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2010,4
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2011,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2012,1
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2013,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2014,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2015,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2016,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2017,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2018,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2019,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2020,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2021,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2022,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2023,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2024,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2025,0
+ROTA,Rotavírus,270630,Palmeira Dos Indios,AL,2026,0
+ROTA,Rotavírus,270670,Penedo,AL,2009,1
+ROTA,Rotavírus,270670,Penedo,AL,2010,0
+ROTA,Rotavírus,270670,Penedo,AL,2011,0
+ROTA,Rotavírus,270670,Penedo,AL,2012,0
+ROTA,Rotavírus,270670,Penedo,AL,2013,0
+ROTA,Rotavírus,270670,Penedo,AL,2014,0
+ROTA,Rotavírus,270670,Penedo,AL,2015,0
+ROTA,Rotavírus,270670,Penedo,AL,2016,0
+ROTA,Rotavírus,270670,Penedo,AL,2017,0
+ROTA,Rotavírus,270670,Penedo,AL,2018,0
+ROTA,Rotavírus,270670,Penedo,AL,2019,0
+ROTA,Rotavírus,270670,Penedo,AL,2020,0
+ROTA,Rotavírus,270670,Penedo,AL,2021,0
+ROTA,Rotavírus,270670,Penedo,AL,2022,0
+ROTA,Rotavírus,270670,Penedo,AL,2023,0
+ROTA,Rotavírus,270670,Penedo,AL,2024,0
+ROTA,Rotavírus,270670,Penedo,AL,2025,0
+ROTA,Rotavírus,270670,Penedo,AL,2026,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2009,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2010,1
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2011,1
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2012,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2013,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2014,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2015,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2016,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2017,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2018,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2019,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2020,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2021,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2022,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2023,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2024,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2025,0
+ROTA,Rotavírus,270860,Sao Miguel Dos Campos,AL,2026,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2009,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2010,3
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2011,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2012,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2013,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2014,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2015,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2016,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2017,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2018,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2019,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2020,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2021,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2022,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2023,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2024,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2025,0
+ROTA,Rotavírus,270915,Teotonio Vilela,AL,2026,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2009,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2010,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2011,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2012,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2013,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2014,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2015,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2016,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2017,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2018,0
+ROTA,Rotavírus,130250,Manacapuru,AM,2019,9
+ROTA,Rotavírus,130250,Manacapuru,AM,2020,1
+ROTA,Rotavírus,130250,Manacapuru,AM,2021,28
+ROTA,Rotavírus,130250,Manacapuru,AM,2022,29
+ROTA,Rotavírus,130250,Manacapuru,AM,2023,74
+ROTA,Rotavírus,130250,Manacapuru,AM,2024,21
+ROTA,Rotavírus,130250,Manacapuru,AM,2025,145
+ROTA,Rotavírus,130250,Manacapuru,AM,2026,0
+ROTA,Rotavírus,130260,Manaus,AM,2009,221
+ROTA,Rotavírus,130260,Manaus,AM,2010,92
+ROTA,Rotavírus,130260,Manaus,AM,2011,69
+ROTA,Rotavírus,130260,Manaus,AM,2012,63
+ROTA,Rotavírus,130260,Manaus,AM,2013,36
+ROTA,Rotavírus,130260,Manaus,AM,2014,34
+ROTA,Rotavírus,130260,Manaus,AM,2015,11
+ROTA,Rotavírus,130260,Manaus,AM,2016,17
+ROTA,Rotavírus,130260,Manaus,AM,2017,17
+ROTA,Rotavírus,130260,Manaus,AM,2018,1
+ROTA,Rotavírus,130260,Manaus,AM,2019,23
+ROTA,Rotavírus,130260,Manaus,AM,2020,5
+ROTA,Rotavírus,130260,Manaus,AM,2021,1
+ROTA,Rotavírus,130260,Manaus,AM,2022,3
+ROTA,Rotavírus,130260,Manaus,AM,2023,17
+ROTA,Rotavírus,130260,Manaus,AM,2024,14
+ROTA,Rotavírus,130260,Manaus,AM,2025,14
+ROTA,Rotavírus,130260,Manaus,AM,2026,0
+ROTA,Rotavírus,160030,Macapa,AP,2009,0
+ROTA,Rotavírus,160030,Macapa,AP,2010,2
+ROTA,Rotavírus,160030,Macapa,AP,2011,10
+ROTA,Rotavírus,160030,Macapa,AP,2012,18
+ROTA,Rotavírus,160030,Macapa,AP,2013,15
+ROTA,Rotavírus,160030,Macapa,AP,2014,31
+ROTA,Rotavírus,160030,Macapa,AP,2015,15
+ROTA,Rotavírus,160030,Macapa,AP,2016,13
+ROTA,Rotavírus,160030,Macapa,AP,2017,17
+ROTA,Rotavírus,160030,Macapa,AP,2018,5
+ROTA,Rotavírus,160030,Macapa,AP,2019,3
+ROTA,Rotavírus,160030,Macapa,AP,2020,7
+ROTA,Rotavírus,160030,Macapa,AP,2021,9
+ROTA,Rotavírus,160030,Macapa,AP,2022,11
+ROTA,Rotavírus,160030,Macapa,AP,2023,24
+ROTA,Rotavírus,160030,Macapa,AP,2024,12
+ROTA,Rotavírus,160030,Macapa,AP,2025,43
+ROTA,Rotavírus,160030,Macapa,AP,2026,4
+ROTA,Rotavírus,290600,Campo Formoso,BA,2009,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2010,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2011,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2012,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2013,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2014,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2015,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2016,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2017,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2018,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2019,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2020,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2021,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2022,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2023,1
+ROTA,Rotavírus,290600,Campo Formoso,BA,2024,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2025,0
+ROTA,Rotavírus,290600,Campo Formoso,BA,2026,0
+ROTA,Rotavírus,292740,Salvador,BA,2009,15
+ROTA,Rotavírus,292740,Salvador,BA,2010,22
+ROTA,Rotavírus,292740,Salvador,BA,2011,18
+ROTA,Rotavírus,292740,Salvador,BA,2012,14
+ROTA,Rotavírus,292740,Salvador,BA,2013,10
+ROTA,Rotavírus,292740,Salvador,BA,2014,6
+ROTA,Rotavírus,292740,Salvador,BA,2015,2
+ROTA,Rotavírus,292740,Salvador,BA,2016,6
+ROTA,Rotavírus,292740,Salvador,BA,2017,9
+ROTA,Rotavírus,292740,Salvador,BA,2018,9
+ROTA,Rotavírus,292740,Salvador,BA,2019,15
+ROTA,Rotavírus,292740,Salvador,BA,2020,3
+ROTA,Rotavírus,292740,Salvador,BA,2021,3
+ROTA,Rotavírus,292740,Salvador,BA,2022,14
+ROTA,Rotavírus,292740,Salvador,BA,2023,8
+ROTA,Rotavírus,292740,Salvador,BA,2024,11
+ROTA,Rotavírus,292740,Salvador,BA,2025,2
+ROTA,Rotavírus,292740,Salvador,BA,2026,0
+ROTA,Rotavírus,530010,Brasilia,DF,2009,0
+ROTA,Rotavírus,530010,Brasilia,DF,2010,0
+ROTA,Rotavírus,530010,Brasilia,DF,2011,0
+ROTA,Rotavírus,530010,Brasilia,DF,2012,0
+ROTA,Rotavírus,530010,Brasilia,DF,2013,0
+ROTA,Rotavírus,530010,Brasilia,DF,2014,0
+ROTA,Rotavírus,530010,Brasilia,DF,2015,0
+ROTA,Rotavírus,530010,Brasilia,DF,2016,0
+ROTA,Rotavírus,530010,Brasilia,DF,2017,0
+ROTA,Rotavírus,530010,Brasilia,DF,2018,0
+ROTA,Rotavírus,530010,Brasilia,DF,2019,2
+ROTA,Rotavírus,530010,Brasilia,DF,2020,0
+ROTA,Rotavírus,530010,Brasilia,DF,2021,0
+ROTA,Rotavírus,530010,Brasilia,DF,2022,0
+ROTA,Rotavírus,530010,Brasilia,DF,2023,2
+ROTA,Rotavírus,530010,Brasilia,DF,2024,17
+ROTA,Rotavírus,530010,Brasilia,DF,2025,1
+ROTA,Rotavírus,530010,Brasilia,DF,2026,0
+ROTA,Rotavírus,320530,Vitoria,ES,2009,0
+ROTA,Rotavírus,320530,Vitoria,ES,2010,0
+ROTA,Rotavírus,320530,Vitoria,ES,2011,0
+ROTA,Rotavírus,320530,Vitoria,ES,2012,0
+ROTA,Rotavírus,320530,Vitoria,ES,2013,1
+ROTA,Rotavírus,320530,Vitoria,ES,2014,0
+ROTA,Rotavírus,320530,Vitoria,ES,2015,0
+ROTA,Rotavírus,320530,Vitoria,ES,2016,0
+ROTA,Rotavírus,320530,Vitoria,ES,2017,0
+ROTA,Rotavírus,320530,Vitoria,ES,2018,0
+ROTA,Rotavírus,320530,Vitoria,ES,2019,0
+ROTA,Rotavírus,320530,Vitoria,ES,2020,0
+ROTA,Rotavírus,320530,Vitoria,ES,2021,0
+ROTA,Rotavírus,320530,Vitoria,ES,2022,0
+ROTA,Rotavírus,320530,Vitoria,ES,2023,0
+ROTA,Rotavírus,320530,Vitoria,ES,2024,0
+ROTA,Rotavírus,320530,Vitoria,ES,2025,0
+ROTA,Rotavírus,320530,Vitoria,ES,2026,0
+ROTA,Rotavírus,520110,Anapolis,GO,2009,0
+ROTA,Rotavírus,520110,Anapolis,GO,2010,3
+ROTA,Rotavírus,520110,Anapolis,GO,2011,0
+ROTA,Rotavírus,520110,Anapolis,GO,2012,0
+ROTA,Rotavírus,520110,Anapolis,GO,2013,0
+ROTA,Rotavírus,520110,Anapolis,GO,2014,0
+ROTA,Rotavírus,520110,Anapolis,GO,2015,0
+ROTA,Rotavírus,520110,Anapolis,GO,2016,0
+ROTA,Rotavírus,520110,Anapolis,GO,2017,6
+ROTA,Rotavírus,520110,Anapolis,GO,2018,0
+ROTA,Rotavírus,520110,Anapolis,GO,2019,1
+ROTA,Rotavírus,520110,Anapolis,GO,2020,0
+ROTA,Rotavírus,520110,Anapolis,GO,2021,0
+ROTA,Rotavírus,520110,Anapolis,GO,2022,0
+ROTA,Rotavírus,520110,Anapolis,GO,2023,0
+ROTA,Rotavírus,520110,Anapolis,GO,2024,19
+ROTA,Rotavírus,520110,Anapolis,GO,2025,6
+ROTA,Rotavírus,520110,Anapolis,GO,2026,0
+ROTA,Rotavírus,520870,Goiania,GO,2009,0
+ROTA,Rotavírus,520870,Goiania,GO,2010,8
+ROTA,Rotavírus,520870,Goiania,GO,2011,0
+ROTA,Rotavírus,520870,Goiania,GO,2012,1
+ROTA,Rotavírus,520870,Goiania,GO,2013,2
+ROTA,Rotavírus,520870,Goiania,GO,2014,1
+ROTA,Rotavírus,520870,Goiania,GO,2015,0
+ROTA,Rotavírus,520870,Goiania,GO,2016,19
+ROTA,Rotavírus,520870,Goiania,GO,2017,20
+ROTA,Rotavírus,520870,Goiania,GO,2018,4
+ROTA,Rotavírus,520870,Goiania,GO,2019,23
+ROTA,Rotavírus,520870,Goiania,GO,2020,0
+ROTA,Rotavírus,520870,Goiania,GO,2021,0
+ROTA,Rotavírus,520870,Goiania,GO,2022,0
+ROTA,Rotavírus,520870,Goiania,GO,2023,0
+ROTA,Rotavírus,520870,Goiania,GO,2024,0
+ROTA,Rotavírus,520870,Goiania,GO,2025,7
+ROTA,Rotavírus,520870,Goiania,GO,2026,2
+ROTA,Rotavírus,521190,Jatai,GO,2009,0
+ROTA,Rotavírus,521190,Jatai,GO,2010,5
+ROTA,Rotavírus,521190,Jatai,GO,2011,0
+ROTA,Rotavírus,521190,Jatai,GO,2012,0
+ROTA,Rotavírus,521190,Jatai,GO,2013,2
+ROTA,Rotavírus,521190,Jatai,GO,2014,8
+ROTA,Rotavírus,521190,Jatai,GO,2015,1
+ROTA,Rotavírus,521190,Jatai,GO,2016,7
+ROTA,Rotavírus,521190,Jatai,GO,2017,4
+ROTA,Rotavírus,521190,Jatai,GO,2018,0
+ROTA,Rotavírus,521190,Jatai,GO,2019,12
+ROTA,Rotavírus,521190,Jatai,GO,2020,0
+ROTA,Rotavírus,521190,Jatai,GO,2021,0
+ROTA,Rotavírus,521190,Jatai,GO,2022,0
+ROTA,Rotavírus,521190,Jatai,GO,2023,0
+ROTA,Rotavírus,521190,Jatai,GO,2024,8
+ROTA,Rotavírus,521190,Jatai,GO,2025,1
+ROTA,Rotavírus,521190,Jatai,GO,2026,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2009,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2010,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2011,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2012,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2013,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2014,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2015,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2016,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2017,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2018,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2019,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2020,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2021,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2022,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2023,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2024,30
+ROTA,Rotavírus,521880,Rio Verde,GO,2025,0
+ROTA,Rotavírus,521880,Rio Verde,GO,2026,0
+ROTA,Rotavírus,211130,Sao Luis,MA,2009,0
+ROTA,Rotavírus,211130,Sao Luis,MA,2010,26
+ROTA,Rotavírus,211130,Sao Luis,MA,2011,42
+ROTA,Rotavírus,211130,Sao Luis,MA,2012,31
+ROTA,Rotavírus,211130,Sao Luis,MA,2013,25
+ROTA,Rotavírus,211130,Sao Luis,MA,2014,24
+ROTA,Rotavírus,211130,Sao Luis,MA,2015,9
+ROTA,Rotavírus,211130,Sao Luis,MA,2016,27
+ROTA,Rotavírus,211130,Sao Luis,MA,2017,7
+ROTA,Rotavírus,211130,Sao Luis,MA,2018,1
+ROTA,Rotavírus,211130,Sao Luis,MA,2019,1
+ROTA,Rotavírus,211130,Sao Luis,MA,2020,1
+ROTA,Rotavírus,211130,Sao Luis,MA,2021,0
+ROTA,Rotavírus,211130,Sao Luis,MA,2022,1
+ROTA,Rotavírus,211130,Sao Luis,MA,2023,1
+ROTA,Rotavírus,211130,Sao Luis,MA,2024,22
+ROTA,Rotavírus,211130,Sao Luis,MA,2025,5
+ROTA,Rotavírus,211130,Sao Luis,MA,2026,1
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2009,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2010,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2011,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2012,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2013,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2014,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2015,1
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2016,5
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2017,2
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2018,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2019,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2020,0
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2021,1
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2022,2
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2023,47
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2024,78
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2025,19
+ROTA,Rotavírus,310620,Belo Horizonte,MG,2026,1
+ROTA,Rotavírus,311550,Caxambu,MG,2009,0
+ROTA,Rotavírus,311550,Caxambu,MG,2010,0
+ROTA,Rotavírus,311550,Caxambu,MG,2011,0
+ROTA,Rotavírus,311550,Caxambu,MG,2012,0
+ROTA,Rotavírus,311550,Caxambu,MG,2013,0
+ROTA,Rotavírus,311550,Caxambu,MG,2014,0
+ROTA,Rotavírus,311550,Caxambu,MG,2015,0
+ROTA,Rotavírus,311550,Caxambu,MG,2016,0
+ROTA,Rotavírus,311550,Caxambu,MG,2017,0
+ROTA,Rotavírus,311550,Caxambu,MG,2018,0
+ROTA,Rotavírus,311550,Caxambu,MG,2019,0
+ROTA,Rotavírus,311550,Caxambu,MG,2020,0
+ROTA,Rotavírus,311550,Caxambu,MG,2021,0
+ROTA,Rotavírus,311550,Caxambu,MG,2022,0
+ROTA,Rotavírus,311550,Caxambu,MG,2023,2
+ROTA,Rotavírus,311550,Caxambu,MG,2024,0
+ROTA,Rotavírus,311550,Caxambu,MG,2025,0
+ROTA,Rotavírus,311550,Caxambu,MG,2026,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2009,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2010,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2011,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2012,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2013,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2014,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2015,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2016,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2017,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2018,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2019,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2020,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2021,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2022,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2023,1
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2024,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2025,0
+ROTA,Rotavírus,314530,Novo Cruzeiro,MG,2026,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2009,3
+ROTA,Rotavírus,500270,Campo Grande,MS,2010,4
+ROTA,Rotavírus,500270,Campo Grande,MS,2011,4
+ROTA,Rotavírus,500270,Campo Grande,MS,2012,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2013,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2014,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2015,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2016,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2017,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2018,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2019,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2020,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2021,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2022,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2023,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2024,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2025,0
+ROTA,Rotavírus,500270,Campo Grande,MS,2026,0
+ROTA,Rotavírus,500370,Dourados,MS,2009,12
+ROTA,Rotavírus,500370,Dourados,MS,2010,12
+ROTA,Rotavírus,500370,Dourados,MS,2011,2
+ROTA,Rotavírus,500370,Dourados,MS,2012,0
+ROTA,Rotavírus,500370,Dourados,MS,2013,0
+ROTA,Rotavírus,500370,Dourados,MS,2014,0
+ROTA,Rotavírus,500370,Dourados,MS,2015,0
+ROTA,Rotavírus,500370,Dourados,MS,2016,1
+ROTA,Rotavírus,500370,Dourados,MS,2017,0
+ROTA,Rotavírus,500370,Dourados,MS,2018,0
+ROTA,Rotavírus,500370,Dourados,MS,2019,0
+ROTA,Rotavírus,500370,Dourados,MS,2020,0
+ROTA,Rotavírus,500370,Dourados,MS,2021,0
+ROTA,Rotavírus,500370,Dourados,MS,2022,0
+ROTA,Rotavírus,500370,Dourados,MS,2023,0
+ROTA,Rotavírus,500370,Dourados,MS,2024,0
+ROTA,Rotavírus,500370,Dourados,MS,2025,0
+ROTA,Rotavírus,500370,Dourados,MS,2026,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2009,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2010,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2011,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2012,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2013,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2014,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2015,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2016,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2017,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2018,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2019,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2020,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2021,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2022,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2023,1
+ROTA,Rotavírus,510340,Cuiaba,MT,2024,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2025,0
+ROTA,Rotavírus,510340,Cuiaba,MT,2026,0
+ROTA,Rotavírus,150442,Marituba,PA,2009,34
+ROTA,Rotavírus,150442,Marituba,PA,2010,19
+ROTA,Rotavírus,150442,Marituba,PA,2011,12
+ROTA,Rotavírus,150442,Marituba,PA,2012,6
+ROTA,Rotavírus,150442,Marituba,PA,2013,6
+ROTA,Rotavírus,150442,Marituba,PA,2014,18
+ROTA,Rotavírus,150442,Marituba,PA,2015,9
+ROTA,Rotavírus,150442,Marituba,PA,2016,11
+ROTA,Rotavírus,150442,Marituba,PA,2017,0
+ROTA,Rotavírus,150442,Marituba,PA,2018,0
+ROTA,Rotavírus,150442,Marituba,PA,2019,0
+ROTA,Rotavírus,150442,Marituba,PA,2020,0
+ROTA,Rotavírus,150442,Marituba,PA,2021,0
+ROTA,Rotavírus,150442,Marituba,PA,2022,0
+ROTA,Rotavírus,150442,Marituba,PA,2023,0
+ROTA,Rotavírus,150442,Marituba,PA,2024,0
+ROTA,Rotavírus,150442,Marituba,PA,2025,0
+ROTA,Rotavírus,150442,Marituba,PA,2026,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2009,16
+ROTA,Rotavírus,250400,Campina Grande,PB,2010,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2011,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2012,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2013,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2014,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2015,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2016,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2017,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2018,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2019,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2020,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2021,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2022,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2023,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2024,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2025,0
+ROTA,Rotavírus,250400,Campina Grande,PB,2026,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2009,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2010,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2011,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2012,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2013,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2014,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2015,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2016,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2017,25
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2018,2
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2019,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2020,2
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2021,0
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2022,3
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2023,56
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2024,39
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2025,23
+ROTA,Rotavírus,250750,Joao Pessoa,PB,2026,5
+ROTA,Rotavírus,261160,Recife,PE,2009,14
+ROTA,Rotavírus,261160,Recife,PE,2010,11
+ROTA,Rotavírus,261160,Recife,PE,2011,18
+ROTA,Rotavírus,261160,Recife,PE,2012,29
+ROTA,Rotavírus,261160,Recife,PE,2013,39
+ROTA,Rotavírus,261160,Recife,PE,2014,59
+ROTA,Rotavírus,261160,Recife,PE,2015,16
+ROTA,Rotavírus,261160,Recife,PE,2016,28
+ROTA,Rotavírus,261160,Recife,PE,2017,31
+ROTA,Rotavírus,261160,Recife,PE,2018,11
+ROTA,Rotavírus,261160,Recife,PE,2019,9
+ROTA,Rotavírus,261160,Recife,PE,2020,2
+ROTA,Rotavírus,261160,Recife,PE,2021,6
+ROTA,Rotavírus,261160,Recife,PE,2022,8
+ROTA,Rotavírus,261160,Recife,PE,2023,27
+ROTA,Rotavírus,261160,Recife,PE,2024,12
+ROTA,Rotavírus,261160,Recife,PE,2025,2
+ROTA,Rotavírus,261160,Recife,PE,2026,3
+ROTA,Rotavírus,261570,Triunfo,PE,2009,0
+ROTA,Rotavírus,261570,Triunfo,PE,2010,0
+ROTA,Rotavírus,261570,Triunfo,PE,2011,0
+ROTA,Rotavírus,261570,Triunfo,PE,2012,0
+ROTA,Rotavírus,261570,Triunfo,PE,2013,0
+ROTA,Rotavírus,261570,Triunfo,PE,2014,0
+ROTA,Rotavírus,261570,Triunfo,PE,2015,0
+ROTA,Rotavírus,261570,Triunfo,PE,2016,0
+ROTA,Rotavírus,261570,Triunfo,PE,2017,0
+ROTA,Rotavírus,261570,Triunfo,PE,2018,0
+ROTA,Rotavírus,261570,Triunfo,PE,2019,0
+ROTA,Rotavírus,261570,Triunfo,PE,2020,0
+ROTA,Rotavírus,261570,Triunfo,PE,2021,0
+ROTA,Rotavírus,261570,Triunfo,PE,2022,0
+ROTA,Rotavírus,261570,Triunfo,PE,2023,1
+ROTA,Rotavírus,261570,Triunfo,PE,2024,0
+ROTA,Rotavírus,261570,Triunfo,PE,2025,0
+ROTA,Rotavírus,261570,Triunfo,PE,2026,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2009,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2010,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2011,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2012,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2013,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2014,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2015,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2016,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2017,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2018,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2019,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2020,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2021,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2022,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2023,0
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2024,120
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2025,20
+ROTA,Rotavírus,410830,Foz do Iguacu,PR,2026,2
+ROTA,Rotavírus,411820,Paranagua,PR,2009,0
+ROTA,Rotavírus,411820,Paranagua,PR,2010,0
+ROTA,Rotavírus,411820,Paranagua,PR,2011,0
+ROTA,Rotavírus,411820,Paranagua,PR,2012,1
+ROTA,Rotavírus,411820,Paranagua,PR,2013,1
+ROTA,Rotavírus,411820,Paranagua,PR,2014,0
+ROTA,Rotavírus,411820,Paranagua,PR,2015,0
+ROTA,Rotavírus,411820,Paranagua,PR,2016,0
+ROTA,Rotavírus,411820,Paranagua,PR,2017,0
+ROTA,Rotavírus,411820,Paranagua,PR,2018,0
+ROTA,Rotavírus,411820,Paranagua,PR,2019,0
+ROTA,Rotavírus,411820,Paranagua,PR,2020,0
+ROTA,Rotavírus,411820,Paranagua,PR,2021,0
+ROTA,Rotavírus,411820,Paranagua,PR,2022,0
+ROTA,Rotavírus,411820,Paranagua,PR,2023,0
+ROTA,Rotavírus,411820,Paranagua,PR,2024,0
+ROTA,Rotavírus,411820,Paranagua,PR,2025,0
+ROTA,Rotavírus,411820,Paranagua,PR,2026,0
+ROTA,Rotavírus,330270,Marica,RJ,2009,0
+ROTA,Rotavírus,330270,Marica,RJ,2010,0
+ROTA,Rotavírus,330270,Marica,RJ,2011,0
+ROTA,Rotavírus,330270,Marica,RJ,2012,0
+ROTA,Rotavírus,330270,Marica,RJ,2013,0
+ROTA,Rotavírus,330270,Marica,RJ,2014,0
+ROTA,Rotavírus,330270,Marica,RJ,2015,0
+ROTA,Rotavírus,330270,Marica,RJ,2016,0
+ROTA,Rotavírus,330270,Marica,RJ,2017,0
+ROTA,Rotavírus,330270,Marica,RJ,2018,0
+ROTA,Rotavírus,330270,Marica,RJ,2019,0
+ROTA,Rotavírus,330270,Marica,RJ,2020,0
+ROTA,Rotavírus,330270,Marica,RJ,2021,0
+ROTA,Rotavírus,330270,Marica,RJ,2022,0
+ROTA,Rotavírus,330270,Marica,RJ,2023,1
+ROTA,Rotavírus,330270,Marica,RJ,2024,0
+ROTA,Rotavírus,330270,Marica,RJ,2025,0
+ROTA,Rotavírus,330270,Marica,RJ,2026,0
+ROTA,Rotavírus,110004,Cacoal,RO,2009,0
+ROTA,Rotavírus,110004,Cacoal,RO,2010,0
+ROTA,Rotavírus,110004,Cacoal,RO,2011,0
+ROTA,Rotavírus,110004,Cacoal,RO,2012,0
+ROTA,Rotavírus,110004,Cacoal,RO,2013,0
+ROTA,Rotavírus,110004,Cacoal,RO,2014,0
+ROTA,Rotavírus,110004,Cacoal,RO,2015,0
+ROTA,Rotavírus,110004,Cacoal,RO,2016,0
+ROTA,Rotavírus,110004,Cacoal,RO,2017,0
+ROTA,Rotavírus,110004,Cacoal,RO,2018,0
+ROTA,Rotavírus,110004,Cacoal,RO,2019,0
+ROTA,Rotavírus,110004,Cacoal,RO,2020,0
+ROTA,Rotavírus,110004,Cacoal,RO,2021,0
+ROTA,Rotavírus,110004,Cacoal,RO,2022,0
+ROTA,Rotavírus,110004,Cacoal,RO,2023,0
+ROTA,Rotavírus,110004,Cacoal,RO,2024,1
+ROTA,Rotavírus,110004,Cacoal,RO,2025,0
+ROTA,Rotavírus,110004,Cacoal,RO,2026,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2009,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2010,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2011,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2012,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2013,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2014,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2015,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2016,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2017,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2018,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2019,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2020,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2021,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2022,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2023,4
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2024,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2025,0
+ROTA,Rotavírus,110010,Guajara-mirim,RO,2026,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2009,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2010,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2011,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2012,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2013,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2014,1
+ROTA,Rotavírus,110020,Porto Velho,RO,2015,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2016,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2017,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2018,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2019,1
+ROTA,Rotavírus,110020,Porto Velho,RO,2020,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2021,0
+ROTA,Rotavírus,110020,Porto Velho,RO,2022,1
+ROTA,Rotavírus,110020,Porto Velho,RO,2023,8
+ROTA,Rotavírus,110020,Porto Velho,RO,2024,6
+ROTA,Rotavírus,110020,Porto Velho,RO,2025,1
+ROTA,Rotavírus,110020,Porto Velho,RO,2026,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2009,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2010,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2011,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2012,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2013,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2014,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2015,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2016,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2017,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2018,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2019,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2020,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2021,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2022,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2023,1
+ROTA,Rotavírus,110033,Nova Mamore,RO,2024,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2025,0
+ROTA,Rotavírus,110033,Nova Mamore,RO,2026,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2009,69
+ROTA,Rotavírus,140010,Boa Vista,RR,2010,32
+ROTA,Rotavírus,140010,Boa Vista,RR,2011,33
+ROTA,Rotavírus,140010,Boa Vista,RR,2012,10
+ROTA,Rotavírus,140010,Boa Vista,RR,2013,3
+ROTA,Rotavírus,140010,Boa Vista,RR,2014,16
+ROTA,Rotavírus,140010,Boa Vista,RR,2015,2
+ROTA,Rotavírus,140010,Boa Vista,RR,2016,27
+ROTA,Rotavírus,140010,Boa Vista,RR,2017,8
+ROTA,Rotavírus,140010,Boa Vista,RR,2018,1
+ROTA,Rotavírus,140010,Boa Vista,RR,2019,1
+ROTA,Rotavírus,140010,Boa Vista,RR,2020,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2021,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2022,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2023,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2024,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2025,0
+ROTA,Rotavírus,140010,Boa Vista,RR,2026,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2009,8
+ROTA,Rotavírus,431490,Porto Alegre,RS,2010,2
+ROTA,Rotavírus,431490,Porto Alegre,RS,2011,3
+ROTA,Rotavírus,431490,Porto Alegre,RS,2012,3
+ROTA,Rotavírus,431490,Porto Alegre,RS,2013,1
+ROTA,Rotavírus,431490,Porto Alegre,RS,2014,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2015,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2016,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2017,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2018,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2019,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2020,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2021,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2022,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2023,0
+ROTA,Rotavírus,431490,Porto Alegre,RS,2024,15
+ROTA,Rotavírus,431490,Porto Alegre,RS,2025,5
+ROTA,Rotavírus,431490,Porto Alegre,RS,2026,0
+ROTA,Rotavírus,420240,Blumenau,SC,2009,0
+ROTA,Rotavírus,420240,Blumenau,SC,2010,0
+ROTA,Rotavírus,420240,Blumenau,SC,2011,0
+ROTA,Rotavírus,420240,Blumenau,SC,2012,0
+ROTA,Rotavírus,420240,Blumenau,SC,2013,0
+ROTA,Rotavírus,420240,Blumenau,SC,2014,0
+ROTA,Rotavírus,420240,Blumenau,SC,2015,0
+ROTA,Rotavírus,420240,Blumenau,SC,2016,0
+ROTA,Rotavírus,420240,Blumenau,SC,2017,0
+ROTA,Rotavírus,420240,Blumenau,SC,2018,0
+ROTA,Rotavírus,420240,Blumenau,SC,2019,0
+ROTA,Rotavírus,420240,Blumenau,SC,2020,0
+ROTA,Rotavírus,420240,Blumenau,SC,2021,0
+ROTA,Rotavírus,420240,Blumenau,SC,2022,0
+ROTA,Rotavírus,420240,Blumenau,SC,2023,1
+ROTA,Rotavírus,420240,Blumenau,SC,2024,0
+ROTA,Rotavírus,420240,Blumenau,SC,2025,0
+ROTA,Rotavírus,420240,Blumenau,SC,2026,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2009,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2010,1
+ROTA,Rotavírus,420540,Florianopolis,SC,2011,1
+ROTA,Rotavírus,420540,Florianopolis,SC,2012,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2013,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2014,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2015,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2016,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2017,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2018,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2019,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2020,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2021,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2022,0
+ROTA,Rotavírus,420540,Florianopolis,SC,2023,1
+ROTA,Rotavírus,420540,Florianopolis,SC,2024,20
+ROTA,Rotavírus,420540,Florianopolis,SC,2025,13
+ROTA,Rotavírus,420540,Florianopolis,SC,2026,4
+ROTA,Rotavírus,420820,Itajai,SC,2009,0
+ROTA,Rotavírus,420820,Itajai,SC,2010,0
+ROTA,Rotavírus,420820,Itajai,SC,2011,0
+ROTA,Rotavírus,420820,Itajai,SC,2012,0
+ROTA,Rotavírus,420820,Itajai,SC,2013,0
+ROTA,Rotavírus,420820,Itajai,SC,2014,0
+ROTA,Rotavírus,420820,Itajai,SC,2015,0
+ROTA,Rotavírus,420820,Itajai,SC,2016,0
+ROTA,Rotavírus,420820,Itajai,SC,2017,0
+ROTA,Rotavírus,420820,Itajai,SC,2018,0
+ROTA,Rotavírus,420820,Itajai,SC,2019,0
+ROTA,Rotavírus,420820,Itajai,SC,2020,0
+ROTA,Rotavírus,420820,Itajai,SC,2021,0
+ROTA,Rotavírus,420820,Itajai,SC,2022,0
+ROTA,Rotavírus,420820,Itajai,SC,2023,0
+ROTA,Rotavírus,420820,Itajai,SC,2024,0
+ROTA,Rotavírus,420820,Itajai,SC,2025,22
+ROTA,Rotavírus,420820,Itajai,SC,2026,0
+ROTA,Rotavírus,280030,Aracaju,SE,2009,13
+ROTA,Rotavírus,280030,Aracaju,SE,2010,6
+ROTA,Rotavírus,280030,Aracaju,SE,2011,14
+ROTA,Rotavírus,280030,Aracaju,SE,2012,9
+ROTA,Rotavírus,280030,Aracaju,SE,2013,10
+ROTA,Rotavírus,280030,Aracaju,SE,2014,2
+ROTA,Rotavírus,280030,Aracaju,SE,2015,0
+ROTA,Rotavírus,280030,Aracaju,SE,2016,19
+ROTA,Rotavírus,280030,Aracaju,SE,2017,8
+ROTA,Rotavírus,280030,Aracaju,SE,2018,2
+ROTA,Rotavírus,280030,Aracaju,SE,2019,2
+ROTA,Rotavírus,280030,Aracaju,SE,2020,0
+ROTA,Rotavírus,280030,Aracaju,SE,2021,1
+ROTA,Rotavírus,280030,Aracaju,SE,2022,5
+ROTA,Rotavírus,280030,Aracaju,SE,2023,3
+ROTA,Rotavírus,280030,Aracaju,SE,2024,31
+ROTA,Rotavírus,280030,Aracaju,SE,2025,28
+ROTA,Rotavírus,280030,Aracaju,SE,2026,0
+ROTA,Rotavírus,350650,Birigui,SP,2009,0
+ROTA,Rotavírus,350650,Birigui,SP,2010,0
+ROTA,Rotavírus,350650,Birigui,SP,2011,0
+ROTA,Rotavírus,350650,Birigui,SP,2012,0
+ROTA,Rotavírus,350650,Birigui,SP,2013,0
+ROTA,Rotavírus,350650,Birigui,SP,2014,0
+ROTA,Rotavírus,350650,Birigui,SP,2015,0
+ROTA,Rotavírus,350650,Birigui,SP,2016,0
+ROTA,Rotavírus,350650,Birigui,SP,2017,0
+ROTA,Rotavírus,350650,Birigui,SP,2018,0
+ROTA,Rotavírus,350650,Birigui,SP,2019,0
+ROTA,Rotavírus,350650,Birigui,SP,2020,0
+ROTA,Rotavírus,350650,Birigui,SP,2021,0
+ROTA,Rotavírus,350650,Birigui,SP,2022,0
+ROTA,Rotavírus,350650,Birigui,SP,2023,5
+ROTA,Rotavírus,350650,Birigui,SP,2024,0
+ROTA,Rotavírus,350650,Birigui,SP,2025,0
+ROTA,Rotavírus,350650,Birigui,SP,2026,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2009,2
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2010,7
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2011,5
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2012,2
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2013,4
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2014,9
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2015,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2016,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2017,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2018,2
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2019,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2020,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2021,0
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2022,2
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2023,1
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2024,15
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2025,4
+ROTA,Rotavírus,354980,Sao Jose do Rio Preto,SP,2026,0
+ROTA,Rotavírus,355030,Sao Paulo,SP,2009,1
+ROTA,Rotavírus,355030,Sao Paulo,SP,2010,95
+ROTA,Rotavírus,355030,Sao Paulo,SP,2011,91
+ROTA,Rotavírus,355030,Sao Paulo,SP,2012,69
+ROTA,Rotavírus,355030,Sao Paulo,SP,2013,48
+ROTA,Rotavírus,355030,Sao Paulo,SP,2014,25
+ROTA,Rotavírus,355030,Sao Paulo,SP,2015,12
+ROTA,Rotavírus,355030,Sao Paulo,SP,2016,12
+ROTA,Rotavírus,355030,Sao Paulo,SP,2017,11
+ROTA,Rotavírus,355030,Sao Paulo,SP,2018,24
+ROTA,Rotavírus,355030,Sao Paulo,SP,2019,10
+ROTA,Rotavírus,355030,Sao Paulo,SP,2020,4
+ROTA,Rotavírus,355030,Sao Paulo,SP,2021,1
+ROTA,Rotavírus,355030,Sao Paulo,SP,2022,5
+ROTA,Rotavírus,355030,Sao Paulo,SP,2023,11
+ROTA,Rotavírus,355030,Sao Paulo,SP,2024,14
+ROTA,Rotavírus,355030,Sao Paulo,SP,2025,11
+ROTA,Rotavírus,355030,Sao Paulo,SP,2026,3
+ROTA,Rotavírus,170210,Araguaina,TO,2009,0
+ROTA,Rotavírus,170210,Araguaina,TO,2010,0
+ROTA,Rotavírus,170210,Araguaina,TO,2011,0
+ROTA,Rotavírus,170210,Araguaina,TO,2012,0
+ROTA,Rotavírus,170210,Araguaina,TO,2013,11
+ROTA,Rotavírus,170210,Araguaina,TO,2014,23
+ROTA,Rotavírus,170210,Araguaina,TO,2015,15
+ROTA,Rotavírus,170210,Araguaina,TO,2016,46
+ROTA,Rotavírus,170210,Araguaina,TO,2017,12
+ROTA,Rotavírus,170210,Araguaina,TO,2018,1
+ROTA,Rotavírus,170210,Araguaina,TO,2019,3
+ROTA,Rotavírus,170210,Araguaina,TO,2020,3
+ROTA,Rotavírus,170210,Araguaina,TO,2021,5
+ROTA,Rotavírus,170210,Araguaina,TO,2022,18
+ROTA,Rotavírus,170210,Araguaina,TO,2023,0
+ROTA,Rotavírus,170210,Araguaina,TO,2024,84
+ROTA,Rotavírus,170210,Araguaina,TO,2025,12
+ROTA,Rotavírus,170210,Araguaina,TO,2026,6
+ROTA,Rotavírus,172100,Palmas,TO,2009,0
+ROTA,Rotavírus,172100,Palmas,TO,2010,0
+ROTA,Rotavírus,172100,Palmas,TO,2011,0
+ROTA,Rotavírus,172100,Palmas,TO,2012,0
+ROTA,Rotavírus,172100,Palmas,TO,2013,0
+ROTA,Rotavírus,172100,Palmas,TO,2014,0
+ROTA,Rotavírus,172100,Palmas,TO,2015,0
+ROTA,Rotavírus,172100,Palmas,TO,2016,8
+ROTA,Rotavírus,172100,Palmas,TO,2017,8
+ROTA,Rotavírus,172100,Palmas,TO,2018,3
+ROTA,Rotavírus,172100,Palmas,TO,2019,1
+ROTA,Rotavírus,172100,Palmas,TO,2020,0
+ROTA,Rotavírus,172100,Palmas,TO,2021,0
+ROTA,Rotavírus,172100,Palmas,TO,2022,0
+ROTA,Rotavírus,172100,Palmas,TO,2023,0
+ROTA,Rotavírus,172100,Palmas,TO,2024,0
+ROTA,Rotavírus,172100,Palmas,TO,2025,0
+ROTA,Rotavírus,172100,Palmas,TO,2026,0
