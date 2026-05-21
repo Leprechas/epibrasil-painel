@@ -39,3 +39,323 @@ const munRank=group(rows,["uf","cod_mun6","municipio"]).filter(r=>(r[ind]||0)>0)
 async function diseaseChanged(){await loadDisease($("disease").value);setupFilters();refresh()}
 async function init(){const [manRes,ufRes,munRes]=await Promise.all([fetch(MANIFEST_URL),fetch(GEO_UF_URL).catch(()=>null),fetch(GEO_MUN_URL).catch(()=>null)]);if(!manRes.ok)throw new Error("Manifesto de dados não encontrado");MANIFEST=await manRes.json();if(ufRes&&ufRes.ok)GEO_UF=await ufRes.json();if(munRes&&munRes.ok)GEO_MUN=await munRes.json();await loadPopulation();setupDiseaseSelect();await diseaseChanged()}
 $("apply").onclick=refresh;$("clear").onclick=()=>{$("uf").value="";$("mun").value="";const ys=allAvailableYears();if(ys.length)setSelectedYears([ys.at(-1)]);refresh()};$("all-years").onclick=()=>{setSelectedYears(allAvailableYears());refresh()};$("last-year").onclick=()=>{const ys=allAvailableYears();if(ys.length)setSelectedYears([ys.at(-1)]);refresh()};$("uf").onchange=()=>{$("mun").value="";refresh()};$("disease").onchange=diseaseChanged;$("year").onchange=refresh;$("indicator").onchange=refresh;init().catch(e=>alert("Erro: "+e.message));
+/* ===== Extras EpiBrasil: institucional, legendas e downloads ===== */
+
+function epiEnsureUIExtras(){
+  const filters=document.querySelector(".filters");
+
+  if(filters&&!document.getElementById("download-csv")){
+    const area=document.createElement("div");
+    area.className="filter-download-area";
+    area.innerHTML=`
+      <button id="download-csv" type="button" class="download-btn">Baixar CSV filtrado</button>
+    `;
+    const note=filters.querySelector(".note");
+    if(note)filters.insertBefore(area,note);
+    else filters.appendChild(area);
+  }
+
+  const topbar=document.querySelector(".topbar");
+  if(topbar&&!document.getElementById("about-panel-btn")){
+    const wrap=document.createElement("div");
+    wrap.className="top-actions";
+
+    const oldBadge=document.getElementById("row-count");
+    if(oldBadge&&oldBadge.parentElement===topbar){
+      topbar.removeChild(oldBadge);
+      wrap.appendChild(oldBadge);
+    }
+
+    const about=document.createElement("button");
+    about.id="about-panel-btn";
+    about.type="button";
+    about.className="about-btn";
+    about.textContent="Fonte e metodologia";
+    wrap.appendChild(about);
+
+    topbar.appendChild(wrap);
+  }
+
+  const mapUf=document.getElementById("map-uf");
+  if(mapUf&&!document.getElementById("download-map-uf")){
+    const panel=mapUf.closest(".panel");
+    const toolbar=document.createElement("div");
+    toolbar.className="map-toolbar";
+    toolbar.innerHTML=`
+      <button id="download-map-uf" type="button" class="download-btn secondary-download">Baixar mapa UF</button>
+    `;
+    panel.insertBefore(toolbar,mapUf);
+
+    const box=document.createElement("div");
+    box.className="map-box";
+    mapUf.parentNode.insertBefore(box,mapUf);
+    box.appendChild(mapUf);
+
+    const legend=document.createElement("div");
+    legend.id="legend-map-uf";
+    legend.className="map-legend";
+    box.appendChild(legend);
+  }
+
+  const mapMun=document.getElementById("map-mun");
+  if(mapMun&&!document.getElementById("download-map-mun")){
+    const panel=mapMun.closest(".panel");
+    const toolbar=document.createElement("div");
+    toolbar.className="map-toolbar";
+    toolbar.innerHTML=`
+      <button id="download-map-mun" type="button" class="download-btn secondary-download">Baixar mapa municipal</button>
+    `;
+    panel.insertBefore(toolbar,mapMun);
+
+    const box=document.createElement("div");
+    box.className="map-box";
+    mapMun.parentNode.insertBefore(box,mapMun);
+    box.appendChild(mapMun);
+
+    const legend=document.createElement("div");
+    legend.id="legend-map-mun";
+    legend.className="map-legend";
+    box.appendChild(legend);
+  }
+
+  if(!document.getElementById("epi-splash")){
+    document.body.insertAdjacentHTML("afterbegin",`
+      <section id="epi-splash" class="epi-splash">
+        <div class="epi-splash-card">
+          <div class="epi-splash-kicker">Painel epidemiológico brasileiro</div>
+          <h1>EpiBrasil</h1>
+          <p>
+            Plataforma estática para visualização exploratória de doenças e agravos notificados,
+            com agregação por município, Unidade Federativa, ano e período selecionado.
+          </p>
+
+          <div class="epi-splash-grid">
+            <div class="epi-splash-box">
+              <h3>Fontes dos dados</h3>
+              <ul>
+                <li>Casos agregados: SINAN/DATASUS, exportados via TABNET.</li>
+                <li>População municipal: IBGE/SIDRA.</li>
+                <li>Malhas territoriais: arquivos GeoJSON de UFs e municípios.</li>
+              </ul>
+            </div>
+
+            <div class="epi-splash-box">
+              <h3>Indicadores</h3>
+              <ul>
+                <li>Casos no ano ou período selecionado.</li>
+                <li>População-ano, quando disponível.</li>
+                <li>Incidência por 100 mil habitantes.</li>
+                <li>Municípios com notificações.</li>
+              </ul>
+            </div>
+
+            <div class="epi-splash-box">
+              <h3>Metodologia</h3>
+              <ul>
+                <li>Os dados são agregados por município-ano.</li>
+                <li>Para múltiplos anos, os casos e populações-ano são somados.</li>
+                <li>A incidência é calculada por: casos / população × 100.000.</li>
+                <li>Não são usados microdados identificáveis.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            Este painel é uma ferramenta exploratória. Diferenças de cobertura, oportunidade de notificação,
+            revisão das bases e mudanças operacionais dos sistemas devem ser consideradas na interpretação.
+          </p>
+
+          <div class="epi-splash-actions">
+            <button id="close-splash" type="button">Entrar no painel</button>
+            <button id="close-splash-secondary" type="button" class="secondary">Continuar explorando</button>
+          </div>
+        </div>
+      </section>
+    `);
+  }
+}
+
+function epiCloseSplash(){
+  const splash=document.getElementById("epi-splash");
+  if(splash)splash.style.display="none";
+}
+
+function epiShowSplash(){
+  const splash=document.getElementById("epi-splash");
+  if(splash)splash.style.display="flex";
+}
+
+function epiCsvEscape(value){
+  if(value===null||value===undefined)return "";
+  const s=String(value);
+  if(/[",\n\r;]/.test(s))return `"${s.replace(/"/g,'""')}"`;
+  return s;
+}
+
+function epiDownloadBlob(content,filename,type){
+  const blob=new Blob([content],{type:type||"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function epiDownloadFilteredCSV(){
+  if(typeof filtered!=="function"){
+    alert("Filtro ainda não carregado.");
+    return;
+  }
+
+  const rows=filtered(false);
+  const headers=[
+    "doenca",
+    "doenca_nome",
+    "cod_mun6",
+    "municipio",
+    "uf",
+    "ano",
+    "casos",
+    "populacao",
+    "incidencia_100mil"
+  ];
+
+  const csv=[
+    headers.join(","),
+    ...rows.map(r=>headers.map(h=>epiCsvEscape(
+      h==="incidencia_100mil"&&Number.isFinite(r[h]) ? r[h].toFixed(6) : r[h]
+    )).join(","))
+  ].join("\n");
+
+  const disease=$("disease")?.value||"doenca";
+  const years=typeof selectedYears==="function" ? selectedYears().join("-") : "periodo";
+  epiDownloadBlob(csv,`epibrasil_${disease}_${years}_filtrado.csv`,"text/csv;charset=utf-8");
+}
+
+function epiLegendRanges(max){
+  if(!Number.isFinite(max)||max<=0){
+    return [
+      {label:"Sem notificação",color:"#f1f5f9"}
+    ];
+  }
+
+  const b1=max*0.2;
+  const b2=max*0.4;
+  const b3=max*0.6;
+  const b4=max*0.8;
+
+  return [
+    {label:`${fmt1.format(b4)} – ${fmt1.format(max)}`,color:"#7f1d1d"},
+    {label:`${fmt1.format(b3)} – ${fmt1.format(b4)}`,color:"#b91c1c"},
+    {label:`${fmt1.format(b2)} – ${fmt1.format(b3)}`,color:"#ef4444"},
+    {label:`${fmt1.format(b1)} – ${fmt1.format(b2)}`,color:"#f97316"},
+    {label:`> 0 – ${fmt1.format(b1)}`,color:"#fed7aa"},
+    {label:"Sem notificação",color:"#f1f5f9"}
+  ];
+}
+
+function epiLegendHTML(title,max){
+  const ind=$("indicator")?.value||"casos";
+  const label=ind==="casos" ? "Casos" : "Incidência";
+  return `
+    <strong>${title}</strong>
+    <div style="margin-bottom:6px;color:#64748b">${label}</div>
+    ${epiLegendRanges(max).map(r=>`
+      <div class="legend-row">
+        <span class="legend-swatch" style="background:${r.color}"></span>
+        <span>${r.label}</span>
+      </div>
+    `).join("")}
+  `;
+}
+
+function epiUpdateLegends(){
+  if(typeof filtered!=="function"||typeof group!=="function")return;
+
+  const rows=filtered(false);
+  const ind=$("indicator")?.value||"casos";
+
+  const ufRows=group(rows,["uf"]).filter(r=>r.uf);
+  const munRows=group(rows,["uf","cod_mun6","municipio"]);
+
+  const maxUF=Math.max(0,...ufRows.map(r=>Number(r[ind]||0)));
+  const maxMun=Math.max(0,...munRows.map(r=>Number(r[ind]||0)));
+
+  const legUF=document.getElementById("legend-map-uf");
+  const legMun=document.getElementById("legend-map-mun");
+
+  if(legUF)legUF.innerHTML=epiLegendHTML("Legenda — UFs",maxUF);
+  if(legMun)legMun.innerHTML=epiLegendHTML("Legenda — municípios",maxMun);
+}
+
+async function epiDownloadMap(mapId,filename){
+  const el=document.getElementById(mapId);
+
+  if(!el){
+    alert("Mapa não encontrado.");
+    return;
+  }
+
+  if(!window.html2canvas){
+    alert("Biblioteca de captura não carregada. Verifique se o html2canvas foi adicionado ao index.html.");
+    return;
+  }
+
+  try{
+    if(mapId==="map-uf"&&typeof MAP_UF!=="undefined"&&MAP_UF)MAP_UF.invalidateSize();
+    if(mapId==="map-mun"&&typeof MAP_MUN!=="undefined"&&MAP_MUN)MAP_MUN.invalidateSize();
+
+    await new Promise(resolve=>setTimeout(resolve,300));
+
+    const container=el.closest(".map-box")||el;
+
+    const canvas=await html2canvas(container,{
+      backgroundColor:"#ffffff",
+      scale:2,
+      useCORS:true,
+      ignoreElements:(node)=>node.classList&&node.classList.contains("leaflet-control-attribution")
+    });
+
+    canvas.toBlob(blob=>{
+      if(!blob){
+        alert("Não foi possível gerar a imagem do mapa.");
+        return;
+      }
+
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;
+      a.download=filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    },"image/png");
+  }catch(e){
+    console.error(e);
+    alert("Não foi possível baixar o mapa. Em alguns navegadores, os blocos do OpenStreetMap podem bloquear a captura.");
+  }
+}
+
+epiEnsureUIExtras();
+
+document.addEventListener("click",e=>{
+  if(e.target&&e.target.id==="download-csv")epiDownloadFilteredCSV();
+  if(e.target&&e.target.id==="download-map-uf")epiDownloadMap("map-uf","epibrasil_mapa_ufs.png");
+  if(e.target&&e.target.id==="download-map-mun")epiDownloadMap("map-mun","epibrasil_mapa_municipios.png");
+  if(e.target&&e.target.id==="about-panel-btn")epiShowSplash();
+  if(e.target&&["close-splash","close-splash-secondary"].includes(e.target.id))epiCloseSplash();
+});
+
+if(typeof refresh==="function"){
+  const epiOriginalRefresh=refresh;
+  refresh=function(){
+    epiOriginalRefresh();
+    setTimeout(epiUpdateLegends,150);
+  };
+}
+
+setTimeout(epiUpdateLegends,800);
