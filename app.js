@@ -5,14 +5,128 @@ const POP_URL="data/populacao_municipio_ano.csv?v=20260512-8";
 const $=id=>document.getElementById(id);
 const fmt=new Intl.NumberFormat("pt-BR");
 const fmt1=new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1});
-let MANIFEST=[],DATA=[],GEO_UF=null,GEO_MUN=null,POP_MAP=new Map(),MAP_UF=null,MAP_MUN=null,LAYER_UF=null,LAYER_MUN=null;
+let MANIFEST=[],DATA=[],GEO_UF=null,GEO_MUN=null,POP_MAP=new Map(),POP_SERIES=new Map(),MAP_UF=null,MAP_MUN=null,LAYER_UF=null,LAYER_MUN=null;
 const CACHE={};
 
 function parseCSV(text){const rows=[];let row=[],cell="",q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&q&&n==='"'){cell+='"';i++}else if(c==='"'){q=!q}else if(c===","&&!q){row.push(cell);cell=""}else if((c==="\n"||c==="\r")&&!q){if(c==="\r"&&n==="\n")i++;row.push(cell);if(row.some(v=>v.trim()!==""))rows.push(row);row=[];cell=""}else cell+=c}if(cell||row.length){row.push(cell);rows.push(row)}const head=rows.shift().map(x=>x.trim());return rows.map(r=>{const o={};head.forEach((h,i)=>o[h]=(r[i]??"").trim());return o})}
 function num(x){if(x===undefined||x===null||x==="")return null;const n=Number(String(x).replace(/\./g,"").replace(",","."));return Number.isFinite(n)?n:null}
 function popKey(cod,ano){return String(cod).replace(/\D/g,"").padStart(6,"0").slice(0,6)+"|"+String(ano)}
-async function loadPopulation(){try{const res=await fetch(POP_URL);if(!res.ok)return;const rows=parseCSV(await res.text());POP_MAP=new Map();for(const r of rows){const cod=String(r.cod_mun6||"").replace(/\D/g,"").padStart(6,"0").slice(0,6);const ano=Number(r.ano);const pop=num(r.populacao);if(cod&&Number.isFinite(ano)&&Number.isFinite(pop))POP_MAP.set(popKey(cod,ano),pop)}}catch(e){console.warn("População não carregada:",e)}}
-function norm(r){const casos=num(r.casos)||0;const cod=String(r.cod_mun6||"").replace(/\D/g,"").padStart(6,"0").slice(0,6);const ano=Number(r.ano);let pop=num(r.populacao);if((pop===null||!Number.isFinite(pop))&&POP_MAP.has(popKey(cod,ano)))pop=POP_MAP.get(popKey(cod,ano));let inc=num(r.incidencia_100mil);if((inc===null||!Number.isFinite(inc))&&pop>0)inc=casos/pop*100000;return{doenca:(r.doenca||"").toUpperCase(),doenca_nome:r.doenca_nome||r.doenca,cod_mun6:cod,municipio:r.municipio||"",uf:(r.uf||"").toUpperCase(),ano:ano,casos:casos,populacao:pop,incidencia_100mil:inc}}
+async function loadPopulation(){
+  try{
+    const res=await fetch(POP_URL);
+
+    if(!res.ok)return;
+
+    const rows=parseCSV(await res.text());
+
+    POP_MAP=new Map();
+    POP_SERIES=new Map();
+
+    for(const r of rows){
+      const cod=String(r.cod_mun6||"")
+        .replace(/\D/g,"")
+        .padStart(6,"0")
+        .slice(0,6);
+
+      const ano=Number(r.ano);
+      const pop=num(r.populacao);
+
+      if(cod&&Number.isFinite(ano)&&Number.isFinite(pop)&&pop>0){
+        POP_MAP.set(popKey(cod,ano),pop);
+
+        if(!POP_SERIES.has(cod))POP_SERIES.set(cod,[]);
+        POP_SERIES.get(cod).push({ano,pop});
+      }
+    }
+
+    for(const [cod,serie] of POP_SERIES.entries()){
+      serie.sort((a,b)=>a.ano-b.ano);
+    }
+  }catch(e){
+    console.warn("População não carregada:",e);
+  }
+}
+function interpolatePopulation(cod,ano){
+  cod=String(cod).replace(/\D/g,"").padStart(6,"0").slice(0,6);
+  ano=Number(ano);
+
+  if(!cod||!Number.isFinite(ano))return null;
+
+  const exact=POP_MAP.get(popKey(cod,ano));
+  if(Number.isFinite(exact))return exact;
+
+  const serie=POP_SERIES.get(cod);
+
+  if(!serie||serie.length===0)return null;
+
+  const before=serie.filter(d=>d.ano<ano).at(-1);
+  const after=serie.find(d=>d.ano>ano);
+
+  if(before&&after&&after.ano!==before.ano){
+    const t=(ano-before.ano)/(after.ano-before.ano);
+    return Math.round(before.pop+t*(after.pop-before.pop));
+  }
+
+  if(before){
+    const recent=serie.slice(-3);
+
+    if(recent.length>=2){
+      const first=recent[0];
+      const last=recent[recent.length-1];
+
+      if(first.pop>0&&last.pop>0&&last.ano!==first.ano){
+        const taxa=Math.pow(last.pop/first.pop,1/(last.ano-first.ano))-1;
+        const estimada=before.pop*Math.pow(1+taxa,ano-before.ano);
+
+        if(Number.isFinite(estimada)&&estimada>0){
+          return Math.round(estimada);
+        }
+      }
+    }
+
+    return before.pop;
+  }
+
+  if(after){
+    return after.pop;
+  }
+
+  return null;
+}
+function norm(r){
+  const casos=num(r.casos)||0;
+
+  const cod=String(r.cod_mun6||"")
+    .replace(/\D/g,"")
+    .padStart(6,"0")
+    .slice(0,6);
+
+  const ano=Number(r.ano);
+
+  let pop=num(r.populacao);
+
+  if((pop===null||!Number.isFinite(pop)||pop<=0)){
+    pop=interpolatePopulation(cod,ano);
+  }
+
+  let inc=num(r.incidencia_100mil);
+
+  if((inc===null||!Number.isFinite(inc))&&pop>0){
+    inc=casos/pop*100000;
+  }
+
+  return{
+    doenca:(r.doenca||"").toUpperCase(),
+    doenca_nome:r.doenca_nome||r.doenca,
+    cod_mun6:cod,
+    municipio:r.municipio||"",
+    uf:(r.uf||"").toUpperCase(),
+    ano:ano,
+    casos:casos,
+    populacao:pop,
+    incidencia_100mil:inc
+  };
+}
 function group(rows,keys){const m=new Map();for(const r of rows){const k=keys.map(x=>r[x]).join("|");if(!m.has(k)){const o={casos:0,populacao:0,_pop:0,_muns:new Set(),_munsPos:new Set()};keys.forEach(x=>o[x]=r[x]);m.set(k,o)}const o=m.get(k);o.casos+=r.casos||0;if(Number.isFinite(r.populacao)){o.populacao+=r.populacao;o._pop++}if(r.cod_mun6)o._muns.add(r.cod_mun6);if(r.cod_mun6&&(r.casos||0)>0)o._munsPos.add(r.cod_mun6)}return[...m.values()].map(o=>{const pop=o._pop?o.populacao:null;const inc=pop?o.casos/pop*100000:null;const municipios=o._muns.size;const municipios_com_notificacao=o._munsPos.size;delete o._pop;delete o._muns;delete o._munsPos;return{...o,populacao:pop,incidencia_100mil:inc,municipios,municipios_com_notificacao}})}
 function selectedYears(){return[...$("year").selectedOptions].map(o=>Number(o.value)).filter(Number.isFinite)}
 function setSelectedYears(years){const ys=new Set(years.map(Number));[...$("year").options].forEach(o=>{o.selected=ys.has(Number(o.value))})}
@@ -35,7 +149,7 @@ if(GEO_MUN){LAYER_MUN=L.geoJSON(GEO_MUN,{style:f=>{const code=getMunCode(f);cons
 function refresh(){updateMuns();const rows=filtered(),total=group(rows,[])[0]||{casos:0,populacao:null,incidencia_100mil:null,municipios_com_notificacao:0};$("card-casos").textContent=fmt.format(total.casos||0);$("card-pop").textContent=total.populacao?fmt.format(total.populacao):"—";$("card-inc").textContent=Number.isFinite(total.incidencia_100mil)?fmt1.format(total.incidencia_100mil):"—";$("card-muns").textContent=fmt.format(total.municipios_com_notificacao||0);
 const ser=group(rows,["ano"]).sort((a,b)=>a.ano-b.ano);Plotly.newPlot("series",[{x:ser.map(r=>r.ano),y:ser.map(r=>r.casos),type:"bar",name:"Casos",marker:{color:"#1f77b4"}}],{margin:{t:20,r:20,b:45,l:60},yaxis:{title:"Casos/Ano"},xaxis:{title:"Ano",type:"category"}},{responsive:true,displayModeBar:false});
 const ind=$("indicator").value;const ufRank=group(rowsForSelectedYearsNoGeoFilters(),["uf"]).filter(r=>r.uf&&(r[ind]||0)>0).sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity));Plotly.newPlot("ufs",[{x:ufRank.map(r=>r[ind]),y:ufRank.map(r=>r.uf),type:"bar",orientation:"h",marker:{color:ufRank.map((_,i)=>i<5?"#1e3a8a":"#60a5fa")},text:ufRank.map(r=>fmt.format(r[ind]||0)),textposition:"inside",insidetextanchor:"end",hovertemplate:"<b>%{y}</b><br>Valor: %{x}<extra></extra>"}],{margin:{t:20,r:30,b:50,l:60},height:520,xaxis:{title:ind==="casos"?"Casos no período":"Incidência / 100 mil"},yaxis:{automargin:true,categoryorder:"total ascending"},plot_bgcolor:"#fff",paper_bgcolor:"#fff"},{responsive:true,displayModeBar:false});
-const munRank=group(rows,["uf","cod_mun6","municipio"]).filter(r=>(r[ind]||0)>0).sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity)).slice(0,100);$("table").innerHTML="<thead><tr><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano</th><th>Incidência</th></tr></thead><tbody>"+munRank.map(r=>`<tr><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${r.municipio}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td></tr>`).join("")+"</tbody>";renderMaps(rows)}
+const munRank=group(rows,["uf","cod_mun6","municipio"]).filter(r=>(r[ind]||0)>0).sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity)).slice(0,100);$("table").innerHTML="<thead><tr><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano estimada</th><th>Incidência</th></tr></thead><tbody>"+munRank.map(r=>`<tr><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${r.municipio}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td></tr>`).join("")+"</tbody>";renderMaps(rows)}
 async function diseaseChanged(){await loadDisease($("disease").value);setupFilters();refresh()}
 async function init(){const [manRes,ufRes,munRes]=await Promise.all([fetch(MANIFEST_URL),fetch(GEO_UF_URL).catch(()=>null),fetch(GEO_MUN_URL).catch(()=>null)]);if(!manRes.ok)throw new Error("Manifesto de dados não encontrado");MANIFEST=await manRes.json();if(ufRes&&ufRes.ok)GEO_UF=await ufRes.json();if(munRes&&munRes.ok)GEO_MUN=await munRes.json();await loadPopulation();setupDiseaseSelect();await diseaseChanged()}
 $("apply").onclick=refresh;$("clear").onclick=()=>{$("uf").value="";$("mun").value="";const ys=allAvailableYears();if(ys.length)setSelectedYears([ys.at(-1)]);refresh()};$("all-years").onclick=()=>{setSelectedYears(allAvailableYears());refresh()};$("last-year").onclick=()=>{const ys=allAvailableYears();if(ys.length)setSelectedYears([ys.at(-1)]);refresh()};$("uf").onchange=()=>{$("mun").value="";refresh()};$("disease").onchange=diseaseChanged;$("year").onchange=refresh;$("indicator").onchange=refresh;init().catch(e=>alert("Erro: "+e.message));
