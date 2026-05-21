@@ -397,3 +397,21 @@ footer{
     transform-origin:bottom right;
   }
 }
+/* ===== Exportação limpa dos mapas ===== */
+
+.map-box.exporting-map{
+  background:#ffffff !important;
+}
+
+.map-box.exporting-map .leaflet-tile-pane,
+.map-box.exporting-map .leaflet-control-container{
+  display:none !important;
+}
+
+.map-box.exporting-map .leaflet-container{
+  background:#ffffff !important;
+}
+
+.map-box.exporting-map .map-legend{
+  box-shadow:0 8px 22px rgba(15,23,42,.14);
+}
