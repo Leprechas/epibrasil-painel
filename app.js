@@ -300,24 +300,45 @@ async function epiDownloadMap(mapId,filename){
   }
 
   if(!window.html2canvas){
-    alert("Biblioteca de captura não carregada. Verifique se o html2canvas foi adicionado ao index.html.");
+    alert("Biblioteca de captura não carregada.");
     return;
   }
 
+  const isUF=mapId==="map-uf";
+  const map=isUF ? MAP_UF : MAP_MUN;
+  const layer=isUF ? LAYER_UF : LAYER_MUN;
+  const box=el.closest(".map-box")||el;
+
   try{
-    if(mapId==="map-uf"&&typeof MAP_UF!=="undefined"&&MAP_UF)MAP_UF.invalidateSize();
-    if(mapId==="map-mun"&&typeof MAP_MUN!=="undefined"&&MAP_MUN)MAP_MUN.invalidateSize();
+    if(map&&layer){
+      map.invalidateSize();
 
-    await new Promise(resolve=>setTimeout(resolve,300));
+      try{
+        map.fitBounds(layer.getBounds(),{
+          padding:[24,24],
+          maxZoom:isUF ? 5 : 6
+        });
+      }catch(e){}
+    }
 
-    const container=el.closest(".map-box")||el;
+    box.classList.add("exporting-map");
 
-    const canvas=await html2canvas(container,{
+    await new Promise(resolve=>setTimeout(resolve,700));
+
+    const canvas=await html2canvas(box,{
       backgroundColor:"#ffffff",
       scale:2,
       useCORS:true,
-      ignoreElements:(node)=>node.classList&&node.classList.contains("leaflet-control-attribution")
+      logging:false,
+      ignoreElements:(node)=>{
+        return node.classList&&(
+          node.classList.contains("leaflet-control-attribution")||
+          node.classList.contains("leaflet-control-zoom")
+        );
+      }
     });
+
+    box.classList.remove("exporting-map");
 
     canvas.toBlob(blob=>{
       if(!blob){
@@ -335,8 +356,9 @@ async function epiDownloadMap(mapId,filename){
       URL.revokeObjectURL(url);
     },"image/png");
   }catch(e){
+    box.classList.remove("exporting-map");
     console.error(e);
-    alert("Não foi possível baixar o mapa. Em alguns navegadores, os blocos do OpenStreetMap podem bloquear a captura.");
+    alert("Não foi possível baixar o mapa.");
   }
 }
 
