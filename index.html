@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EpiBrasil</title>
-<link rel="stylesheet" href="style.css?v=20260512-5">
+<link rel="stylesheet" href="style.css?v=20260512-6">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -22,7 +22,16 @@
   <aside class="panel filters">
     <h2>Filtros</h2>
     <label>Doença<select id="disease"></select></label>
-    <label>Ano<select id="year"></select></label>
+    <label>Anos
+      <select id="year" multiple size="8"></select>
+    </label>
+    
+    <div class="year-actions">
+      <button id="all-years" type="button" class="secondary mini">Todos</button>
+      <button id="last-year" type="button" class="secondary mini">Mais recente</button>
+    </div>
+    
+    <p class="hint">Use Ctrl ou Shift para selecionar vários anos.</p>
     <label>UF<select id="uf"></select></label>
     <label>Município<input id="mun" list="mun-list" placeholder="Digite o município"><datalist id="mun-list"></datalist></label>
     <label>Indicador<select id="indicator"><option value="casos">Casos</option><option value="incidencia_100mil">Incidência / 100 mil</option></select></label>
@@ -33,8 +42,8 @@
 
   <section class="content">
     <section class="cards">
-      <article class="card"><span>Casos/Ano</span><strong id="card-casos">—</strong></article>
-      <article class="card"><span>População/Ano</span><strong id="card-pop">—</strong></article>
+      <article class="card"><span>Casos nos anos selecionados</span><strong id="card-casos">—</strong></article>
+      <article class="card"><span>População nos anos selecionados</span><strong id="card-pop">—</strong></article>
       <article class="card"><span>Incidência / 100 mil</span><strong id="card-inc">—</strong></article>
       <article class="card"><span>Municípios com notificações</span><strong id="card-muns">—</strong></article>
     </section>
@@ -50,6 +59,6 @@
 </main>
 
 <footer>Protótipo técnico. Use apenas dados agregados. Não publique microdados identificáveis.</footer>
-<script src="app.js?v=20260512-5"></script>
+<script src="app.js?v=20260512-6"></script>
 </body>
 </html>
