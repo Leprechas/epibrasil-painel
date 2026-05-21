@@ -1,1 +1,196 @@
-:root{--bg:#f3f6fb;--panel:#fff;--text:#111827;--muted:#64748b;--line:#dbe3ef;--accent:#1e3a8a;--accent2:#2563eb;--shadow:0 8px 22px rgba(15,23,42,.08);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}.topbar{display:flex;justify-content:space-between;gap:20px;padding:24px 28px;background:var(--panel);border-bottom:1px solid var(--line)}.topbar h1{margin:0 0 8px;font-size:30px}.topbar p{margin:0;color:var(--muted)}.badge{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);background:#fff;height:max-content}.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;padding:20px}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.filters{height:fit-content;position:sticky;top:16px}h2{margin:0 0 10px;font-size:22px}label{display:block;margin:0 0 16px;font-weight:700;font-size:14px}select,input{width:100%;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}select[multiple]{height:auto;min-height:170px}.year-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:-8px 0 8px}.mini{padding:9px 10px;font-size:13px;margin-bottom:0}.hint{margin:0 0 16px;color:var(--muted);font-size:12px;line-height:1.35}button{width:100%;border:0;border-radius:12px;padding:13px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;margin-bottom:10px}button:hover{background:var(--accent2)}.secondary{background:#e5e7eb;color:#111827}.note,.subtle,footer{color:var(--muted);font-size:13px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}.card span{display:block;color:var(--muted);margin-bottom:8px}.card strong{font-size:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.wide{grid-column:1/-1}.chart{width:100%;height:390px}.uf-chart{height:520px;max-height:520px;overflow:hidden}.map{width:100%;height:460px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:#f8fafc}.map-large{height:620px}.table-wrap{overflow:auto;max-height:520px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);position:sticky;top:0;background:#fff}footer{padding:18px 28px 32px}@media(max-width:1100px){.layout{grid-template-columns:1fr}.filters{position:static}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:640px){.cards{grid-template-columns:1fr}.topbar{flex-direction:column}}
+:root{--bg:#f3f6fb;--panel:#fff;--text:#111827;--muted:#64748b;--line:#dbe3ef;--accent:#1e3a8a;--accent2:#2563eb;--shadow:0 8px 22px rgba(15,23,42,.08);--radius:18px}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}.topbar{display:flex;justify-content:space-between;gap:20px;padding:24px 28px;background:var(--panel);border-bottom:1px solid var(--line)}.topbar h1{margin:0 0 8px;font-size:30px}.topbar p{margin:0;color:var(--muted)}.badge{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);background:#fff;height:max-content}.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;padding:20px}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.filters{height:fit-content;position:sticky;top:16px}h2{margin:0 0 10px;font-size:22px}label{display:block;margin:0 0 16px;font-weight:700;font-size:14px}select,input{width:100%;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}select[multiple]{height:auto;min-height:170px}.year-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:-8px 0 8px}.mini{padding:9px 10px;font-size:13px;margin-bottom:0}.hint{margin:0 0 16px;color:var(--muted);font-size:12px;line-height:1.35}button{width:100%;border:0;border-radius:12px;padding:13px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;margin-bottom:10px}button:hover{background:var(--accent2)}.secondary{background:#e5e7eb;color:#111827}.note,.subtle,footer{color:var(--muted);font-size:13px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}.card span{display:block;color:var(--muted);margin-bottom:8px}.card strong{font-size:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.wide{grid-column:1/-1}.chart{width:100%;height:390px}.uf-chart{height:520px;max-height:520px;overflow:hidden}.map{width:100%;height:460px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:#f8fafc}.map-large{height:620px}.table-wrap{overflow:auto;max-height:520px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);position:sticky;top:0;background:#fff}footer{padding:18px 28px 32px}@media(max-width:1100px){.layout{grid-template-columns:1fr}.filters{position:static}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:640px){.cards{grid-template-columns:1fr}.topbar{flex-direction:column}}/* ===== Melhorias visuais gerais — EpiBrasil ===== */
+
+body{
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,0.08), transparent 32rem),
+    #eef3f9;
+}
+
+.topbar{
+  padding:28px 34px;
+  background:linear-gradient(135deg,#ffffff,#f8fbff);
+  box-shadow:0 4px 18px rgba(15,23,42,.05);
+}
+
+.topbar h1{
+  font-size:34px;
+  letter-spacing:-.04em;
+  color:#0f172a;
+}
+
+.topbar p{
+  font-size:15px;
+  color:#53627a;
+}
+
+.badge{
+  font-size:13px;
+  color:#334155;
+  background:#f8fafc;
+  border-color:#cbd5e1;
+  box-shadow:0 2px 8px rgba(15,23,42,.04);
+}
+
+.layout{
+  grid-template-columns:310px minmax(0,1fr);
+  gap:24px;
+  padding:24px;
+}
+
+.filters{
+  border-radius:24px;
+  position:sticky;
+  top:18px;
+  max-height:calc(100vh - 36px);
+  overflow:auto;
+}
+
+.filters h2{
+  font-size:24px;
+  margin-bottom:18px;
+}
+
+label{
+  color:#0f172a;
+  letter-spacing:-.01em;
+}
+
+select,
+input{
+  border-color:#d6deeb;
+  background:#fff;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+select:focus,
+input:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+select[multiple]{
+  min-height:185px;
+  padding:8px;
+}
+
+select[multiple] option{
+  padding:6px 8px;
+  border-radius:8px;
+  margin:2px 0;
+}
+
+button{
+  box-shadow:0 6px 16px rgba(30,58,138,.18);
+}
+
+button.secondary{
+  box-shadow:none;
+}
+
+.year-actions{
+  margin-top:-6px;
+}
+
+.hint{
+  color:#64748b;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  padding:8px 10px;
+}
+
+.cards{
+  gap:18px;
+}
+
+.card{
+  min-height:106px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#ffffff,#fbfdff);
+}
+
+.card span{
+  font-size:14px;
+  color:#64748b;
+}
+
+.card strong{
+  font-size:32px;
+  color:#0f172a;
+  letter-spacing:.03em;
+}
+
+.panel{
+  border-radius:22px;
+  background:#ffffff;
+}
+
+.panel h2{
+  font-size:24px;
+  letter-spacing:-.03em;
+  color:#0f172a;
+}
+
+.subtle{
+  display:block;
+  margin-bottom:12px;
+  color:#64748b;
+}
+
+.chart{
+  height:420px;
+}
+
+.uf-chart{
+  height:500px !important;
+  max-height:500px;
+  overflow:hidden;
+}
+
+.map{
+  height:500px;
+  border-radius:18px;
+  border:1px solid #cbd5e1;
+}
+
+.map-large{
+  height:650px;
+}
+
+.leaflet-container{
+  background:#e0f2fe;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.table-wrap{
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  overflow:auto;
+  max-height:560px;
+}
+
+table{
+  font-size:14px;
+}
+
+th{
+  background:#f8fafc;
+  color:#475569;
+  text-transform:uppercase;
+  font-size:12px;
+  letter-spacing:.04em;
+}
+
+td{
+  color:#1e293b;
+}
+
+tbody tr:hover{
+  background:#f8fafc;
+}
+
+footer{
+  text-align:center;
+  color:#64748b;
+}
