@@ -1,7 +1,7 @@
-const MANIFEST_URL="data/manifest.json?v=20260512-7";
-const GEO_UF_URL="data/ufs.geojson?v=20260512-7";
-const GEO_MUN_URL="data/municipios.geojson?v=20260512-7";
-const POP_URL="data/populacao_municipio_ano.csv?v=20260512-7";
+const MANIFEST_URL="data/manifest.json?v=20260512-8";
+const GEO_UF_URL="data/ufs.geojson?v=20260512-8";
+const GEO_MUN_URL="data/municipios.geojson?v=20260512-8";
+const POP_URL="data/populacao_municipio_ano.csv?v=20260512-8";
 const $=id=>document.getElementById(id);
 const fmt=new Intl.NumberFormat("pt-BR");
 const fmt1=new Intl.NumberFormat("pt-BR",{maximumFractionDigits:1});
