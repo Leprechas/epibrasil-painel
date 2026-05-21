@@ -266,30 +266,6 @@ data/populacao_municipio_ano.csv
 
 ---
 
-## Publicação no GitHub Pages
-
-Para publicar o painel:
-
-1. Acesse **Settings** no repositório.
-2. Vá em **Pages**.
-3. Em **Build and deployment**, selecione:
-
-```text
-Source: Deploy from a branch
-Branch: main
-Folder: /root
-```
-
-4. Clique em **Save**.
-
-Depois, acesse:
-
-```text
-https://leprechas.github.io/epibrasil-painel/
-```
-
----
-
 ## Interpretação dos resultados
 
 O EpiBrasil é uma ferramenta exploratória. Os resultados devem ser interpretados considerando:
