@@ -786,3 +786,40 @@ footer{
     transform-origin:bottom right;
   }
 }
+/* ===== Ajuste seguro do logo LEPRECHAS ===== */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:18px 32px;
+  min-height:0;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.site-logo{
+  width:min(360px,90vw) !important;
+  max-height:120px;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
+
+.brand-subtitle,
+.topbar p{
+  margin:0;
+  font-size:14px;
+  color:#53627a;
+  max-width:760px;
+}
+
+#row-count{
+  margin-left:auto;
+  white-space:nowrap;
+}
