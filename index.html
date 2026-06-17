@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LEPRECHAS — Painel Epidemiológico Brasileiro</title>
+
+  <meta name="description" content="Painel interativo para visualização exploratória de doenças e agravos notificados no Brasil, com indicadores municipais, estaduais e nacionais. Dados do SINAN/DATASUS e IBGE.">
+  <meta name="author" content="Barelli, V. E. G.">
+
+  <meta property="og:title" content="LEPRECHAS — Painel Epidemiológico Brasileiro">
+  <meta property="og:description" content="Visualização exploratória de doenças e agravos notificados no Brasil com indicadores municipais, estaduais e nacionais.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo-leprechas.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LEPRECHAS — Painel Epidemiológico Brasileiro">
+  <meta name="twitter:description" content="Visualização exploratória de doenças e agravos notificados no Brasil.">
+
+  <link rel="manifest" href="pwa-manifest.json">
+  <meta name="theme-color" content="#071b3a">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css?v=20260617">
+
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <div id="loading-bar" class="loading-bar"></div>
+  <div id="toast-container" class="toast-container"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo-leprechas.png" alt="LEPRECHAS — Painel Epidemiológico" class="site-logo">
+      <p class="brand-subtitle">
+        Painel Epidemiológico Brasileiro para visualização exploratória de doenças e agravos notificados,
+        com indicadores municipais, estaduais e nacionais.
+      </p>
+      <div class="source-strip">
+        <span class="source-chip">Casos: SINAN/DATASUS</span>
+        <span class="source-chip">População: IBGE/SIDRA</span>
+        <span class="source-chip">Malhas: GeoJSON territorial</span>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <span id="row-count" class="badge">carregando...</span>
+      <button id="theme-toggle" type="button" class="theme-toggle-btn" title="Alternar tema claro/escuro">
+        <span class="theme-icon-light">&#9789;</span>
+        <span class="theme-icon-dark">&#9788;</span>
+      </button>
+      <button id="about-panel-btn" type="button" class="about-btn">Sobre, fonte e metodologia</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel filters">
+      <h2>Filtros</h2>
+
+      <label>
+        Doença
+        <select id="disease"></select>
+      </label>
+
+      <label>
+        Anos
+        <select id="year" multiple size="8"></select>
+      </label>
+
+      <div class="year-actions">
+        <button id="all-years" type="button" class="secondary mini">Todos</button>
+        <button id="last-year" type="button" class="secondary mini">Mais recente</button>
+      </div>
+
+      <p class="hint">Use Ctrl ou Shift para selecionar vários anos manualmente. Use "Todos" para agregar o período completo.</p>
+
+      <label>
+        Região
+        <select id="region">
+          <option value="">Todas as regiões</option>
+          <option value="Norte">Norte</option>
+          <option value="Nordeste">Nordeste</option>
+          <option value="Centro-Oeste">Centro-Oeste</option>
+          <option value="Sudeste">Sudeste</option>
+          <option value="Sul">Sul</option>
+        </select>
+      </label>
+
+      <label>
+        UF
+        <select id="uf"></select>
+      </label>
+
+      <label>
+        Município
+        <input id="mun" list="mun-list" placeholder="Digite o município">
+        <datalist id="mun-list"></datalist>
+      </label>
+
+      <label>
+        Indicador
+        <select id="indicator">
+          <option value="casos">Casos</option>
+          <option value="incidencia_100mil">Incidência / 100 mil</option>
+        </select>
+      </label>
+
+      <div class="segmented" aria-label="Indicador do mapa">
+        <button type="button" id="seg-casos" data-indicator="casos" class="active">Casos</button>
+        <button type="button" id="seg-inc" data-indicator="incidencia_100mil">Incidência</button>
+      </div>
+
+      <label>
+        Classificação dos mapas
+        <select id="map-class">
+          <option value="equal">Intervalos iguais</option>
+          <option value="quantile">Quantis</option>
+          <option value="log">Logarítmica</option>
+        </select>
+      </label>
+
+      <button id="apply" type="button">Atualizar painel</button>
+      <button id="clear" type="button" class="secondary">Limpar filtros</button>
+      <button id="download-csv" type="button" class="download-btn">Baixar CSV filtrado</button>
+
+      <p class="note">
+        Base atual: casos agregados por município-ano. A incidência usa população municipal por ano.
+        Quando necessário, a população pode ser interpolada ou extrapolada.
+      </p>
+    </aside>
+
+    <section class="content">
+      <section class="cards">
+        <article class="card"><span>Casos nos anos selecionados</span><strong id="card-casos">—</strong></article>
+        <article class="card"><span>População-ano somada</span><strong id="card-pop">—</strong></article>
+        <article class="card"><span>População-ano média</span><strong id="card-pop-media">—</strong></article>
+        <article class="card"><span>Incidência / 100 mil</span><strong id="card-inc">—</strong></article>
+        <article class="card"><span>Municípios com notificações</span><strong id="card-muns">—</strong></article>
+        <article class="card"><span>Período selecionado</span><strong id="card-periodo">—</strong></article>
+        <article class="card"><span>UFs com notificações</span><strong id="card-ufs">—</strong></article>
+        <article class="card"><span>Cobertura populacional</span><strong id="card-cobertura">—</strong></article>
+        <article class="card"><span>Tendência temporal</span><strong id="card-tendencia">—</strong></article>
+      </section>
+
+      <section class="grid">
+        <article class="panel wide">
+          <h2>Série histórica de casos</h2>
+          <p class="subtle">Barras: casos anuais. Linha: incidência por 100 mil habitantes, quando houver população disponível.</p>
+          <div id="series" class="chart"></div>
+        </article>
+
+        <article class="panel">
+          <h2>Ranking de UFs</h2>
+          <p class="subtle">Ordenado pelo indicador selecionado; UFs sem notificação são omitidas.</p>
+          <div id="ufs" class="chart uf-chart"></div>
+        </article>
+
+        <article class="panel">
+          <h2>Mapa das UFs</h2>
+          <p id="map-uf-status" class="subtle">carregando mapa...</p>
+          <div class="map-toolbar">
+            <button id="download-map-uf-clean" type="button" class="download-btn secondary-download">Baixar mapa UF limpo</button>
+          </div>
+          <div class="map-box">
+            <div id="map-uf" class="map"></div>
+            <div id="legend-map-uf" class="map-legend"></div>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <h2>Mapa dos municípios</h2>
+          <p id="map-mun-status" class="subtle">carregando mapa...</p>
+          <div class="map-toolbar">
+            <button id="download-map-mun-clean" type="button" class="download-btn secondary-download">Baixar mapa municipal limpo (SVG)</button>
+          </div>
+          <div class="map-box">
+            <div id="map-mun" class="map map-large"></div>
+            <div id="legend-map-mun" class="map-legend"></div>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <h2>Ranking municipal</h2>
+          <div class="table-wrap"><table id="table"></table></div>
+          <p class="table-note">* População estimada por interpolação ou extrapolação quando não havia valor exato para o município-ano.</p>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <section id="lep-about-modal" class="lep-modal" aria-hidden="true">
+    <div class="lep-modal-card" role="dialog" aria-modal="true" aria-labelledby="lep-about-title">
+      <div class="lep-kicker">Sobre o painel</div>
+      <h1 id="lep-about-title">LEPRECHAS — Painel Epidemiológico Brasileiro</h1>
+      <p>
+        O LEPRECHAS é um painel estático para visualização exploratória de doenças e agravos notificados,
+        com dados agregados por município, Unidade Federativa, ano e período selecionado.
+      </p>
+
+      <div class="lep-modal-grid">
+        <div class="lep-modal-box">
+          <h3>Fontes dos dados</h3>
+          <ul>
+            <li>Casos agregados: SINAN/DATASUS, exportados via TABNET.</li>
+            <li>População municipal: IBGE/SIDRA.</li>
+            <li>Malhas territoriais: arquivos GeoJSON de UFs e municípios.</li>
+          </ul>
+        </div>
+
+        <div class="lep-modal-box">
+          <h3>Indicadores</h3>
+          <ul>
+            <li>Casos no ano ou período selecionado.</li>
+            <li>População-ano somada e população-ano média.</li>
+            <li>Incidência por 100 mil habitantes.</li>
+            <li>Municípios e UFs com notificações.</li>
+            <li>Cobertura populacional da seleção.</li>
+          </ul>
+        </div>
+
+        <div class="lep-modal-box">
+          <h3>Metodologia</h3>
+          <ul>
+            <li>Os dados são agregados por município-ano.</li>
+            <li>Para múltiplos anos, casos e populações-ano são somados. A média populacional é calculada dividindo a população-ano somada pelo número de anos selecionados.</li>
+            <li>A incidência é calculada por: casos / população × 100.000.</li>
+            <li>Valores populacionais ausentes podem ser estimados por interpolação ou extrapolação.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Interpretação</h2>
+      <p>
+        O painel é exploratório. Os resultados devem ser interpretados considerando cobertura da vigilância,
+        atraso de notificação, revisão das bases, alterações territoriais, variações diagnósticas e instabilidade
+        de taxas em municípios de pequena população.
+      </p>
+
+      <h2>Como citar</h2>
+      <div id="lep-citation" class="lep-citation">
+        Barelli, V. E. G. LEPRECHAS: Painel Epidemiológico Brasileiro. Disponível em:
+        https://leprechas.github.io/epibrasil-painel/. Acesso em: dia mês ano.
+      </div>
+
+      <div class="lep-modal-actions">
+        <button id="copy-citation" type="button">Copiar citação</button>
+        <button id="close-about-modal" type="button" class="secondary">Fechar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>LEPRECHAS — Painel Epidemiológico Brasileiro</strong><br>
+    Dados agregados: SINAN/DATASUS | População: IBGE/SIDRA | Malhas territoriais: GeoJSON<br>
+    Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
+  </footer>
+
+  <script src="app.js?v=20260617"></script>
+</body>
+</html>
