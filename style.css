@@ -452,7 +452,7 @@ button:hover{background:var(--accent2)}
 
 .map-large{height:620px}
 
-.map-toolbar{
+.chart-toolbar,.map-toolbar{
   display:flex;
   justify-content:flex-end;
   gap:8px;
@@ -460,9 +460,26 @@ button:hover{background:var(--accent2)}
   flex-wrap:wrap;
 }
 
+.chart-toolbar .download-btn,
 .map-toolbar .download-btn{
   padding:8px 12px;
   font-size:12px;
+}
+
+.range-inputs{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:6px;
+  margin-top:8px;
+}
+
+.range-inputs input{margin-top:0}
+
+.range-sep{
+  color:var(--muted);
+  font-weight:700;
+  text-align:center;
 }
 
 .map-legend{

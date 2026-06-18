@@ -100,6 +100,12 @@
       </label>
 
       <label>
+        Comparar doenças
+        <select id="compare" multiple size="4"></select>
+      </label>
+      <p class="hint">Selecione doenças para comparar séries temporais. Use Ctrl para múltiplas.</p>
+
+      <label>
         Indicador
         <select id="indicator">
           <option value="casos">Casos</option>
@@ -120,6 +126,16 @@
           <option value="log">Logarítmica</option>
         </select>
       </label>
+
+      <label>
+        Faixa de incidência / 100 mil
+        <div class="range-inputs">
+          <input id="inc-min" type="number" placeholder="Mín" step="any" min="0">
+          <span class="range-sep">—</span>
+          <input id="inc-max" type="number" placeholder="Máx" step="any" min="0">
+        </div>
+      </label>
+      <p class="hint">Filtra municípios por faixa de incidência no mapa e tabela.</p>
 
       <button id="apply" type="button">Atualizar painel</button>
       <button id="clear" type="button" class="secondary">Limpar filtros</button>
@@ -148,12 +164,27 @@
         <article class="panel wide">
           <h2>Série histórica de casos</h2>
           <p class="subtle">Barras: casos anuais. Linha: incidência por 100 mil habitantes, quando houver população disponível.</p>
+          <div class="chart-toolbar">
+            <button id="download-series-png" type="button" class="download-btn secondary-download">Baixar série (PNG)</button>
+          </div>
           <div id="series" class="chart"></div>
+        </article>
+
+        <article id="compare-panel" class="panel wide" style="display:none">
+          <h2>Comparação entre doenças</h2>
+          <p class="subtle">Séries temporais das doenças selecionadas para comparação, com o indicador ativo.</p>
+          <div class="chart-toolbar">
+            <button id="download-compare-png" type="button" class="download-btn secondary-download">Baixar comparação (PNG)</button>
+          </div>
+          <div id="compare-chart" class="chart"></div>
         </article>
 
         <article class="panel">
           <h2>Ranking de UFs</h2>
           <p class="subtle">Ordenado pelo indicador selecionado; UFs sem notificação são omitidas.</p>
+          <div class="chart-toolbar">
+            <button id="download-uf-png" type="button" class="download-btn secondary-download">Baixar ranking UFs (PNG)</button>
+          </div>
           <div id="ufs" class="chart uf-chart"></div>
         </article>
 
