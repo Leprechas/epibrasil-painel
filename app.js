@@ -1108,11 +1108,15 @@ function downloadPlotlyChart(divId,label,title){
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
   const filename=`leprechas_${label}_${disease}_${years}.png`;
   const theme=getPlotlyTheme();
-  const titleObj={text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left"};
-  Plotly.relayout(divId,{title:titleObj,margin:{t:60,r:70,b:45,l:60}})
-    .then(()=>Plotly.toImage(divId,{format:"png",width:1200,height:600}))
+  const exportLayout={
+    title:{text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left",y:0.98,yanchor:"top"},
+    margin:{t:50,r:70,b:45,l:60},
+    legend:{orientation:"h",y:-0.18,x:0.5,xanchor:"center",font:{color:theme.font}}
+  };
+  Plotly.relayout(divId,exportLayout)
+    .then(()=>Plotly.toImage(divId,{format:"png",width:1200,height:650}))
     .then(dataUrl=>{
-      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60}});
+      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60},legend:{orientation:"h",y:1.12,x:0,xanchor:"auto",font:{color:theme.font}}});
       const a=document.createElement("a");
       a.href=dataUrl;
       a.download=filename;
@@ -1122,7 +1126,7 @@ function downloadPlotlyChart(divId,label,title){
       toast("Gráfico exportado","success",2000);
     })
     .catch(()=>{
-      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60}}).catch(()=>{});
+      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60},legend:{orientation:"h",y:1.12,x:0,xanchor:"auto",font:{color:theme.font}}}).catch(()=>{});
       toast("Erro ao exportar gráfico","error");
     });
 }
