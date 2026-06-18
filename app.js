@@ -1118,13 +1118,13 @@ function downloadPlotlyChart(divId,label,title){
 
   const exportLayout=JSON.parse(JSON.stringify(src.layout||{}));
   exportLayout.title={text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left"};
-  exportLayout.margin={t:60,r:(exportLayout.margin||{}).r||70,b:60,l:(exportLayout.margin||{}).l||60};
-  exportLayout.legend={orientation:"h",y:-0.22,x:0.5,xanchor:"center",font:{color:theme.font}};
+  exportLayout.margin={t:60,r:(exportLayout.margin||{}).r||70,b:90,l:(exportLayout.margin||{}).l||60};
+  exportLayout.legend={orientation:"h",y:-0.06,x:0,xanchor:"left",font:{color:theme.font}};
   exportLayout.plot_bgcolor=theme.bg;
   exportLayout.paper_bgcolor=theme.paper;
   exportLayout.font={color:theme.font};
 
-  Plotly.newPlot(clone,src.data,exportLayout,{staticPlot:true})
+  Plotly.newPlot(clone,JSON.parse(JSON.stringify(src.data)),exportLayout,{staticPlot:true})
     .then(()=>Plotly.toImage(clone,{format:"png",width:1200,height:700}))
     .then(dataUrl=>{
       Plotly.purge(clone);
