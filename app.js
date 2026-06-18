@@ -1107,36 +1107,41 @@ function downloadPlotlyChart(divId,label,title){
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
   const filename=`leprechas_${label}_${disease}_${years}.png`;
-  const headerH=56;
-  Plotly.toImage(divId,{format:"png",width:1200,height:600})
-    .then(chartUrl=>{
-      const img=new Image();
-      img.onload=()=>{
-        const canvas=document.createElement("canvas");
-        canvas.width=1200;
-        canvas.height=600+headerH;
-        const ctx=canvas.getContext("2d");
-        ctx.fillStyle="#ffffff";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle="#0f172a";
-        ctx.font="bold 20px Arial, sans-serif";
-        ctx.fillText(title,24,36);
-        ctx.drawImage(img,0,headerH);
-        canvas.toBlob(blob=>{
-          if(!blob){toast("Erro ao gerar imagem","error");return;}
-          const a=document.createElement("a");
-          a.href=URL.createObjectURL(blob);
-          a.download=filename;
-          document.body.appendChild(a);
-          a.click();
-          URL.revokeObjectURL(a.href);
-          a.remove();
-          toast("Gráfico exportado","success",2000);
-        },"image/png");
-      };
-      img.src=chartUrl;
+  const theme=getPlotlyTheme();
+
+  const src=document.getElementById(divId);
+  if(!src||!src.data)return;
+
+  const clone=document.createElement("div");
+  clone.style.cssText="position:fixed;left:-9999px;top:0;width:1200px;height:700px;visibility:hidden";
+  document.body.appendChild(clone);
+
+  const exportLayout=JSON.parse(JSON.stringify(src.layout||{}));
+  exportLayout.title={text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left"};
+  exportLayout.margin={t:60,r:(exportLayout.margin||{}).r||70,b:60,l:(exportLayout.margin||{}).l||60};
+  exportLayout.legend={orientation:"h",y:-0.22,x:0.5,xanchor:"center",font:{color:theme.font}};
+  exportLayout.plot_bgcolor=theme.bg;
+  exportLayout.paper_bgcolor=theme.paper;
+  exportLayout.font={color:theme.font};
+
+  Plotly.newPlot(clone,src.data,exportLayout,{staticPlot:true})
+    .then(()=>Plotly.toImage(clone,{format:"png",width:1200,height:700}))
+    .then(dataUrl=>{
+      Plotly.purge(clone);
+      clone.remove();
+      const a=document.createElement("a");
+      a.href=dataUrl;
+      a.download=filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast("Gráfico exportado","success",2000);
     })
-    .catch(()=>toast("Erro ao exportar gráfico","error"));
+    .catch(()=>{
+      try{Plotly.purge(clone);}catch(e){}
+      clone.remove();
+      toast("Erro ao exportar gráfico","error");
+    });
 }
 
 // ── Helpers ──
