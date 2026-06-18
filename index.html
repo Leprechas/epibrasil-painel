@@ -3,16 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LEPRECHAS — Painel Epidemiológico</title>
+  <title>LEPRECHAS — Painel Epidemiológico Brasileiro</title>
+
+  <meta name="description" content="Painel interativo para visualização exploratória de doenças e agravos notificados no Brasil, com indicadores municipais, estaduais e nacionais. Dados do SINAN/DATASUS e IBGE.">
+  <meta name="author" content="Barelli, V. E. G.">
+
+  <meta property="og:title" content="LEPRECHAS — Painel Epidemiológico Brasileiro">
+  <meta property="og:description" content="Visualização exploratória de doenças e agravos notificados no Brasil com indicadores municipais, estaduais e nacionais.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo-leprechas.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LEPRECHAS — Painel Epidemiológico Brasileiro">
+  <meta name="twitter:description" content="Visualização exploratória de doenças e agravos notificados no Brasil.">
+
+  <link rel="manifest" href="pwa-manifest.json">
+  <meta name="theme-color" content="#071b3a">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260602-2">
+  <link rel="stylesheet" href="style.css?v=20260617">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body>
+  <div id="loading-bar" class="loading-bar"></div>
+  <div id="toast-container" class="toast-container"></div>
+
   <header class="topbar">
     <div class="brand">
       <img src="assets/logo-leprechas.png" alt="LEPRECHAS — Painel Epidemiológico" class="site-logo">
@@ -29,6 +47,10 @@
 
     <div class="top-actions">
       <span id="row-count" class="badge">carregando...</span>
+      <button id="theme-toggle" type="button" class="theme-toggle-btn" title="Alternar tema claro/escuro">
+        <span class="theme-icon-light">&#9789;</span>
+        <span class="theme-icon-dark">&#9788;</span>
+      </button>
       <button id="about-panel-btn" type="button" class="about-btn">Sobre, fonte e metodologia</button>
     </div>
   </header>
@@ -52,7 +74,7 @@
         <button id="last-year" type="button" class="secondary mini">Mais recente</button>
       </div>
 
-      <p class="hint">Use Ctrl ou Shift para selecionar vários anos manualmente. Use “Todos” para agregar o período completo.</p>
+      <p class="hint">Use Ctrl ou Shift para selecionar vários anos manualmente. Use "Todos" para agregar o período completo.</p>
 
       <label>
         Região
@@ -235,6 +257,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260602-2"></script>
+  <script src="app.js?v=20260617"></script>
 </body>
 </html>

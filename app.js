@@ -1,4 +1,4 @@
-const VERSION="20260602-2";
+const VERSION="20260617";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -24,6 +24,9 @@ let LAYER_MUN=null;
 let MAP_BREAKS={uf:null,mun:null};
 
 const CACHE={};
+let fetchController=null;
+let geoMunLoading=false;
+let geoMunLoaded=false;
 
 const REGIONS={
   "Norte":["AC","AP","AM","PA","RO","RR","TO"],
@@ -42,6 +45,107 @@ const UF_BY_PREFIX={
 };
 
 const MAP_COLORS=["#fed7aa","#f97316","#ef4444","#b91c1c","#7f1d1d"];
+
+// ── Utilities ──
+
+function debounce(fn,ms){
+  let timer;
+  return function(...args){
+    clearTimeout(timer);
+    timer=setTimeout(()=>fn.apply(this,args),ms);
+  };
+}
+
+function showLoading(){
+  const bar=$("loading-bar");
+  bar.classList.remove("done");
+  bar.classList.add("active");
+}
+
+function hideLoading(){
+  const bar=$("loading-bar");
+  bar.classList.remove("active");
+  bar.classList.add("done");
+  setTimeout(()=>bar.classList.remove("done"),600);
+}
+
+function toast(message,type="info",duration=4000){
+  const container=$("toast-container");
+  const el=document.createElement("div");
+  el.className=`toast toast-${type}`;
+  el.textContent=message;
+  container.appendChild(el);
+  setTimeout(()=>{
+    el.classList.add("leaving");
+    el.addEventListener("animationend",()=>el.remove());
+  },duration);
+}
+
+// ── Dark mode ──
+
+function initTheme(){
+  const saved=localStorage.getItem("epibrasil-theme");
+  if(saved){
+    document.documentElement.setAttribute("data-theme",saved);
+  }else if(window.matchMedia("(prefers-color-scheme: dark)").matches){
+    document.documentElement.setAttribute("data-theme","dark");
+  }
+}
+
+function toggleTheme(){
+  const current=document.documentElement.getAttribute("data-theme");
+  const next=current==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",next);
+  localStorage.setItem("epibrasil-theme",next);
+}
+
+initTheme();
+
+// ── URL state ──
+
+function readURLState(){
+  const params=new URLSearchParams(window.location.search);
+  return {
+    disease:params.get("doenca")||null,
+    years:params.get("anos")?.split(",").map(Number).filter(Number.isFinite)||null,
+    region:params.get("regiao")||null,
+    uf:params.get("uf")||null,
+    mun:params.get("municipio")||null,
+    indicator:params.get("indicador")||null,
+    mapClass:params.get("classificacao")||null
+  };
+}
+
+function writeURLState(){
+  const params=new URLSearchParams();
+
+  const disease=$("disease")?.value;
+  if(disease)params.set("doenca",disease);
+
+  const years=selectedYears();
+  if(years.length)params.set("anos",years.join(","));
+
+  const region=$("region")?.value;
+  if(region)params.set("regiao",region);
+
+  const uf=$("uf")?.value;
+  if(uf)params.set("uf",uf);
+
+  const mun=$("mun")?.value?.trim();
+  if(mun)params.set("municipio",mun);
+
+  const indicator=$("indicator")?.value;
+  if(indicator&&indicator!=="casos")params.set("indicador",indicator);
+
+  const mapClass=$("map-class")?.value;
+  if(mapClass&&mapClass!=="equal")params.set("classificacao",mapClass);
+
+  const qs=params.toString();
+  const url=qs?`${window.location.pathname}?${qs}`:window.location.pathname;
+  history.replaceState(null,"",url);
+}
+
+// ── CSV parser ──
 
 function parseCSV(text){
   const rows=[];
@@ -77,7 +181,7 @@ function parseCSV(text){
     rows.push(row);
   }
 
-  const head=(rows.shift()||[]).map(x=>String(x).replace(/^\uFEFF/,"").trim());
+  const head=(rows.shift()||[]).map(x=>String(x).replace(/^﻿/,"").trim());
   return rows.map(r=>{
     const o={};
     head.forEach((h,i)=>o[h]=(r[i]??"").trim());
@@ -104,12 +208,14 @@ function num(x){
 function normalizeText(s){
   return String(s||"")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[̀-ͯ]/g,"")
     .replace(/\s*-\s*[A-Z]{2}$/i,"")
     .replace(/[^a-zA-Z0-9]+/g," ")
     .trim()
     .toLowerCase();
 }
+
+// ── Population ──
 
 function popKey(cod,ano){
   return String(cod).replace(/\D/g,"").padStart(6,"0").slice(0,6)+"|"+String(ano);
@@ -137,7 +243,10 @@ function addPopSerie(map,key,ano,pop){
 async function loadPopulation(){
   try{
     const res=await fetch(POP_URL);
-    if(!res.ok)return;
+    if(!res.ok){
+      toast("Erro ao carregar dados de população","error");
+      return;
+    }
 
     const rows=parseCSV(await res.text());
     POP_MAP=new Map();
@@ -175,7 +284,7 @@ async function loadPopulation(){
     for(const serie of POP_NAME_SERIES.values())serie.sort((a,b)=>a.ano-b.ano);
     for(const serie of POP_NAME_ONLY_SERIES.values())serie.sort((a,b)=>a.ano-b.ano);
   }catch(e){
-    console.warn("População não carregada:",e);
+    toast("População não carregada: "+e.message,"warn");
   }
 }
 
@@ -238,6 +347,8 @@ function interpolatePopulation(cod,ano,municipio="",uf=""){
 
   return {pop:null,estimated:false};
 }
+
+// ── Data normalization ──
 
 function norm(r){
   const casos=num(r.casos)||0;
@@ -319,6 +430,8 @@ function group(rows,keys){
   });
 }
 
+// ── Filter helpers ──
+
 function selectedYears(){
   return[...$("year").selectedOptions].map(o=>Number(o.value)).filter(Number.isFinite);
 }
@@ -358,25 +471,73 @@ function indicatorLabel(){
   return ind==="casos"?"Casos":"Incidência / 100 mil";
 }
 
+// ── Data loading with AbortController ──
+
 async function loadDisease(code){
   if(CACHE[code]){
     DATA=CACHE[code];
     return;
   }
 
+  if(fetchController)fetchController.abort();
+  fetchController=new AbortController();
+
   const item=MANIFEST.find(d=>d.codigo===code);
-  if(!item)throw new Error("Doença não encontrada");
+  if(!item){
+    toast("Doença não encontrada no manifesto","error");
+    throw new Error("Doença não encontrada");
+  }
 
+  showLoading();
   $("row-count").textContent="carregando "+item.doenca+"...";
-  const res=await fetch(item.arquivo+`?v=${VERSION}`);
-  if(!res.ok)throw new Error("Arquivo da doença não encontrado: "+item.arquivo);
 
-  DATA=parseCSV(await res.text()).map(norm).filter(r=>r.doenca&&r.cod_mun6&&Number.isFinite(r.ano));
-  CACHE[code]=DATA;
+  try{
+    const res=await fetch(item.arquivo+`?v=${VERSION}`,{signal:fetchController.signal});
+    if(!res.ok){
+      toast("Arquivo da doença não encontrado: "+item.arquivo,"error");
+      throw new Error("Arquivo da doença não encontrado: "+item.arquivo);
+    }
 
-  const totalLinhas=MANIFEST.reduce((a,b)=>a+(Number(b.linhas)||0),0);
-  $("row-count").textContent=`${fmt.format(DATA.length)} linhas nesta doença | ${fmt.format(totalLinhas)} linhas no total | ${fmt.format(POP_MAP.size)} populações carregadas`;
+    DATA=parseCSV(await res.text()).map(norm).filter(r=>r.doenca&&r.cod_mun6&&Number.isFinite(r.ano));
+    CACHE[code]=DATA;
+
+    const totalLinhas=MANIFEST.reduce((a,b)=>a+(Number(b.linhas)||0),0);
+    $("row-count").textContent=`${fmt.format(DATA.length)} linhas nesta doença | ${fmt.format(totalLinhas)} linhas no total | ${fmt.format(POP_MAP.size)} populações carregadas`;
+    toast(`${item.doenca} carregada: ${fmt.format(DATA.length)} registros`,"success",2500);
+  }catch(e){
+    if(e.name==="AbortError")return;
+    throw e;
+  }finally{
+    hideLoading();
+  }
 }
+
+// ── Lazy GeoJSON municipal ──
+
+async function ensureGeoMun(){
+  if(GEO_MUN||geoMunLoaded)return;
+  if(geoMunLoading)return;
+
+  geoMunLoading=true;
+  $("map-mun-status").textContent="carregando GeoJSON municipal...";
+
+  try{
+    const res=await fetch(GEO_MUN_URL);
+    if(res.ok){
+      GEO_MUN=await res.json();
+      geoMunLoaded=true;
+      toast("Mapa municipal carregado","success",2000);
+    }else{
+      toast("GeoJSON municipal não encontrado","warn");
+    }
+  }catch(e){
+    toast("Erro ao carregar mapa municipal: "+e.message,"error");
+  }finally{
+    geoMunLoading=false;
+  }
+}
+
+// ── Filter setup ──
 
 function setupDiseaseSelect(){
   MANIFEST.sort((a,b)=>a.doenca.localeCompare(b.doenca,"pt-BR"));
@@ -443,6 +604,8 @@ function rowsForSelectedYearsNoGeoFilters(){
     (!region||lepRegionOfUF(r.uf)===region)
   );
 }
+
+// ── Map helpers ──
 
 function getMunCode(f){
   const p=f.properties||{};
@@ -515,7 +678,7 @@ function legendHTML(title,breaksObj){
   if(!breaksObj||!breaksObj.breaks){
     return `
       <strong>${title}</strong>
-      <div style="margin-bottom:6px;color:#64748b">${ind}</div>
+      <div style="margin-bottom:6px;color:var(--muted)">${ind}</div>
       <div class="legend-row"><span class="legend-swatch" style="background:#f1f5f9"></span><span>Sem notificação</span></div>
     `;
   }
@@ -532,8 +695,8 @@ function legendHTML(title,breaksObj){
 
   return `
     <strong>${title}</strong>
-    <div style="margin-bottom:6px;color:#64748b">${ind}</div>
-    <div style="margin-bottom:6px;color:#64748b">Classificação: ${method}</div>
+    <div style="margin-bottom:6px;color:var(--muted)">${ind}</div>
+    <div style="margin-bottom:6px;color:var(--muted)">Classificação: ${method}</div>
     ${rows.map(r=>`
       <div class="legend-row">
         <span class="legend-swatch" style="background:${r.color}"></span>
@@ -546,6 +709,18 @@ function legendHTML(title,breaksObj){
 function updateLegends(){
   if($("legend-map-uf"))$("legend-map-uf").innerHTML=legendHTML("Legenda — UFs",MAP_BREAKS.uf);
   if($("legend-map-mun"))$("legend-map-mun").innerHTML=legendHTML("Legenda — municípios",MAP_BREAKS.mun);
+}
+
+// ── Map rendering ──
+
+function getPlotlyTheme(){
+  const dark=document.documentElement.getAttribute("data-theme")==="dark";
+  return {
+    bg:dark?"#1e293b":"#fff",
+    paper:dark?"#1e293b":"#fff",
+    font:dark?"#e2e8f0":"#111827",
+    grid:dark?"#334155":"#e5e7eb"
+  };
 }
 
 function initMaps(){
@@ -568,7 +743,7 @@ function initMaps(){
   return true;
 }
 
-function renderMaps(rows){
+async function renderMaps(rows){
   if(!initMaps())return;
 
   prepareMapBreaks(rows);
@@ -615,6 +790,8 @@ function renderMaps(rows){
     $("map-uf-status").textContent="data/ufs.geojson não encontrado";
   }
 
+  await ensureGeoMun();
+
   const munRows=group(rows,["uf","cod_mun6","municipio"]);
   const byCode=new Map(munRows.map(r=>[r.cod_mun6,r]));
 
@@ -645,6 +822,8 @@ function renderMaps(rows){
   updateLegends();
 }
 
+// ── Trend ──
+
 function computeTrend(series){
   const ser=series.filter(r=>Number.isFinite(r.ano)).sort((a,b)=>a.ano-b.ano);
   if(ser.length<2)return "—";
@@ -668,9 +847,12 @@ function updateSegmentedButtons(){
   });
 }
 
-function refresh(){
+// ── Refresh ──
+
+async function refresh(){
   updateMuns();
   updateSegmentedButtons();
+  writeURLState();
 
   const rows=filtered();
   const total=group(rows,[])[0]||{casos:0,populacao:null,incidencia_100mil:null,municipios_com_notificacao:0,ufs_com_notificacao:0,pop_cobertura:null};
@@ -696,8 +878,12 @@ function refresh(){
   renderSeriesChart(ser);
   renderUFRanking();
   renderMunicipalTable(rows);
-  renderMaps(rows);
+  await renderMaps(rows);
 }
+
+const debouncedRefresh=debounce(()=>refresh(),300);
+
+// ── Charts ──
 
 function renderSeriesChart(ser){
   const el=$("series");
@@ -706,6 +892,8 @@ function renderSeriesChart(ser){
     el.innerHTML="<p class='subtle'>Plotly não carregou. Verifique a conexão ou a linha do script no index.html.</p>";
     return;
   }
+
+  const theme=getPlotlyTheme();
 
   Plotly.newPlot("series",[
     {
@@ -726,12 +914,13 @@ function renderSeriesChart(ser){
     }
   ],{
     margin:{t:20,r:70,b:45,l:60},
-    yaxis:{title:"Casos/Ano"},
-    yaxis2:{title:"Incidência",overlaying:"y",side:"right",showgrid:false},
-    xaxis:{title:"Ano",type:"category"},
-    legend:{orientation:"h",y:1.12},
-    plot_bgcolor:"#fff",
-    paper_bgcolor:"#fff"
+    yaxis:{title:"Casos/Ano",color:theme.font,gridcolor:theme.grid},
+    yaxis2:{title:"Incidência",overlaying:"y",side:"right",showgrid:false,color:theme.font},
+    xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
+    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
+    plot_bgcolor:theme.bg,
+    paper_bgcolor:theme.paper,
+    font:{color:theme.font}
   },{responsive:true,displayModeBar:false});
 }
 
@@ -743,6 +932,8 @@ function renderUFRanking(){
     el.innerHTML="<p class='subtle'>Plotly não carregou.</p>";
     return;
   }
+
+  const theme=getPlotlyTheme();
 
   const ufRank=group(rowsForSelectedYearsNoGeoFilters(),["uf"])
     .filter(r=>r.uf&&(r[ind]||0)>0)
@@ -760,10 +951,11 @@ function renderUFRanking(){
   }],{
     margin:{t:20,r:30,b:50,l:60},
     height:520,
-    xaxis:{title:ind==="casos"?"Casos no período":"Incidência / 100 mil"},
-    yaxis:{automargin:true,categoryorder:"total ascending"},
-    plot_bgcolor:"#fff",
-    paper_bgcolor:"#fff"
+    xaxis:{title:ind==="casos"?"Casos no período":"Incidência / 100 mil",color:theme.font,gridcolor:theme.grid},
+    yaxis:{automargin:true,categoryorder:"total ascending",color:theme.font},
+    plot_bgcolor:theme.bg,
+    paper_bgcolor:theme.paper,
+    font:{color:theme.font}
   },{responsive:true,displayModeBar:false});
 }
 
@@ -778,6 +970,8 @@ function renderMunicipalTable(rows){
     munRank.map(r=>`<tr><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${escapeHtml(r.municipio)}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao)+(r.populacao_estimada?" *":""):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td><td>${r.populacao_estimada?"Sim":"Não"}</td></tr>`).join("")+
     "</tbody>";
 }
+
+// ── Helpers ──
 
 function escapeHtml(s){
   return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
@@ -815,6 +1009,8 @@ function downloadFilteredCSV(){
   downloadText(csv,`leprechas_${disease}_${years}_filtrado.csv`,"text/csv;charset=utf-8");
 }
 
+// ── SVG export ──
+
 function featureRings(geometry){
   if(!geometry)return [];
   if(geometry.type==="Polygon")return geometry.coordinates;
@@ -843,7 +1039,7 @@ function buildCleanMapSVG(kind){
   const geo=isUF?GEO_UF:GEO_MUN;
 
   if(!geo||!geo.features){
-    alert("GeoJSON não carregado.");
+    toast("GeoJSON não carregado","warn");
     return null;
   }
 
@@ -859,7 +1055,7 @@ function buildCleanMapSVG(kind){
   const coords=allCoords(features);
 
   if(coords.length===0){
-    alert("Coordenadas do mapa não encontradas.");
+    toast("Coordenadas do mapa não encontradas","warn");
     return null;
   }
 
@@ -947,8 +1143,6 @@ function downloadCleanMap(kind){
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
 
-  // O mapa municipal tem milhares de polígonos. Alguns navegadores travam ao converter esse SVG grande em PNG.
-  // Para garantir que o botão sempre baixe um arquivo, o municipal é exportado diretamente em SVG limpo.
   if(kind==="mun"){
     downloadText(svg,`leprechas_mapa_municipal_${disease}_${years}.svg`,"image/svg+xml;charset=utf-8");
     return;
@@ -992,11 +1186,14 @@ function downloadCleanMap(kind){
   img.src=url;
 }
 
+// ── Modal ──
+
 function openModal(){
   const modal=$("lep-about-modal");
   if(modal){
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
+    modal.querySelector("button")?.focus();
   }
 }
 
@@ -1005,34 +1202,70 @@ function closeModal(){
   if(modal){
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden","true");
+    $("about-panel-btn")?.focus();
   }
 }
+
+// ── Disease change ──
 
 async function diseaseChanged(){
   await loadDisease($("disease").value);
   setupFilters();
-  refresh();
+  await refresh();
 }
 
+// ── Init ──
+
 async function init(){
-  const [manRes,ufRes,munRes]=await Promise.all([
+  showLoading();
+
+  const urlState=readURLState();
+
+  const [manRes,ufRes]=await Promise.all([
     fetch(MANIFEST_URL),
-    fetch(GEO_UF_URL).catch(()=>null),
-    fetch(GEO_MUN_URL).catch(()=>null)
+    fetch(GEO_UF_URL).catch(()=>null)
   ]);
 
-  if(!manRes.ok)throw new Error("Manifesto de dados não encontrado");
+  if(!manRes.ok){
+    toast("Manifesto de dados não encontrado","error");
+    throw new Error("Manifesto de dados não encontrado");
+  }
 
   MANIFEST=await manRes.json();
   if(ufRes&&ufRes.ok)GEO_UF=await ufRes.json();
-  if(munRes&&munRes.ok)GEO_MUN=await munRes.json();
+  else toast("GeoJSON das UFs não encontrado","warn");
 
   await loadPopulation();
   setupDiseaseSelect();
-  await diseaseChanged();
+
+  if(urlState.disease&&MANIFEST.some(d=>d.codigo===urlState.disease)){
+    $("disease").value=urlState.disease;
+  }
+
+  await loadDisease($("disease").value);
+  setupFilters();
+
+  if(urlState.region)$("region").value=urlState.region;
+  if(urlState.uf)$("uf").value=urlState.uf;
+  if(urlState.mun)$("mun").value=urlState.mun;
+  if(urlState.indicator)$("indicator").value=urlState.indicator;
+  if(urlState.mapClass)$("map-class").value=urlState.mapClass;
+  if(urlState.years){
+    const valid=urlState.years.filter(y=>allAvailableYears().includes(y));
+    if(valid.length)setSelectedYears(valid);
+  }
+
+  await refresh();
+  hideLoading();
+
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  }
 }
 
-$("apply").onclick=refresh;
+// ── Event listeners ──
+
+$("apply").onclick=()=>refresh();
 $("clear").onclick=()=>{
   $("region").value="";
   $("uf").value="";
@@ -1045,32 +1278,48 @@ $("clear").onclick=()=>{
 
 $("all-years").onclick=()=>{setSelectedYears(allAvailableYears());refresh();};
 $("last-year").onclick=()=>{const ys=allAvailableYears();if(ys.length)setSelectedYears([ys.at(-1)]);refresh();};
-$("region").onchange=()=>{$("uf").value="";$("mun").value="";setupFilters();refresh();};
-$("uf").onchange=()=>{$("mun").value="";refresh();};
+$("region").onchange=()=>{$("uf").value="";$("mun").value="";setupFilters();debouncedRefresh();};
+$("uf").onchange=()=>{$("mun").value="";debouncedRefresh();};
 $("disease").onchange=diseaseChanged;
-$("year").onchange=refresh;
-$("indicator").onchange=refresh;
-$("map-class").onchange=refresh;
+$("year").onchange=debouncedRefresh;
+$("indicator").onchange=debouncedRefresh;
+$("map-class").onchange=debouncedRefresh;
 $("download-csv").onclick=downloadFilteredCSV;
 $("download-map-uf-clean").onclick=()=>downloadCleanMap("uf");
 $("download-map-mun-clean").onclick=()=>downloadCleanMap("mun");
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
+$("theme-toggle").onclick=toggleTheme;
+
 $("copy-citation").onclick=()=>{
   const txt=$("lep-citation")?.textContent.trim()||"";
-  if(navigator.clipboard)navigator.clipboard.writeText(txt);
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>toast("Citação copiada","success",2000));
+  }
 };
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeModal();
+});
 
 document.querySelectorAll(".segmented button").forEach(btn=>{
   btn.addEventListener("click",()=>{
     $("indicator").value=btn.dataset.indicator;
-    refresh();
+    debouncedRefresh();
   });
 });
 
+window.addEventListener("popstate",()=>{
+  const state=readURLState();
+  if(state.disease&&$("disease").value!==state.disease){
+    $("disease").value=state.disease;
+    diseaseChanged();
+  }
+});
+
 init().catch(e=>{
-  console.error(e);
+  hideLoading();
   $("row-count").textContent="erro ao carregar";
-  alert("Erro: "+e.message);
+  toast("Erro ao inicializar: "+e.message,"error",8000);
 });
