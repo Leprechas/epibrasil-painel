@@ -97,6 +97,16 @@ function toggleTheme(){
   const next=current==="dark"?"light":"dark";
   document.documentElement.setAttribute("data-theme",next);
   localStorage.setItem("epibrasil-theme",next);
+  replotTheme();
+}
+
+function replotTheme(){
+  if(typeof Plotly==="undefined")return;
+  const t=getPlotlyTheme();
+  const base={plot_bgcolor:t.bg,paper_bgcolor:t.paper,font:{color:t.font},"xaxis.color":t.font,"xaxis.gridcolor":t.grid,"yaxis.color":t.font,"yaxis.gridcolor":t.grid};
+  try{Plotly.relayout("series",{...base,"yaxis2.color":t.font,"legend.font.color":t.font});}catch(e){}
+  try{Plotly.relayout("ufs",base);}catch(e){}
+  try{Plotly.relayout("compare-chart",{...base,"legend.font.color":t.font});}catch(e){}
 }
 
 initTheme();
@@ -542,6 +552,14 @@ async function ensureGeoMun(){
 function setupDiseaseSelect(){
   MANIFEST.sort((a,b)=>a.doenca.localeCompare(b.doenca,"pt-BR"));
   $("disease").innerHTML=MANIFEST.map(d=>`<option value="${d.codigo}">${d.doenca}</option>`).join("");
+  populateCompareSelect();
+}
+
+function populateCompareSelect(){
+  const el=$("compare");
+  if(!el)return;
+  const current=$("disease").value;
+  el.innerHTML=MANIFEST.filter(d=>d.codigo!==current).map(d=>`<option value="${d.codigo}">${d.doenca}</option>`).join("");
 }
 
 function setupFilters(){
@@ -877,8 +895,27 @@ async function refresh(){
 
   renderSeriesChart(ser);
   renderUFRanking();
-  renderMunicipalTable(rows);
-  await renderMaps(rows);
+
+  const incMin=num($("inc-min")?.value);
+  const incMax=num($("inc-max")?.value);
+  let mapTableRows=rows;
+  if(Number.isFinite(incMin)||Number.isFinite(incMax)){
+    const munGrouped=group(rows,["uf","cod_mun6","municipio"]);
+    const validMuns=new Set(munGrouped.filter(r=>{
+      const inc=r.incidencia_100mil;
+      if(!Number.isFinite(inc))return false;
+      if(Number.isFinite(incMin)&&inc<incMin)return false;
+      if(Number.isFinite(incMax)&&inc>incMax)return false;
+      return true;
+    }).map(r=>r.cod_mun6));
+    mapTableRows=rows.filter(r=>validMuns.has(r.cod_mun6));
+  }
+
+  renderMunicipalTable(mapTableRows);
+  await renderMaps(mapTableRows);
+
+  const comparisons=await loadComparisonDiseases();
+  renderComparisonChart(ser,comparisons);
 }
 
 const debouncedRefresh=debounce(()=>refresh(),300);
@@ -969,6 +1006,101 @@ function renderMunicipalTable(rows){
   $("table").innerHTML="<thead><tr><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano somada</th><th>Incidência</th><th>Pop. estimada</th></tr></thead><tbody>"+
     munRank.map(r=>`<tr><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${escapeHtml(r.municipio)}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao)+(r.populacao_estimada?" *":""):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td><td>${r.populacao_estimada?"Sim":"Não"}</td></tr>`).join("")+
     "</tbody>";
+}
+
+// ── Comparison ──
+
+async function loadComparisonDiseases(){
+  const el=$("compare");
+  if(!el)return [];
+  const codes=[...el.selectedOptions].map(o=>o.value);
+  if(codes.length===0)return [];
+
+  const results=[];
+  for(const code of codes){
+    if(CACHE[code]){
+      results.push({code,data:CACHE[code],name:MANIFEST.find(d=>d.codigo===code)?.doenca||code});
+      continue;
+    }
+    try{
+      const item=MANIFEST.find(d=>d.codigo===code);
+      if(!item)continue;
+      const res=await fetch(item.arquivo+`?v=${VERSION}`);
+      if(!res.ok)continue;
+      const data=parseCSV(await res.text()).map(norm).filter(r=>r.doenca&&r.cod_mun6&&Number.isFinite(r.ano));
+      CACHE[code]=data;
+      results.push({code,data,name:item.doenca});
+    }catch(e){}
+  }
+  return results;
+}
+
+function renderComparisonChart(mainSer,comparisons){
+  const panel=$("compare-panel");
+  const el=$("compare-chart");
+  if(!panel||!el)return;
+
+  if(!comparisons||comparisons.length===0){
+    panel.style.display="none";
+    return;
+  }
+
+  panel.style.display="";
+  if(typeof Plotly==="undefined")return;
+
+  const theme=getPlotlyTheme();
+  const ind=$("indicator").value;
+  const mainName=diseaseLabel();
+  const colors=["#0ea5e9","#f97316","#22c55e","#a855f7","#ef4444","#eab308"];
+
+  const years=selectedYears();
+  const region=$("region").value;
+  const uf=$("uf").value;
+  const mun=$("mun").value.trim();
+
+  const traces=[{
+    x:mainSer.map(r=>String(r.ano)),
+    y:mainSer.map(r=>r[ind]||0),
+    type:"scatter",mode:"lines+markers",
+    name:mainName,
+    line:{color:colors[0],width:3}
+  }];
+
+  comparisons.forEach((comp,i)=>{
+    const filt=comp.data.filter(r=>
+      (years.length===0||years.includes(r.ano))&&
+      (!region||lepRegionOfUF(r.uf)===region)&&
+      (!uf||r.uf===uf)&&
+      (!mun||r.municipio===mun)
+    );
+    const ser=group(filt,["ano"]).sort((a,b)=>a.ano-b.ano);
+    traces.push({
+      x:ser.map(r=>String(r.ano)),
+      y:ser.map(r=>r[ind]||0),
+      type:"scatter",mode:"lines+markers",
+      name:comp.name,
+      line:{color:colors[(i+1)%colors.length],width:2}
+    });
+  });
+
+  Plotly.newPlot("compare-chart",traces,{
+    margin:{t:20,r:30,b:45,l:60},
+    xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
+    yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
+    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
+    plot_bgcolor:theme.bg,paper_bgcolor:theme.paper,font:{color:theme.font}
+  },{responsive:true,displayModeBar:false});
+}
+
+// ── Chart export ──
+
+function downloadPlotlyChart(divId,label){
+  if(typeof Plotly==="undefined")return;
+  const disease=($("disease")?.value||"doenca").toLowerCase();
+  const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
+  Plotly.downloadImage(divId,{format:"png",width:1200,height:600,filename:`leprechas_${label}_${disease}_${years}`})
+    .then(()=>toast("Gráfico exportado","success",2000))
+    .catch(()=>toast("Erro ao exportar gráfico","error"));
 }
 
 // ── Helpers ──
@@ -1210,6 +1342,7 @@ function closeModal(){
 
 async function diseaseChanged(){
   await loadDisease($("disease").value);
+  populateCompareSelect();
   setupFilters();
   await refresh();
 }
@@ -1270,6 +1403,9 @@ $("clear").onclick=()=>{
   $("region").value="";
   $("uf").value="";
   $("mun").value="";
+  if($("inc-min"))$("inc-min").value="";
+  if($("inc-max"))$("inc-max").value="";
+  if($("compare"))[...$("compare").options].forEach(o=>o.selected=false);
   const ys=allAvailableYears();
   if(ys.length)setSelectedYears([ys.at(-1)]);
   setupFilters();
@@ -1287,6 +1423,9 @@ $("map-class").onchange=debouncedRefresh;
 $("download-csv").onclick=downloadFilteredCSV;
 $("download-map-uf-clean").onclick=()=>downloadCleanMap("uf");
 $("download-map-mun-clean").onclick=()=>downloadCleanMap("mun");
+$("download-series-png").onclick=()=>downloadPlotlyChart("series","serie");
+$("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs");
+$("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao");
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
