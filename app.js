@@ -1107,28 +1107,36 @@ function downloadPlotlyChart(divId,label,title){
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
   const filename=`leprechas_${label}_${disease}_${years}.png`;
-  const theme=getPlotlyTheme();
-  const exportLayout={
-    title:{text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left",y:0.98,yanchor:"top"},
-    margin:{t:50,r:70,b:45,l:60},
-    legend:{orientation:"h",y:-0.18,x:0.5,xanchor:"center",font:{color:theme.font}}
-  };
-  Plotly.relayout(divId,exportLayout)
-    .then(()=>Plotly.toImage(divId,{format:"png",width:1200,height:650}))
-    .then(dataUrl=>{
-      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60},legend:{orientation:"h",y:1.12,x:0,xanchor:"auto",font:{color:theme.font}}});
-      const a=document.createElement("a");
-      a.href=dataUrl;
-      a.download=filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      toast("Gráfico exportado","success",2000);
+  const headerH=56;
+  Plotly.toImage(divId,{format:"png",width:1200,height:600})
+    .then(chartUrl=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement("canvas");
+        canvas.width=1200;
+        canvas.height=600+headerH;
+        const ctx=canvas.getContext("2d");
+        ctx.fillStyle="#ffffff";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle="#0f172a";
+        ctx.font="bold 20px Arial, sans-serif";
+        ctx.fillText(title,24,36);
+        ctx.drawImage(img,0,headerH);
+        canvas.toBlob(blob=>{
+          if(!blob){toast("Erro ao gerar imagem","error");return;}
+          const a=document.createElement("a");
+          a.href=URL.createObjectURL(blob);
+          a.download=filename;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(a.href);
+          a.remove();
+          toast("Gráfico exportado","success",2000);
+        },"image/png");
+      };
+      img.src=chartUrl;
     })
-    .catch(()=>{
-      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60},legend:{orientation:"h",y:1.12,x:0,xanchor:"auto",font:{color:theme.font}}}).catch(()=>{});
-      toast("Erro ao exportar gráfico","error");
-    });
+    .catch(()=>toast("Erro ao exportar gráfico","error"));
 }
 
 // ── Helpers ──
