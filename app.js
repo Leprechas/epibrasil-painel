@@ -1102,13 +1102,17 @@ function renderComparisonChart(comparisons){
 
 // ── Chart export ──
 
-function downloadPlotlyChart(divId,label){
+function downloadPlotlyChart(divId,label,title){
   if(typeof Plotly==="undefined")return;
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
   const filename=`leprechas_${label}_${disease}_${years}.png`;
-  Plotly.toImage(divId,{format:"png",width:1200,height:600})
+  const theme=getPlotlyTheme();
+  const titleObj={text:title,font:{size:18,color:theme.font,family:"Arial, sans-serif"},x:0.02,xanchor:"left"};
+  Plotly.relayout(divId,{title:titleObj,margin:{t:60,r:70,b:45,l:60}})
+    .then(()=>Plotly.toImage(divId,{format:"png",width:1200,height:600}))
     .then(dataUrl=>{
+      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60}});
       const a=document.createElement("a");
       a.href=dataUrl;
       a.download=filename;
@@ -1117,7 +1121,10 @@ function downloadPlotlyChart(divId,label){
       a.remove();
       toast("Gráfico exportado","success",2000);
     })
-    .catch(()=>toast("Erro ao exportar gráfico","error"));
+    .catch(()=>{
+      Plotly.relayout(divId,{title:"",margin:{t:20,r:70,b:45,l:60}}).catch(()=>{});
+      toast("Erro ao exportar gráfico","error");
+    });
 }
 
 // ── Helpers ──
@@ -1208,10 +1215,13 @@ function buildCleanMapSVG(kind){
     return null;
   }
 
-  const minX=Math.min(...coords.map(c=>c[0]));
-  const maxX=Math.max(...coords.map(c=>c[0]));
-  const minY=Math.min(...coords.map(c=>c[1]));
-  const maxY=Math.max(...coords.map(c=>c[1]));
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  for(const c of coords){
+    if(c[0]<minX)minX=c[0];
+    if(c[0]>maxX)maxX=c[0];
+    if(c[1]<minY)minY=c[1];
+    if(c[1]>maxY)maxY=c[1];
+  }
 
   const W=1600;
   const H=1100;
@@ -1441,9 +1451,9 @@ $("map-class").onchange=debouncedRefresh;
 $("download-csv").onclick=downloadFilteredCSV;
 $("download-map-uf-clean").onclick=()=>downloadCleanMap("uf");
 $("download-map-mun-clean").onclick=()=>downloadCleanMap("mun");
-$("download-series-png").onclick=()=>downloadPlotlyChart("series","serie");
-$("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs");
-$("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao");
+$("download-series-png").onclick=()=>downloadPlotlyChart("series","serie",`${diseaseLabel()} — Série histórica | ${yearsLabel()}`);
+$("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs",`${diseaseLabel()} — Ranking de UFs | ${yearsLabel()}`);
+$("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao",`Comparação de doenças — ${indicatorLabel()} | ${yearsLabel()}`);
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
