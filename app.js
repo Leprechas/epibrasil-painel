@@ -915,7 +915,7 @@ async function refresh(){
   await renderMaps(mapTableRows);
 
   const comparisons=await loadComparisonDiseases();
-  renderComparisonChart(ser,comparisons);
+  renderComparisonChart(comparisons);
 }
 
 const debouncedRefresh=debounce(()=>refresh(),300);
@@ -1016,6 +1016,7 @@ async function loadComparisonDiseases(){
   const codes=[...el.selectedOptions].map(o=>o.value);
   if(codes.length===0)return [];
 
+  toast(`Carregando ${codes.length} doença(s) para comparação...`,"info",2000);
   const results=[];
   for(const code of codes){
     if(CACHE[code]){
@@ -1026,16 +1027,18 @@ async function loadComparisonDiseases(){
       const item=MANIFEST.find(d=>d.codigo===code);
       if(!item)continue;
       const res=await fetch(item.arquivo+`?v=${VERSION}`);
-      if(!res.ok)continue;
+      if(!res.ok){toast(`Erro ao carregar ${item.doenca}`,"warn");continue;}
       const data=parseCSV(await res.text()).map(norm).filter(r=>r.doenca&&r.cod_mun6&&Number.isFinite(r.ano));
       CACHE[code]=data;
       results.push({code,data,name:item.doenca});
-    }catch(e){}
+    }catch(e){
+      toast("Erro ao carregar doença para comparação","error");
+    }
   }
   return results;
 }
 
-function renderComparisonChart(mainSer,comparisons){
+function renderComparisonChart(comparisons){
   const panel=$("compare-panel");
   const el=$("compare-chart");
   if(!panel||!el)return;
@@ -1053,10 +1056,16 @@ function renderComparisonChart(mainSer,comparisons){
   const mainName=diseaseLabel();
   const colors=["#0ea5e9","#f97316","#22c55e","#a855f7","#ef4444","#eab308"];
 
-  const years=selectedYears();
   const region=$("region").value;
   const uf=$("uf").value;
   const mun=$("mun").value.trim();
+
+  const mainAllYears=DATA.filter(r=>
+    (!region||lepRegionOfUF(r.uf)===region)&&
+    (!uf||r.uf===uf)&&
+    (!mun||r.municipio===mun)
+  );
+  const mainSer=group(mainAllYears,["ano"]).sort((a,b)=>a.ano-b.ano);
 
   const traces=[{
     x:mainSer.map(r=>String(r.ano)),
@@ -1068,7 +1077,6 @@ function renderComparisonChart(mainSer,comparisons){
 
   comparisons.forEach((comp,i)=>{
     const filt=comp.data.filter(r=>
-      (years.length===0||years.includes(r.ano))&&
       (!region||lepRegionOfUF(r.uf)===region)&&
       (!uf||r.uf===uf)&&
       (!mun||r.municipio===mun)
@@ -1098,8 +1106,17 @@ function downloadPlotlyChart(divId,label){
   if(typeof Plotly==="undefined")return;
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
-  Plotly.downloadImage(divId,{format:"png",width:1200,height:600,filename:`leprechas_${label}_${disease}_${years}`})
-    .then(()=>toast("Gráfico exportado","success",2000))
+  const filename=`leprechas_${label}_${disease}_${years}.png`;
+  Plotly.toImage(divId,{format:"png",width:1200,height:600})
+    .then(dataUrl=>{
+      const a=document.createElement("a");
+      a.href=dataUrl;
+      a.download=filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast("Gráfico exportado","success",2000);
+    })
     .catch(()=>toast("Erro ao exportar gráfico","error"));
 }
 
@@ -1268,7 +1285,8 @@ function buildCleanMapSVG(kind){
     </svg>`;
 }
 
-function downloadCleanMap(kind){
+async function downloadCleanMap(kind){
+  if(kind==="mun")await ensureGeoMun();
   const svg=buildCleanMapSVG(kind);
   if(!svg)return;
 
