@@ -1,4 +1,4 @@
-const VERSION="20260617";
+const VERSION="20260619";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -27,6 +27,10 @@ const CACHE={};
 let fetchController=null;
 let geoMunLoading=false;
 let geoMunLoaded=false;
+
+let TABLE_PAGE=0;
+const TABLE_PAGE_SIZE=50;
+let TABLE_ALL_ROWS=[];
 
 const REGIONS={
   "Norte":["AC","AP","AM","PA","RO","RR","TO"],
@@ -107,6 +111,7 @@ function replotTheme(){
   try{Plotly.relayout("series",{...base,"yaxis2.color":t.font,"legend.font.color":t.font});}catch(e){}
   try{Plotly.relayout("ufs",base);}catch(e){}
   try{Plotly.relayout("compare-chart",{...base,"legend.font.color":t.font});}catch(e){}
+  try{Plotly.relayout("region-chart",{...base,"legend.font.color":t.font});}catch(e){}
 }
 
 initTheme();
@@ -567,7 +572,17 @@ function setupFilters(){
   const oldUf=$("uf").value;
 
   const years=[...new Set(DATA.map(r=>r.ano))].sort((a,b)=>a-b);
-  $("year").innerHTML=years.map(y=>`<option value="${y}">${y}</option>`).join("");
+  const totalMuns=new Set(DATA.map(r=>r.cod_mun6)).size;
+  const yearCoverage=new Map();
+  for(const y of years){
+    const munsInYear=new Set(DATA.filter(r=>r.ano===y&&(r.casos||0)>0).map(r=>r.cod_mun6)).size;
+    yearCoverage.set(y,totalMuns>0?munsInYear/totalMuns:1);
+  }
+  $("year").innerHTML=years.map(y=>{
+    const cov=yearCoverage.get(y)||0;
+    const badge=cov<0.8?` ⚠ ${Math.round(cov*100)}%`:"";
+    return `<option value="${y}" ${cov<0.8?'class="low-coverage"':''}>${y}${badge}</option>`;
+  }).join("");
 
   const validOld=oldYears.filter(y=>years.includes(y));
   if(validOld.length>0)setSelectedYears(validOld);
@@ -895,6 +910,7 @@ async function refresh(){
 
   renderSeriesChart(ser);
   renderUFRanking();
+  renderRegionStackedChart(filtered(false));
 
   const incMin=num($("inc-min")?.value);
   const incMax=num($("inc-max")?.value);
@@ -996,16 +1012,96 @@ function renderUFRanking(){
   },{responsive:true,displayModeBar:false});
 }
 
+function renderRegionStackedChart(rows){
+  const el=$("region-chart");
+  const panel=$("region-panel");
+  if(!el||!panel)return;
+
+  if(typeof Plotly==="undefined"){
+    el.innerHTML="<p class='subtle'>Plotly não carregou.</p>";
+    return;
+  }
+
+  const theme=getPlotlyTheme();
+  const ind=$("indicator").value;
+  const regionColors={"Norte":"#0ea5e9","Nordeste":"#f97316","Centro-Oeste":"#a855f7","Sudeste":"#22c55e","Sul":"#ef4444"};
+
+  const rowsWithRegion=rows.map(r=>({...r,_region:lepRegionOfUF(r.uf)})).filter(r=>r._region);
+  const byYearRegion=new Map();
+  for(const r of rowsWithRegion){
+    const k=`${r.ano}|${r._region}`;
+    if(!byYearRegion.has(k))byYearRegion.set(k,{ano:r.ano,region:r._region,casos:0,populacao:0,_pop:0});
+    const o=byYearRegion.get(k);
+    o.casos+=r.casos||0;
+    if(Number.isFinite(r.populacao)&&r.populacao>0){o.populacao+=r.populacao;o._pop++;}
+  }
+
+  const grouped=[...byYearRegion.values()].map(o=>{
+    const inc=o._pop&&o.populacao?o.casos/o.populacao*100000:null;
+    return{...o,incidencia_100mil:inc};
+  });
+
+  const years=[...new Set(grouped.map(r=>r.ano))].sort((a,b)=>a-b);
+  if(years.length<2){panel.style.display="none";return;}
+
+  panel.style.display="";
+  const traces=Object.keys(REGIONS).map(reg=>({
+    x:years.map(String),
+    y:years.map(y=>{const r=grouped.find(g=>g.ano===y&&g.region===reg);return r?r[ind]||0:0;}),
+    name:reg,
+    type:"bar",
+    marker:{color:regionColors[reg]||"#999"},
+    hovertemplate:`<b>${reg}</b><br>Ano: %{x}<br>${ind==="casos"?"Casos":"Incidência"}: %{y}<extra></extra>`
+  }));
+
+  Plotly.newPlot("region-chart",traces,{
+    barmode:"stack",
+    margin:{t:20,r:30,b:45,l:70},
+    xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
+    yaxis:{title:ind==="casos"?"Casos":"Incidência / 100 mil",color:theme.font,gridcolor:theme.grid},
+    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
+    plot_bgcolor:theme.bg,
+    paper_bgcolor:theme.paper,
+    font:{color:theme.font}
+  },{responsive:true,displayModeBar:false});
+}
+
 function renderMunicipalTable(rows){
   const ind=$("indicator").value;
-  const munRank=group(rows,["uf","cod_mun6","municipio"])
+  TABLE_ALL_ROWS=group(rows,["uf","cod_mun6","municipio"])
     .filter(r=>(r[ind]||0)>0)
-    .sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity))
-    .slice(0,100);
+    .sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity));
+  TABLE_PAGE=0;
+  renderTablePage();
+}
 
-  $("table").innerHTML="<thead><tr><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano somada</th><th>Incidência</th><th>Pop. estimada</th></tr></thead><tbody>"+
-    munRank.map(r=>`<tr><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${escapeHtml(r.municipio)}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao)+(r.populacao_estimada?" *":""):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td><td>${r.populacao_estimada?"Sim":"Não"}</td></tr>`).join("")+
+function renderTablePage(){
+  const total=TABLE_ALL_ROWS.length;
+  const totalPages=Math.max(1,Math.ceil(total/TABLE_PAGE_SIZE));
+  if(TABLE_PAGE>=totalPages)TABLE_PAGE=totalPages-1;
+  if(TABLE_PAGE<0)TABLE_PAGE=0;
+
+  const start=TABLE_PAGE*TABLE_PAGE_SIZE;
+  const page=TABLE_ALL_ROWS.slice(start,start+TABLE_PAGE_SIZE);
+
+  $("table").innerHTML="<thead><tr><th>#</th><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano somada</th><th>Incidência</th><th>Pop. estimada</th></tr></thead><tbody>"+
+    page.map((r,i)=>`<tr><td>${start+i+1}</td><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${escapeHtml(r.municipio)}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao)+(r.populacao_estimada?" *":""):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td><td>${r.populacao_estimada?"Sim":"Não"}</td></tr>`).join("")+
     "</tbody>";
+
+  const pag=$("table-pagination");
+  if(pag){
+    pag.innerHTML=`
+      <button id="page-first" type="button" class="secondary mini" ${TABLE_PAGE===0?"disabled":""}>&#171;</button>
+      <button id="page-prev" type="button" class="secondary mini" ${TABLE_PAGE===0?"disabled":""}>&#8249; Anterior</button>
+      <span class="page-info">Página ${TABLE_PAGE+1} de ${totalPages} (${fmt.format(total)} municípios)</span>
+      <button id="page-next" type="button" class="secondary mini" ${TABLE_PAGE>=totalPages-1?"disabled":""}>Próxima &#8250;</button>
+      <button id="page-last" type="button" class="secondary mini" ${TABLE_PAGE>=totalPages-1?"disabled":""}>&#187;</button>
+    `;
+    $("page-first").onclick=()=>{TABLE_PAGE=0;renderTablePage();};
+    $("page-prev").onclick=()=>{TABLE_PAGE--;renderTablePage();};
+    $("page-next").onclick=()=>{TABLE_PAGE++;renderTablePage();};
+    $("page-last").onclick=()=>{TABLE_PAGE=Math.ceil(total/TABLE_PAGE_SIZE)-1;renderTablePage();};
+  }
 }
 
 // ── Comparison ──
@@ -1471,6 +1567,7 @@ $("download-map-mun-clean").onclick=()=>downloadCleanMap("mun");
 $("download-series-png").onclick=()=>downloadPlotlyChart("series","serie",`${diseaseLabel()} — Série histórica | ${yearsLabel()}`);
 $("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs",`${diseaseLabel()} — Ranking de UFs | ${yearsLabel()}`);
 $("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao",`Comparação de doenças — ${indicatorLabel()} | ${yearsLabel()}`);
+$("download-region-png").onclick=()=>downloadPlotlyChart("region-chart","regioes",`${diseaseLabel()} — Casos por região | ${yearsLabel()}`);
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
@@ -1493,6 +1590,14 @@ document.querySelectorAll(".segmented button").forEach(btn=>{
     debouncedRefresh();
   });
 });
+
+window.addEventListener("resize",debounce(()=>{
+  if(typeof Plotly==="undefined")return;
+  ["series","ufs","compare-chart","region-chart"].forEach(id=>{
+    const el=$(id);
+    if(el&&el.data)Plotly.Plots.resize(el);
+  });
+},250));
 
 window.addEventListener("popstate",()=>{
   const state=readURLState();

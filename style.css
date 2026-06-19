@@ -555,6 +555,27 @@ tr:hover td{background:var(--table-hover)}
 
 .table-note{margin:10px 0 0}
 
+.table-pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 0;
+  flex-wrap:wrap;
+}
+
+.page-info{
+  font-size:13px;
+  color:var(--muted);
+  min-width:180px;
+  text-align:center;
+}
+
+option.low-coverage{
+  color:#d97706;
+  font-weight:600;
+}
+
 /* ── Footer ── */
 footer{
   border-top:1px solid var(--line);
