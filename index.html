@@ -21,7 +21,7 @@
   <meta name="theme-color" content="#071b3a">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260617">
+  <link rel="stylesheet" href="style.css?v=20260619">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -179,6 +179,15 @@
           <div id="compare-chart" class="chart"></div>
         </article>
 
+        <article id="region-panel" class="panel wide">
+          <h2>Casos por região</h2>
+          <p class="subtle">Barras empilhadas: distribuição do indicador selecionado por macrorregião ao longo do tempo.</p>
+          <div class="chart-toolbar">
+            <button id="download-region-png" type="button" class="download-btn secondary-download">Baixar regiões (PNG)</button>
+          </div>
+          <div id="region-chart" class="chart"></div>
+        </article>
+
         <article class="panel">
           <h2>Ranking de UFs</h2>
           <p class="subtle">Ordenado pelo indicador selecionado; UFs sem notificação são omitidas.</p>
@@ -215,6 +224,7 @@
         <article class="panel wide">
           <h2>Ranking municipal</h2>
           <div class="table-wrap"><table id="table"></table></div>
+          <div id="table-pagination" class="table-pagination"></div>
           <p class="table-note">* População estimada por interpolação ou extrapolação quando não havia valor exato para o município-ano.</p>
         </article>
       </section>
@@ -288,6 +298,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260617"></script>
+  <script src="app.js?v=20260619"></script>
 </body>
 </html>
