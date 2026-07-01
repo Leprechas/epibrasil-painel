@@ -1,10 +1,11 @@
-const CACHE_NAME = "epibrasil-v1";
+const CACHE_NAME = "epibrasil-v2";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
   "/style.css",
   "/app.js",
-  "/assets/logo-leprechas.png",
+  "/assets/epibrasil-logo.png",
+  "/assets/epibrasil-logo-dark.png",
   "/data/manifest.json",
   "/data/ufs.geojson"
 ];

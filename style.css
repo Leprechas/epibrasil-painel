@@ -177,6 +177,10 @@ body{
   display:block;
 }
 
+.site-logo-dark{display:none}
+[data-theme="dark"] .site-logo-light{display:none}
+[data-theme="dark"] .site-logo-dark{display:block}
+
 .brand-subtitle{
   margin:0;
   color:#53627a;

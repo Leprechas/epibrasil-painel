@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="88" viewBox="0 0 300 88" role="img" aria-label="EpiBrasil — Painel Epidemiológico">
+  <defs>
+    
+  </defs>
+  
+  <g transform="translate(8,12)">
+    <rect x="2" y="2" width="60" height="60" rx="16" fill="#071b3a"></rect>
+    <rect x="13" y="50" width="41" height="2" rx="1" fill="#ffffff" opacity="0.18"></rect>
+    <rect x="13" y="39" width="6" height="10" rx="2.5" fill="#3a5f92"></rect>
+    <rect x="22" y="30" width="6" height="19" rx="2.5" fill="#4d7ab5"></rect>
+    <rect x="31" y="17" width="6" height="32" rx="2.5" fill="#74a9e2"></rect>
+    <rect x="40" y="25" width="6" height="24" rx="2.5" fill="#4d7ab5"></rect>
+    <rect x="49" y="37" width="6" height="12" rx="2.5" fill="#3a5f92"></rect>
+  </g>
+  
+  <text x="92" y="49" font-family="&#39;Space Grotesk&#39;, system-ui, sans-serif" font-size="40" letter-spacing="-0.8" fill="#071b3a"><tspan font-weight="700">Epi</tspan><tspan font-weight="500">Brasil</tspan></text>
+  <text x="94" y="68" font-family="&#39;Space Grotesk&#39;, system-ui, sans-serif" font-size="10" font-weight="600" letter-spacing="2.4" fill="#8a8a86">PAINEL EPIDEMIOLÓGICO</text>
+</svg>
