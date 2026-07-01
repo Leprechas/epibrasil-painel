@@ -1,5 +1,5 @@
 {
-  "name": "LEPRECHAS - Painel Epidemiologico Brasileiro",
+  "name": "EpiBrasil - Painel Epidemiologico Brasileiro",
   "short_name": "EpiBrasil",
   "description": "Painel para visualizacao exploratoria de doencas e agravos notificados no Brasil",
   "start_url": "/epibrasil-painel/",

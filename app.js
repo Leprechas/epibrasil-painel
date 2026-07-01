@@ -1,4 +1,4 @@
-const VERSION="20260701";
+const VERSION="20260701b";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -1202,7 +1202,7 @@ function downloadPlotlyChart(divId,label,title){
   if(typeof Plotly==="undefined")return;
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
-  const filename=`leprechas_${label}_${disease}_${years}.png`;
+  const filename=`epibrasil_${label}_${disease}_${years}.png`;
   const theme=getPlotlyTheme();
 
   const src=document.getElementById(divId);
@@ -1275,7 +1275,7 @@ function downloadFilteredCSV(){
 
   const disease=($("disease")?.value||"doenca").toLowerCase();
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
-  downloadText(csv,`leprechas_${disease}_${years}_filtrado.csv`,"text/csv;charset=utf-8");
+  downloadText(csv,`epibrasil_${disease}_${years}_filtrado.csv`,"text/csv;charset=utf-8");
 }
 
 // ── SVG export ──
@@ -1403,7 +1403,7 @@ function buildCleanMapSVG(kind){
       <text x="${legendX}" y="${legendY+66}" font-family="Arial, sans-serif" font-size="18" fill="#64748b">Classificação: ${svgEscape(methodLabel)}</text>
       ${legend}
       <text x="70" y="1060" font-family="Arial, sans-serif" font-size="18" fill="#64748b">
-        LEPRECHAS — Painel Epidemiológico Brasileiro. Uso exploratório; não substitui sistemas oficiais de vigilância.
+        EpiBrasil — Painel Epidemiológico Brasileiro. Uso exploratório; não substitui sistemas oficiais de vigilância.
       </text>
     </svg>`;
 }
@@ -1417,7 +1417,7 @@ async function downloadCleanMap(kind){
   const years=yearsLabel().replaceAll(" ","_").replaceAll(",","-").replaceAll("–","-");
 
   if(kind==="mun"){
-    downloadText(svg,`leprechas_mapa_municipal_${disease}_${years}.svg`,"image/svg+xml;charset=utf-8");
+    downloadText(svg,`epibrasil_mapa_municipal_${disease}_${years}.svg`,"image/svg+xml;charset=utf-8");
     return;
   }
 
@@ -1437,13 +1437,13 @@ async function downloadCleanMap(kind){
 
     canvas.toBlob(blob=>{
       if(!blob){
-        downloadText(svg,`leprechas_mapa_${kind}.svg`,"image/svg+xml;charset=utf-8");
+        downloadText(svg,`epibrasil_mapa_${kind}.svg`,"image/svg+xml;charset=utf-8");
         return;
       }
 
       const a=document.createElement("a");
       a.href=URL.createObjectURL(blob);
-      a.download=`leprechas_mapa_${kind}_${disease}_${years}.png`;
+      a.download=`epibrasil_mapa_${kind}_${disease}_${years}.png`;
       document.body.appendChild(a);
       a.click();
       URL.revokeObjectURL(a.href);
@@ -1453,7 +1453,7 @@ async function downloadCleanMap(kind){
 
   img.onerror=()=>{
     URL.revokeObjectURL(url);
-    downloadText(svg,`leprechas_mapa_${kind}.svg`,"image/svg+xml;charset=utf-8");
+    downloadText(svg,`epibrasil_mapa_${kind}.svg`,"image/svg+xml;charset=utf-8");
   };
 
   img.src=url;
