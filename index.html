@@ -3,22 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EpiBrasil — Painel Epidemiológico Brasileiro</title>
+  <title>EpiBrasil Painel — Painel Epidemiológico Brasileiro | SINAN/DATASUS</title>
 
-  <meta name="description" content="Painel interativo para visualização exploratória de doenças e agravos notificados no Brasil, com indicadores municipais, estaduais e nacionais. Dados do SINAN/DATASUS e IBGE.">
+  <meta name="description" content="EpiBrasil Painel: painel epidemiológico interativo e gratuito para visualização exploratória de doenças e agravos de notificação compulsória no Brasil, com indicadores municipais, estaduais e nacionais. Dados do SINAN/DATASUS e IBGE.">
+  <meta name="keywords" content="painel epidemiológico, EpiBrasil, EpiBrasil Painel, epidemiologia Brasil, SINAN, DATASUS, vigilância epidemiológica, doenças de notificação compulsória, indicadores de saúde, mapa epidemiológico">
   <meta name="author" content="Barelli, V. E. G.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://leprechas.github.io/epibrasil-painel/">
 
-  <meta property="og:title" content="EpiBrasil — Painel Epidemiológico Brasileiro">
+  <meta property="og:title" content="EpiBrasil Painel — Painel Epidemiológico Brasileiro">
   <meta property="og:description" content="Visualização exploratória de doenças e agravos notificados no Brasil com indicadores municipais, estaduais e nacionais.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://leprechas.github.io/epibrasil-painel/">
   <meta property="og:image" content="assets/epibrasil-og.png">
+  <meta property="og:locale" content="pt_BR">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="EpiBrasil — Painel Epidemiológico Brasileiro">
+  <meta name="twitter:title" content="EpiBrasil Painel — Painel Epidemiológico Brasileiro">
   <meta name="twitter:description" content="Visualização exploratória de doenças e agravos notificados no Brasil.">
 
   <link rel="manifest" href="pwa-manifest.json">
   <meta name="theme-color" content="#071b3a">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EpiBrasil Painel",
+    "alternateName": "EpiBrasil",
+    "url": "https://leprechas.github.io/epibrasil-painel/",
+    "description": "Painel epidemiológico interativo e gratuito para visualização exploratória de doenças e agravos de notificação compulsória no Brasil, com indicadores municipais, estaduais e nacionais.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any (Web)",
+    "isAccessibleForFree": true,
+    "inLanguage": "pt-BR",
+    "author": {
+      "@type": "Person",
+      "name": "Vitor Eduardo Girotto Barelli"
+    },
+    "image": "https://leprechas.github.io/epibrasil-painel/assets/epibrasil-og.png"
+  }
+  </script>
 
   <link rel="icon" type="image/png" sizes="16x16" href="assets/epibrasil-favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/epibrasil-favicon-32.png">
@@ -26,7 +51,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/epibrasil-favicon-180.png">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260701b">
+  <link rel="stylesheet" href="style.css?v=20260703">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -38,8 +63,10 @@
 
   <header class="topbar">
     <div class="brand">
-      <img src="assets/epibrasil-logo.png" alt="EpiBrasil — Painel Epidemiológico" class="site-logo site-logo-light">
-      <img src="assets/epibrasil-logo-dark.png" alt="EpiBrasil — Painel Epidemiológico" class="site-logo site-logo-dark">
+      <h1 class="site-title">
+        <img src="assets/epibrasil-logo.png" alt="EpiBrasil Painel — Painel Epidemiológico Brasileiro" class="site-logo site-logo-light">
+        <img src="assets/epibrasil-logo-dark.png" alt="EpiBrasil Painel — Painel Epidemiológico Brasileiro" class="site-logo site-logo-dark">
+      </h1>
       <p class="brand-subtitle">
         Painel Epidemiológico Brasileiro para visualização exploratória de doenças e agravos notificados,
         com indicadores municipais, estaduais e nacionais.
@@ -304,6 +331,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260701b"></script>
+  <script src="app.js?v=20260703"></script>
 </body>
 </html>
