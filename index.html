@@ -51,7 +51,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/epibrasil-favicon-180.png">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260703">
+  <link rel="stylesheet" href="style.css?v=20260704">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -59,7 +59,7 @@
 
 <body>
   <div id="loading-bar" class="loading-bar"></div>
-  <div id="toast-container" class="toast-container"></div>
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
 
   <header class="topbar">
     <div class="brand">
@@ -146,9 +146,9 @@
         </select>
       </label>
 
-      <div class="segmented" aria-label="Indicador do mapa">
-        <button type="button" id="seg-casos" data-indicator="casos" class="active">Casos</button>
-        <button type="button" id="seg-inc" data-indicator="incidencia_100mil">Incidência</button>
+      <div class="segmented" role="group" aria-label="Indicador do mapa">
+        <button type="button" id="seg-casos" data-indicator="casos" class="active" aria-pressed="true">Casos</button>
+        <button type="button" id="seg-inc" data-indicator="incidencia_100mil" aria-pressed="false">Incidência</button>
       </div>
 
       <label>
@@ -160,14 +160,12 @@
         </select>
       </label>
 
-      <label>
-        Faixa de incidência / 100 mil
-        <div class="range-inputs">
-          <input id="inc-min" type="number" placeholder="Mín" step="any" min="0">
-          <span class="range-sep">—</span>
-          <input id="inc-max" type="number" placeholder="Máx" step="any" min="0">
-        </div>
-      </label>
+      <span class="label-text">Faixa de incidência / 100 mil</span>
+      <div class="range-inputs">
+        <input id="inc-min" type="number" placeholder="Mín" step="any" min="0" aria-label="Incidência mínima por 100 mil">
+        <span class="range-sep">—</span>
+        <input id="inc-max" type="number" placeholder="Máx" step="any" min="0" aria-label="Incidência máxima por 100 mil">
+      </div>
       <p class="hint">Filtra municípios por faixa de incidência no mapa e tabela.</p>
 
       <button id="apply" type="button">Atualizar painel</button>
@@ -331,6 +329,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260703"></script>
+  <script src="app.js?v=20260704"></script>
 </body>
 </html>

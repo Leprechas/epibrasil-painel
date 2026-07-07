@@ -1,4 +1,4 @@
-const VERSION="20260703";
+const VERSION="20260704";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -25,12 +25,14 @@ let MAP_BREAKS={uf:null,mun:null};
 
 const CACHE={};
 let fetchController=null;
-let geoMunLoading=false;
 let geoMunLoaded=false;
 
 let TABLE_PAGE=0;
 const TABLE_PAGE_SIZE=50;
 let TABLE_ALL_ROWS=[];
+
+let refreshGen=0;
+let geoMunPromise=null;
 
 const REGIONS={
   "Norte":["AC","AP","AM","PA","RO","RR","TO"],
@@ -407,7 +409,7 @@ function group(rows,keys){
     const k=keys.map(x=>r[x]).join("|");
 
     if(!m.has(k)){
-      const o={casos:0,populacao:0,_pop:0,_popEstimated:0,_muns:new Set(),_munsPos:new Set(),_ufsPos:new Set()};
+      const o={casos:0,populacao:0,_pop:0,_popEstimated:0,_muns:new Set(),_munsPos:new Set(),_munsPosComPop:new Set(),_ufsPos:new Set()};
       keys.forEach(x=>o[x]=r[x]);
       m.set(k,o);
     }
@@ -415,14 +417,18 @@ function group(rows,keys){
     const o=m.get(k);
     o.casos+=r.casos||0;
 
-    if(Number.isFinite(r.populacao)&&r.populacao>0){
+    const temPop=Number.isFinite(r.populacao)&&r.populacao>0;
+    if(temPop){
       o.populacao+=r.populacao;
       o._pop++;
       if(r.populacao_estimada)o._popEstimated++;
     }
 
     if(r.cod_mun6)o._muns.add(r.cod_mun6);
-    if(r.cod_mun6&&(r.casos||0)>0)o._munsPos.add(r.cod_mun6);
+    if(r.cod_mun6&&(r.casos||0)>0){
+      o._munsPos.add(r.cod_mun6);
+      if(temPop)o._munsPosComPop.add(r.cod_mun6);
+    }
     if(r.uf&&(r.casos||0)>0)o._ufsPos.add(r.uf);
   }
 
@@ -433,12 +439,13 @@ function group(rows,keys){
     const municipios_com_notificacao=o._munsPos.size;
     const ufs_com_notificacao=o._ufsPos.size;
     const populacao_estimada=o._popEstimated>0;
-    const pop_cobertura=municipios_com_notificacao?o._pop/municipios_com_notificacao*100:null;
+    const pop_cobertura=municipios_com_notificacao?o._munsPosComPop.size/municipios_com_notificacao*100:null;
 
     delete o._pop;
     delete o._popEstimated;
     delete o._muns;
     delete o._munsPos;
+    delete o._munsPosComPop;
     delete o._ufsPos;
 
     return{...o,populacao:pop,incidencia_100mil:inc,municipios,municipios_com_notificacao,ufs_com_notificacao,populacao_estimada,pop_cobertura};
@@ -491,7 +498,7 @@ function indicatorLabel(){
 async function loadDisease(code){
   if(CACHE[code]){
     DATA=CACHE[code];
-    return;
+    return true;
   }
 
   if(fetchController)fetchController.abort();
@@ -519,8 +526,9 @@ async function loadDisease(code){
     const totalLinhas=MANIFEST.reduce((a,b)=>a+(Number(b.linhas)||0),0);
     $("row-count").textContent=`${fmt.format(DATA.length)} linhas nesta doença | ${fmt.format(totalLinhas)} linhas no total | ${fmt.format(POP_MAP.size)} populações carregadas`;
     toast(`${item.doenca} carregada: ${fmt.format(DATA.length)} registros`,"success",2500);
+    return true;
   }catch(e){
-    if(e.name==="AbortError")return;
+    if(e.name==="AbortError")return false;
     throw e;
   }finally{
     hideLoading();
@@ -531,32 +539,35 @@ async function loadDisease(code){
 
 async function ensureGeoMun(){
   if(GEO_MUN||geoMunLoaded)return;
-  if(geoMunLoading)return;
+  if(geoMunPromise)return geoMunPromise;
 
-  geoMunLoading=true;
   $("map-mun-status").textContent="carregando GeoJSON municipal...";
 
-  try{
-    const res=await fetch(GEO_MUN_URL);
-    if(res.ok){
-      GEO_MUN=await res.json();
-      geoMunLoaded=true;
-      toast("Mapa municipal carregado","success",2000);
-    }else{
-      toast("GeoJSON municipal não encontrado","warn");
+  geoMunPromise=(async()=>{
+    try{
+      const res=await fetch(GEO_MUN_URL);
+      if(res.ok){
+        GEO_MUN=await res.json();
+        geoMunLoaded=true;
+        toast("Mapa municipal carregado","success",2000);
+      }else{
+        toast("GeoJSON municipal não encontrado","warn");
+      }
+    }catch(e){
+      toast("Erro ao carregar mapa municipal: "+e.message,"error");
+    }finally{
+      geoMunPromise=null;
     }
-  }catch(e){
-    toast("Erro ao carregar mapa municipal: "+e.message,"error");
-  }finally{
-    geoMunLoading=false;
-  }
+  })();
+
+  return geoMunPromise;
 }
 
 // ── Filter setup ──
 
 function setupDiseaseSelect(){
   MANIFEST.sort((a,b)=>a.doenca.localeCompare(b.doenca,"pt-BR"));
-  $("disease").innerHTML=MANIFEST.map(d=>`<option value="${d.codigo}">${d.doenca}</option>`).join("");
+  $("disease").innerHTML=MANIFEST.map(d=>`<option value="${escapeHtml(d.codigo)}">${escapeHtml(d.doenca)}</option>`).join("");
   populateCompareSelect();
 }
 
@@ -564,7 +575,7 @@ function populateCompareSelect(){
   const el=$("compare");
   if(!el)return;
   const current=$("disease").value;
-  el.innerHTML=MANIFEST.filter(d=>d.codigo!==current).map(d=>`<option value="${d.codigo}">${d.doenca}</option>`).join("");
+  el.innerHTML=MANIFEST.filter(d=>d.codigo!==current).map(d=>`<option value="${escapeHtml(d.codigo)}">${escapeHtml(d.doenca)}</option>`).join("");
 }
 
 function setupFilters(){
@@ -593,7 +604,7 @@ function setupFilters(){
   const ufsFiltradas=region?ufsDisponiveis.filter(uf=>lepRegionOfUF(uf)===region):ufsDisponiveis;
   const ufs=["",...ufsFiltradas];
 
-  $("uf").innerHTML=ufs.map(u=>`<option value="${u}">${u||"Brasil"}</option>`).join("");
+  $("uf").innerHTML=ufs.map(u=>`<option value="${escapeHtml(u)}">${escapeHtml(u)||"Brasil"}</option>`).join("");
   if(ufs.includes(oldUf))$("uf").value=oldUf;
   else $("uf").value="";
 
@@ -684,18 +695,16 @@ function colorFromBreaks(v,breaks){
   return MAP_COLORS[4];
 }
 
-function prepareMapBreaks(rows){
+function prepareMapBreaks(ufRows,munRows){
   const ind=$("indicator").value;
   const method=$("map-class").value;
-  const ufRows=group(rows,["uf"]).filter(r=>r.uf);
-  const munRows=group(rows,["uf","cod_mun6","municipio"]);
 
-  const ufValues=ufRows.map(r=>Number(r[ind]||0));
+  const ufValues=ufRows.filter(r=>r.uf).map(r=>Number(r[ind]||0));
   const munValues=munRows.map(r=>Number(r[ind]||0));
 
   MAP_BREAKS={
-    uf:{breaks:makeBreaks(ufValues,method),values:ufValues},
-    mun:{breaks:makeBreaks(munValues,method),values:munValues}
+    uf:{breaks:makeBreaks(ufValues,method)},
+    mun:{breaks:makeBreaks(munValues,method)}
   };
 }
 
@@ -756,6 +765,14 @@ function getPlotlyTheme(){
   };
 }
 
+function baseChartLayout(theme){
+  return {plot_bgcolor:theme.bg,paper_bgcolor:theme.paper,font:{color:theme.font}};
+}
+
+function baseLegend(theme){
+  return {orientation:"h",y:1.12,font:{color:theme.font}};
+}
+
 function initMaps(){
   if(typeof L==="undefined"){
     $("map-uf-status").textContent="Leaflet não carregou.";
@@ -776,10 +793,10 @@ function initMaps(){
   return true;
 }
 
-async function renderMaps(rows){
+async function renderMaps(ufRows,munRows,gen){
   if(!initMaps())return;
 
-  prepareMapBreaks(rows);
+  prepareMapBreaks(ufRows,munRows);
 
   const ind=$("indicator").value;
 
@@ -793,7 +810,6 @@ async function renderMaps(rows){
     LAYER_MUN=null;
   }
 
-  const ufRows=group(rows,["uf"]);
   const byUF=new Map(ufRows.map(r=>[r.uf,r]));
 
   if(GEO_UF){
@@ -824,8 +840,8 @@ async function renderMaps(rows){
   }
 
   await ensureGeoMun();
+  if(gen!==undefined&&gen!==refreshGen)return;
 
-  const munRows=group(rows,["uf","cod_mun6","municipio"]);
   const byCode=new Map(munRows.map(r=>[r.cod_mun6,r]));
 
   if(GEO_MUN){
@@ -876,13 +892,17 @@ function computeTrend(series){
 function updateSegmentedButtons(){
   const ind=$("indicator").value;
   document.querySelectorAll(".segmented button").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.indicator===ind);
+    const active=btn.dataset.indicator===ind;
+    btn.classList.toggle("active",active);
+    btn.setAttribute("aria-pressed",String(active));
   });
 }
 
 // ── Refresh ──
 
 async function refresh(){
+  const gen=++refreshGen;
+
   updateMuns();
   updateSegmentedButtons();
   writeURLState();
@@ -910,7 +930,7 @@ async function refresh(){
 
   renderSeriesChart(ser);
   renderUFRanking();
-  renderRegionStackedChart(filtered(false));
+  renderRegionStackedChart(rows);
 
   const incMin=num($("inc-min")?.value);
   const incMax=num($("inc-max")?.value);
@@ -927,10 +947,15 @@ async function refresh(){
     mapTableRows=rows.filter(r=>validMuns.has(r.cod_mun6));
   }
 
-  renderMunicipalTable(mapTableRows);
-  await renderMaps(mapTableRows);
+  const ufRows=group(mapTableRows,["uf"]);
+  const munRows=group(mapTableRows,["uf","cod_mun6","municipio"]);
+
+  renderMunicipalTable(munRows);
+  await renderMaps(ufRows,munRows,gen);
+  if(gen!==refreshGen)return;
 
   const comparisons=await loadComparisonDiseases();
+  if(gen!==refreshGen)return;
   renderComparisonChart(comparisons);
 }
 
@@ -970,10 +995,8 @@ function renderSeriesChart(ser){
     yaxis:{title:"Casos/Ano",color:theme.font,gridcolor:theme.grid},
     yaxis2:{title:"Incidência",overlaying:"y",side:"right",showgrid:false,color:theme.font},
     xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
-    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
-    plot_bgcolor:theme.bg,
-    paper_bgcolor:theme.paper,
-    font:{color:theme.font}
+    legend:baseLegend(theme),
+    ...baseChartLayout(theme)
   },{responsive:true,displayModeBar:false});
 }
 
@@ -1006,9 +1029,7 @@ function renderUFRanking(){
     height:520,
     xaxis:{title:ind==="casos"?"Casos no período":"Incidência / 100 mil",color:theme.font,gridcolor:theme.grid},
     yaxis:{automargin:true,categoryorder:"total ascending",color:theme.font},
-    plot_bgcolor:theme.bg,
-    paper_bgcolor:theme.paper,
-    font:{color:theme.font}
+    ...baseChartLayout(theme)
   },{responsive:true,displayModeBar:false});
 }
 
@@ -1026,20 +1047,9 @@ function renderRegionStackedChart(rows){
   const ind=$("indicator").value;
   const regionColors={"Norte":"#0ea5e9","Nordeste":"#f97316","Centro-Oeste":"#a855f7","Sudeste":"#22c55e","Sul":"#ef4444"};
 
-  const rowsWithRegion=rows.map(r=>({...r,_region:lepRegionOfUF(r.uf)})).filter(r=>r._region);
-  const byYearRegion=new Map();
-  for(const r of rowsWithRegion){
-    const k=`${r.ano}|${r._region}`;
-    if(!byYearRegion.has(k))byYearRegion.set(k,{ano:r.ano,region:r._region,casos:0,populacao:0,_pop:0});
-    const o=byYearRegion.get(k);
-    o.casos+=r.casos||0;
-    if(Number.isFinite(r.populacao)&&r.populacao>0){o.populacao+=r.populacao;o._pop++;}
-  }
-
-  const grouped=[...byYearRegion.values()].map(o=>{
-    const inc=o._pop&&o.populacao?o.casos/o.populacao*100000:null;
-    return{...o,incidencia_100mil:inc};
-  });
+  const rowsWithRegion=rows.map(r=>({...r,region:lepRegionOfUF(r.uf)})).filter(r=>r.region);
+  const grouped=group(rowsWithRegion,["ano","region"]);
+  const byKey=new Map(grouped.map(g=>[`${g.ano}|${g.region}`,g]));
 
   const years=[...new Set(grouped.map(r=>r.ano))].sort((a,b)=>a-b);
   if(years.length<2){panel.style.display="none";return;}
@@ -1047,7 +1057,7 @@ function renderRegionStackedChart(rows){
   panel.style.display="";
   const traces=Object.keys(REGIONS).map(reg=>({
     x:years.map(String),
-    y:years.map(y=>{const r=grouped.find(g=>g.ano===y&&g.region===reg);return r?r[ind]||0:0;}),
+    y:years.map(y=>byKey.get(`${y}|${reg}`)?.[ind]||0),
     name:reg,
     type:"bar",
     marker:{color:regionColors[reg]||"#999"},
@@ -1059,16 +1069,14 @@ function renderRegionStackedChart(rows){
     margin:{t:20,r:30,b:45,l:70},
     xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
     yaxis:{title:ind==="casos"?"Casos":"Incidência / 100 mil",color:theme.font,gridcolor:theme.grid},
-    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
-    plot_bgcolor:theme.bg,
-    paper_bgcolor:theme.paper,
-    font:{color:theme.font}
+    legend:baseLegend(theme),
+    ...baseChartLayout(theme)
   },{responsive:true,displayModeBar:false});
 }
 
-function renderMunicipalTable(rows){
+function renderMunicipalTable(munRows){
   const ind=$("indicator").value;
-  TABLE_ALL_ROWS=group(rows,["uf","cod_mun6","municipio"])
+  TABLE_ALL_ROWS=munRows
     .filter(r=>(r[ind]||0)>0)
     .sort((a,b)=>(b[ind]??-Infinity)-(a[ind]??-Infinity));
   TABLE_PAGE=0;
@@ -1084,7 +1092,7 @@ function renderTablePage(){
   const start=TABLE_PAGE*TABLE_PAGE_SIZE;
   const page=TABLE_ALL_ROWS.slice(start,start+TABLE_PAGE_SIZE);
 
-  $("table").innerHTML="<thead><tr><th>#</th><th>UF</th><th>Código</th><th>Município</th><th>Casos no período</th><th>População-ano somada</th><th>Incidência</th><th>Pop. estimada</th></tr></thead><tbody>"+
+  $("table").innerHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">UF</th><th scope=\"col\">Código</th><th scope=\"col\">Município</th><th scope=\"col\">Casos no período</th><th scope=\"col\">População-ano somada</th><th scope=\"col\">Incidência</th><th scope=\"col\">Pop. estimada</th></tr></thead><tbody>"+
     page.map((r,i)=>`<tr><td>${start+i+1}</td><td>${r.uf}</td><td>${r.cod_mun6}</td><td>${escapeHtml(r.municipio)}</td><td>${fmt.format(r.casos||0)}</td><td>${r.populacao?fmt.format(r.populacao)+(r.populacao_estimada?" *":""):"—"}</td><td>${Number.isFinite(r.incidencia_100mil)?fmt1.format(r.incidencia_100mil):"—"}</td><td>${r.populacao_estimada?"Sim":"Não"}</td></tr>`).join("")+
     "</tbody>";
 
@@ -1191,8 +1199,8 @@ function renderComparisonChart(comparisons){
     margin:{t:20,r:30,b:45,l:60},
     xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
     yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
-    legend:{orientation:"h",y:1.12,font:{color:theme.font}},
-    plot_bgcolor:theme.bg,paper_bgcolor:theme.paper,font:{color:theme.font}
+    legend:baseLegend(theme),
+    ...baseChartLayout(theme)
   },{responsive:true,displayModeBar:false});
 }
 
@@ -1299,10 +1307,6 @@ function allCoords(features){
   return coords;
 }
 
-function svgEscape(s){
-  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-}
-
 function buildCleanMapSVG(kind){
   const isUF=kind==="uf";
   const geo=isUF?GEO_UF:GEO_MUN;
@@ -1387,20 +1391,20 @@ function buildCleanMapSVG(kind){
 
     legend=legendRows.map((r,i)=>`
       <rect x="${legendX}" y="${legendY+90+i*44}" width="30" height="22" rx="5" fill="${r.color}" stroke="#cbd5e1"/>
-      <text x="${legendX+46}" y="${legendY+107+i*44}" font-size="24" fill="#1e293b">${svgEscape(r.label)}</text>
+      <text x="${legendX+46}" y="${legendY+107+i*44}" font-size="24" fill="#1e293b">${escapeHtml(r.label)}</text>
     `).join("");
   }
 
   return `
     <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
       <rect width="100%" height="100%" fill="#ffffff"/>
-      <text x="70" y="70" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="#0f172a">${svgEscape(title)}</text>
-      <text x="70" y="112" font-family="Arial, sans-serif" font-size="22" fill="#475569">${svgEscape(subtitle)}</text>
+      <text x="70" y="70" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="#0f172a">${escapeHtml(title)}</text>
+      <text x="70" y="112" font-family="Arial, sans-serif" font-size="22" fill="#475569">${escapeHtml(subtitle)}</text>
       <g>${paths}</g>
       <rect x="${legendX-32}" y="${legendY-54}" width="350" height="390" rx="24" fill="#ffffff" stroke="#cbd5e1"/>
       <text x="${legendX}" y="${legendY}" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#0f172a">Legenda</text>
-      <text x="${legendX}" y="${legendY+38}" font-family="Arial, sans-serif" font-size="20" fill="#64748b">${svgEscape(indicatorLabel())}</text>
-      <text x="${legendX}" y="${legendY+66}" font-family="Arial, sans-serif" font-size="18" fill="#64748b">Classificação: ${svgEscape(methodLabel)}</text>
+      <text x="${legendX}" y="${legendY+38}" font-family="Arial, sans-serif" font-size="20" fill="#64748b">${escapeHtml(indicatorLabel())}</text>
+      <text x="${legendX}" y="${legendY+66}" font-family="Arial, sans-serif" font-size="18" fill="#64748b">Classificação: ${escapeHtml(methodLabel)}</text>
       ${legend}
       <text x="70" y="1060" font-family="Arial, sans-serif" font-size="18" fill="#64748b">
         EpiBrasil — Painel Epidemiológico Brasileiro. Uso exploratório; não substitui sistemas oficiais de vigilância.
@@ -1482,7 +1486,8 @@ function closeModal(){
 // ── Disease change ──
 
 async function diseaseChanged(){
-  await loadDisease($("disease").value);
+  const ok=await loadDisease($("disease").value);
+  if(!ok)return;
   populateCompareSelect();
   setupFilters();
   await refresh();
@@ -1571,6 +1576,26 @@ $("download-region-png").onclick=()=>downloadPlotlyChart("region-chart","regioes
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
+$("lep-about-modal").addEventListener("keydown",e=>{
+  if(e.key!=="Tab")return;
+  const modal=$("lep-about-modal");
+  if(!modal.classList.contains("open"))return;
+
+  const focusable=[...modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(focusable.length===0)return;
+
+  const first=focusable[0];
+  const last=focusable[focusable.length-1];
+
+  if(e.shiftKey&&document.activeElement===first){
+    e.preventDefault();
+    last.focus();
+  }else if(!e.shiftKey&&document.activeElement===last){
+    e.preventDefault();
+    first.focus();
+  }
+});
 $("theme-toggle").onclick=toggleTheme;
 
 $("copy-citation").onclick=()=>{

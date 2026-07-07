@@ -104,7 +104,7 @@ body{
   border-radius:12px;
   font-size:14px;
   font-weight:600;
-  max-width:420px;
+  max-width:min(420px,calc(100vw - 32px));
   box-shadow:0 8px 24px rgba(0,0,0,.18);
   animation:toast-in .3s ease-out;
   display:flex;
@@ -114,10 +114,10 @@ body{
 
 .toast.leaving{animation:toast-out .3s ease-in forwards}
 
-.toast-info{background:#0ea5e9;color:#fff}
-.toast-success{background:#22c55e;color:#fff}
-.toast-warn{background:#f59e0b;color:#1e293b}
-.toast-error{background:#ef4444;color:#fff}
+.toast-info{background:#0369a1;color:#fff}
+.toast-success{background:#15803d;color:#fff}
+.toast-warn{background:#b45309;color:#fff}
+.toast-error{background:#b91c1c;color:#fff}
 
 @keyframes toast-in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
 @keyframes toast-out{to{opacity:0;transform:translateX(40px)}}
@@ -267,12 +267,14 @@ h2{
   font-size:22px;
 }
 
-label{
+label,.label-text{
   display:block;
   margin:0 0 16px;
   font-weight:700;
   font-size:14px;
 }
+
+.label-text{margin-bottom:0}
 
 select,input{
   width:100%;
@@ -584,8 +586,12 @@ tr:hover td{background:var(--table-hover)}
 }
 
 option.low-coverage{
-  color:#d97706;
+  color:#92400e;
   font-weight:600;
+}
+
+[data-theme="dark"] option.low-coverage{
+  color:#fbbf24;
 }
 
 /* ── Footer ── */
@@ -731,4 +737,13 @@ footer{
 @media(max-width:640px){
   .cards{grid-template-columns:1fr}
   .site-logo{width:100%}
+
+  .toast-container{
+    top:auto;
+    bottom:16px;
+    left:16px;
+    right:16px;
+  }
+
+  .toast{max-width:none}
 }
