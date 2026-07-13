@@ -1,4 +1,4 @@
-const VERSION="20260713c";
+const VERSION="20260713d";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -1680,7 +1680,16 @@ async function init(){
   hideLoading();
 
   if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("sw.js").catch(()=>{});
+    navigator.serviceWorker.register("sw.js").then(reg=>{
+      reg.update().catch(()=>{});
+    }).catch(()=>{});
+
+    let reloaded=false;
+    navigator.serviceWorker.addEventListener("controllerchange",()=>{
+      if(reloaded)return;
+      reloaded=true;
+      location.reload();
+    });
   }
 }
 
