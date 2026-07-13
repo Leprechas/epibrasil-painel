@@ -1,46 +1,38 @@
 """
-Etapa 7 do diagnóstico: o dedup por linha inteira só removeu 1758 de
-3.291.912 linhas — não é duplicação exata. O total continua ~2x o baseline
-mesmo após dedup. Hipótese: pysus baixa 2 arquivos para o mesmo ano (visto
-no log "Downloading sinan: 2/2 files") — provavelmente uma base "final" e
-uma "preliminar" do mesmo período, com o mesmo caso aparecendo nas duas mas
-com campos como DT_DIGITA/CLASSI_FIN diferentes. Aqui inspecionamos os
-nomes dos arquivos/grupos baixados e o campo NU_NOTIFIC (que a etapa 6 não
-encontrou nas colunas) para achar a granularidade real de "1 caso = 1 linha".
+Etapa 8 do diagnóstico: a etapa 7 revelou que os "2 arquivos" baixados são
+DENGBR23.parquet e DENGBR23.csv.parquet — a MESMA base de 2023 cacheada em
+dois formatos. O as_dataframe=True do pysus concatena os dois (bug de
+carregamento), duplicando quase todas as linhas. Aqui testamos ler
+diretamente cada parquet isoladamente com pandas para confirmar qual deles
+é a base "canônica" e se ela bate com o baseline do CSV atual (1.644.960
+casos de dengue em 2023).
 """
+import glob
+import pandas as pd
 import pysus
 
 BASELINE_2023 = 1644960
 
-print("[INFO] Chamando pysus.sinan(disease='DENG', year=2023) SEM as_dataframe (para ver os arquivos)...")
+# Garante que os arquivos já estão baixados/cacheados
 paths = pysus.sinan(disease="DENG", year=2023)
-print(f"[INFO] tipo: {type(paths)}, conteúdo: {paths}")
+print(f"[INFO] arquivos: {paths}")
 
-print("\n[INFO] Chamando novamente com as_dataframe=True...")
-df = pysus.sinan(disease="DENG", year=2023, as_dataframe=True)
-print(f"[INFO] linhas totais: {len(df)}")
+for p in paths:
+    try:
+        d = pd.read_parquet(p)
+        total_mn_resi = d["ID_MN_RESI"].notna().sum() if "ID_MN_RESI" in d.columns else None
+        total_municip = d["ID_MUNICIP"].notna().sum() if "ID_MUNICIP" in d.columns else None
+        print(f"\n[INFO] {p}")
+        print(f"  linhas: {len(d)}, colunas: {len(d.columns)}")
+        print(f"  ID_MN_RESI não-nulos: {total_mn_resi}")
+        print(f"  ID_MUNICIP não-nulos: {total_municip}")
+        if total_mn_resi:
+            diff = total_mn_resi - BASELINE_2023
+            pct = 100 * diff / BASELINE_2023
+            print(f"  diff vs baseline (ID_MN_RESI): {diff:+d} ({pct:+.2f}%)")
+    except Exception as exc:
+        print(f"[ERRO] falha ao ler {p}: {type(exc).__name__}: {exc}")
 
-# Procura qualquer coluna que possa ser identificador único de notificação
-candidatos_id = [c for c in df.columns if "NOTIF" in c.upper() or c.upper() in ("NU_NOTIFIC", "CODIGO", "ID")]
-print(f"[INFO] candidatos a identificador de notificação: {candidatos_id}")
-
-# Se existir alguma coluna de "fonte"/arquivo/grupo, ela ajuda a diferenciar as 2 bases
-candidatos_fonte = [c for c in df.columns if any(k in c.upper() for k in ("VERS", "FONTE", "BASE", "TPUFCOD", "TP_SISTEMA", "MIGRADO"))]
-print(f"[INFO] candidatos a coluna de origem/versão: {candidatos_fonte}")
-for c in candidatos_fonte:
-    print(f"[INFO] {c} value_counts:\n{df[c].value_counts(dropna=False)}")
-
-# DT_DIGITA (data de digitação) pode revelar 2 grupos de datas de processamento distintos
-if "DT_DIGITA" in df.columns:
-    print(f"\n[INFO] DT_DIGITA describe:\n{df['DT_DIGITA'].describe()}")
-    print(f"[INFO] DT_DIGITA amostra: {df['DT_DIGITA'].dropna().unique()[:5]}")
-
-# Testa se agrupar por (ID_MN_RESI, DT_SIN_PRI, ANO_NASC, CS_SEXO) reduz para perto do baseline
-chave = [c for c in ["ID_MN_RESI", "DT_SIN_PRI", "ANO_NASC", "CS_SEXO", "DT_NOTIFIC"] if c in df.columns]
-print(f"\n[INFO] chave candidata para 1 caso = 1 linha: {chave}")
-if chave:
-    dedup_chave = df.drop_duplicates(subset=chave)
-    total = len(dedup_chave)
-    diff = total - BASELINE_2023
-    pct = 100 * diff / BASELINE_2023
-    print(f"[INFO] linhas após dedup por {chave}: {total} (diff={diff:+d}, {pct:+.2f}%)")
+# Também procura todos os parquets em cache para esse ano, caso haja mais candidatos
+cached = glob.glob("/home/runner/pysus/downloads/**/*DENG*23*", recursive=True)
+print(f"\n[INFO] todos os arquivos em cache relacionados a DENG 2023: {cached}")
