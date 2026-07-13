@@ -51,7 +51,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/epibrasil-favicon-180.png">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260713">
+  <link rel="stylesheet" href="style.css?v=20260713b">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -134,15 +134,24 @@
 
       <label>
         Comparar doenças
+        <input id="compare-search" type="text" placeholder="Buscar doença..." class="compare-search">
         <select id="compare" multiple size="4"></select>
       </label>
       <p class="hint">Selecione doenças para comparar séries temporais. Use Ctrl para múltiplas.</p>
 
       <label>
         Comparar municípios
+        <input id="compare-mun-search" type="text" placeholder="Buscar município..." class="compare-search">
         <select id="compare-mun" multiple size="4"></select>
       </label>
       <p class="hint">Selecione até 6 municípios para comparar séries temporais da doença atual. Use Ctrl para múltiplas.</p>
+
+      <label>
+        Comparar UFs
+        <input id="compare-uf-search" type="text" placeholder="Buscar UF..." class="compare-search">
+        <select id="compare-uf" multiple size="4"></select>
+      </label>
+      <p class="hint">Selecione até 6 UFs para comparar séries temporais da doença atual. Use Ctrl para múltiplas.</p>
 
       <label>
         Indicador
@@ -227,6 +236,17 @@
             <button id="download-compare-mun-png" type="button" class="download-btn secondary-download">Baixar comparação municipal (PNG)</button>
           </div>
           <div id="compare-mun-chart" class="chart">
+            <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </article>
+
+        <article id="compare-uf-panel" class="panel wide" style="display:none">
+          <h2>Comparação entre UFs</h2>
+          <p class="subtle">Séries temporais das UFs selecionadas, para a doença e o indicador ativos.</p>
+          <div class="chart-toolbar">
+            <button id="download-compare-uf-png" type="button" class="download-btn secondary-download">Baixar comparação de UFs (PNG)</button>
+          </div>
+          <div id="compare-uf-chart" class="chart">
             <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
         </article>
@@ -354,6 +374,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260713"></script>
+  <script src="app.js?v=20260713b"></script>
 </body>
 </html>

@@ -304,6 +304,9 @@ select,input{
 
 select[multiple]{height:auto;min-height:170px}
 
+.compare-search{margin-bottom:0}
+.compare-search + select[multiple]{margin-top:8px}
+
 .year-actions{
   display:grid;
   grid-template-columns:1fr 1fr;

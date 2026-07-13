@@ -1,4 +1,4 @@
-const VERSION="20260713";
+const VERSION="20260713b";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -115,6 +115,7 @@ function replotTheme(){
   try{Plotly.relayout("compare-chart",{...base,"legend.font.color":t.font});}catch(e){}
   try{Plotly.relayout("region-chart",{...base,"legend.font.color":t.font});}catch(e){}
   try{Plotly.relayout("compare-mun-chart",{...base,"legend.font.color":t.font});}catch(e){}
+  try{Plotly.relayout("compare-uf-chart",{...base,"legend.font.color":t.font});}catch(e){}
 }
 
 initTheme();
@@ -577,6 +578,7 @@ function populateCompareSelect(){
   if(!el)return;
   const current=$("disease").value;
   el.innerHTML=MANIFEST.filter(d=>d.codigo!==current).map(d=>`<option value="${escapeHtml(d.codigo)}">${escapeHtml(d.doenca)}</option>`).join("");
+  filterSelectOptions($("compare-search"),el);
 }
 
 function populateMunCompareSelect(){
@@ -591,6 +593,35 @@ function populateMunCompareSelect(){
 
   const list=[...seen.values()].sort((a,b)=>a.municipio.localeCompare(b.municipio,"pt-BR"));
   el.innerHTML=list.map(r=>`<option value="${escapeHtml(r.cod_mun6)}" ${prevSelected.has(r.cod_mun6)?"selected":""}>${escapeHtml(r.municipio)} (${escapeHtml(r.uf)})</option>`).join("");
+  filterSelectOptions($("compare-mun-search"),el);
+}
+
+function populateUFCompareSelect(){
+  const el=$("compare-uf");
+  if(!el)return;
+
+  const prevSelected=new Set([...el.selectedOptions].map(o=>o.value));
+  const ufs=[...new Set(DATA.map(r=>r.uf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+
+  el.innerHTML=ufs.map(u=>`<option value="${escapeHtml(u)}" ${prevSelected.has(u)?"selected":""}>${escapeHtml(u)}</option>`).join("");
+  filterSelectOptions($("compare-uf-search"),el);
+}
+
+// ── Multi-select search filter ──
+
+function filterSelectOptions(input,select){
+  if(!input||!select)return;
+  const q=normalizeText(input.value);
+  [...select.options].forEach(o=>{
+    o.hidden=!(!q||normalizeText(o.textContent).includes(q));
+  });
+}
+
+function wireCompareSearch(inputId,selectId){
+  const input=$(inputId);
+  const select=$(selectId);
+  if(!input||!select)return;
+  input.addEventListener("input",()=>filterSelectOptions(input,select));
 }
 
 function setupFilters(){
@@ -598,6 +629,7 @@ function setupFilters(){
   const oldUf=$("uf").value;
 
   populateMunCompareSelect();
+  populateUFCompareSelect();
 
   const years=[...new Set(DATA.map(r=>r.ano))].sort((a,b)=>a-b);
   const totalMuns=new Set(DATA.map(r=>r.cod_mun6)).size;
@@ -982,6 +1014,7 @@ async function refresh(){
   if(gen!==refreshGen)return;
   renderComparisonChart(comparisons);
   renderMunComparisonChart();
+  renderUFComparisonChart();
   updateFiltersScrollHint();
 }
 
@@ -1264,6 +1297,47 @@ function renderMunComparisonChart(){
   });
 
   Plotly.newPlot("compare-mun-chart",traces,{
+    margin:{t:20,r:30,b:45,l:60},
+    xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
+    yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
+    legend:baseLegend(theme),
+    ...baseChartLayout(theme)
+  },{responsive:true,displayModeBar:false});
+}
+
+function renderUFComparisonChart(){
+  const panel=$("compare-uf-panel");
+  const el=$("compare-uf-chart");
+  if(!panel||!el)return;
+
+  const sel=$("compare-uf");
+  const ufs=sel?[...sel.selectedOptions].map(o=>o.value):[];
+
+  if(ufs.length===0){
+    panel.style.display="none";
+    return;
+  }
+
+  panel.style.display="";
+  if(typeof Plotly==="undefined")return;
+
+  const theme=getPlotlyTheme();
+  const ind=$("indicator").value;
+  const colors=["#0ea5e9","#f97316","#22c55e","#a855f7","#ef4444","#eab308"];
+
+  const traces=ufs.map((uf,i)=>{
+    const rows=DATA.filter(r=>r.uf===uf);
+    const ser=group(rows,["ano"]).sort((a,b)=>a.ano-b.ano);
+    return{
+      x:ser.map(r=>String(r.ano)),
+      y:ser.map(r=>r[ind]||0),
+      type:"scatter",mode:"lines+markers",
+      name:uf,
+      line:{color:colors[i%colors.length],width:2.5}
+    };
+  });
+
+  Plotly.newPlot("compare-uf-chart",traces,{
     margin:{t:20,r:30,b:45,l:60},
     xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
     yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
@@ -1621,6 +1695,10 @@ $("clear").onclick=()=>{
   if($("inc-max"))$("inc-max").value="";
   if($("compare"))[...$("compare").options].forEach(o=>o.selected=false);
   if($("compare-mun"))[...$("compare-mun").options].forEach(o=>o.selected=false);
+  if($("compare-uf"))[...$("compare-uf").options].forEach(o=>o.selected=false);
+  if($("compare-search"))$("compare-search").value="";
+  if($("compare-mun-search"))$("compare-mun-search").value="";
+  if($("compare-uf-search"))$("compare-uf-search").value="";
   const ys=allAvailableYears();
   if(ys.length)setSelectedYears([ys.at(-1)]);
   setupFilters();
@@ -1643,7 +1721,12 @@ $("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs",`${dise
 $("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao",`Comparação de doenças — ${indicatorLabel()} | ${yearsLabel()}`);
 $("download-region-png").onclick=()=>downloadPlotlyChart("region-chart","regioes",`${diseaseLabel()} — Casos por região | ${yearsLabel()}`);
 $("download-compare-mun-png").onclick=()=>downloadPlotlyChart("compare-mun-chart","comparacao_municipios",`${diseaseLabel()} — Comparação entre municípios | ${indicatorLabel()}`);
+$("download-compare-uf-png").onclick=()=>downloadPlotlyChart("compare-uf-chart","comparacao_ufs",`${diseaseLabel()} — Comparação entre UFs | ${indicatorLabel()}`);
 $("compare-mun").onchange=debouncedRefresh;
+$("compare-uf").onchange=debouncedRefresh;
+wireCompareSearch("compare-search","compare");
+wireCompareSearch("compare-mun-search","compare-mun");
+wireCompareSearch("compare-uf-search","compare-uf");
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
@@ -1689,7 +1772,7 @@ document.querySelectorAll(".segmented button").forEach(btn=>{
 
 window.addEventListener("resize",debounce(()=>{
   if(typeof Plotly!=="undefined"){
-    ["series","ufs","compare-chart","region-chart","compare-mun-chart"].forEach(id=>{
+    ["series","ufs","compare-chart","region-chart","compare-mun-chart","compare-uf-chart"].forEach(id=>{
       const el=$(id);
       if(el&&el.data)Plotly.Plots.resize(el);
     });
