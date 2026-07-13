@@ -1,58 +1,46 @@
 """
-Etapa 6 do diagnóstico: a contagem bruta (3.291.912) é quase exatamente o
-dobro do baseline do CSV atual para 2023 (1.644.960, razão 2.0012). O log
-mostrou "Downloading sinan: 2/2 files" para um único ano — investigamos se
-há duplicação de linhas (por exemplo, dois parquets concatenados sem
-deduplicação) e, se sim, se removê-la aproxima o total do baseline.
+Etapa 7 do diagnóstico: o dedup por linha inteira só removeu 1758 de
+3.291.912 linhas — não é duplicação exata. O total continua ~2x o baseline
+mesmo após dedup. Hipótese: pysus baixa 2 arquivos para o mesmo ano (visto
+no log "Downloading sinan: 2/2 files") — provavelmente uma base "final" e
+uma "preliminar" do mesmo período, com o mesmo caso aparecendo nas duas mas
+com campos como DT_DIGITA/CLASSI_FIN diferentes. Aqui inspecionamos os
+nomes dos arquivos/grupos baixados e o campo NU_NOTIFIC (que a etapa 6 não
+encontrou nas colunas) para achar a granularidade real de "1 caso = 1 linha".
 """
 import pysus
 
 BASELINE_2023 = 1644960
 
+print("[INFO] Chamando pysus.sinan(disease='DENG', year=2023) SEM as_dataframe (para ver os arquivos)...")
+paths = pysus.sinan(disease="DENG", year=2023)
+print(f"[INFO] tipo: {type(paths)}, conteúdo: {paths}")
+
+print("\n[INFO] Chamando novamente com as_dataframe=True...")
 df = pysus.sinan(disease="DENG", year=2023, as_dataframe=True)
 print(f"[INFO] linhas totais: {len(df)}")
 
-dup_total = df.duplicated().sum()
-print(f"[INFO] linhas totalmente duplicadas (todas as colunas): {dup_total}")
+# Procura qualquer coluna que possa ser identificador único de notificação
+candidatos_id = [c for c in df.columns if "NOTIF" in c.upper() or c.upper() in ("NU_NOTIFIC", "CODIGO", "ID")]
+print(f"[INFO] candidatos a identificador de notificação: {candidatos_id}")
 
-dedup_full = df.drop_duplicates()
-print(f"[INFO] linhas após drop_duplicates (todas as colunas): {len(dedup_full)}")
+# Se existir alguma coluna de "fonte"/arquivo/grupo, ela ajuda a diferenciar as 2 bases
+candidatos_fonte = [c for c in df.columns if any(k in c.upper() for k in ("VERS", "FONTE", "BASE", "TPUFCOD", "TP_SISTEMA", "MIGRADO"))]
+print(f"[INFO] candidatos a coluna de origem/versão: {candidatos_fonte}")
+for c in candidatos_fonte:
+    print(f"[INFO] {c} value_counts:\n{df[c].value_counts(dropna=False)}")
 
-id_cols = [c for c in ["NU_NOTIFIC", "DT_NOTIFIC", "ID_MUNICIP", "ID_MN_RESI", "SEM_NOT"] if c in df.columns]
-print(f"[INFO] colunas identificadoras disponíveis: {id_cols}")
-if "NU_NOTIFIC" in df.columns:
-    print(f"[INFO] NU_NOTIFIC não-nulos: {df['NU_NOTIFIC'].notna().sum()}, únicos: {df['NU_NOTIFIC'].nunique()}")
-    dup_by_notific = df.duplicated(subset=["NU_NOTIFIC", "ID_MUNICIP", "DT_NOTIFIC"]).sum()
-    print(f"[INFO] duplicatas por (NU_NOTIFIC, ID_MUNICIP, DT_NOTIFIC): {dup_by_notific}")
-    dedup_by_notific = df.drop_duplicates(subset=["NU_NOTIFIC", "ID_MUNICIP", "DT_NOTIFIC"])
-    print(f"[INFO] linhas após dedup por (NU_NOTIFIC, ID_MUNICIP, DT_NOTIFIC): {len(dedup_by_notific)}")
+# DT_DIGITA (data de digitação) pode revelar 2 grupos de datas de processamento distintos
+if "DT_DIGITA" in df.columns:
+    print(f"\n[INFO] DT_DIGITA describe:\n{df['DT_DIGITA'].describe()}")
+    print(f"[INFO] DT_DIGITA amostra: {df['DT_DIGITA'].dropna().unique()[:5]}")
 
-for label, sub in [("dedup completo (todas colunas)", dedup_full)]:
-    for col in ["ID_MN_RESI", "ID_MUNICIP"]:
-        if col in sub.columns:
-            total = sub[col].notna().sum()
-            diff = total - BASELINE_2023
-            pct = 100 * diff / BASELINE_2023
-            print(f"[INFO] {label} | contagem por {col}: {total} (diff={diff:+d}, {pct:+.2f}%)")
-
-if "NU_NOTIFIC" in df.columns:
-    for col in ["ID_MN_RESI", "ID_MUNICIP"]:
-        if col in dedup_by_notific.columns:
-            total = dedup_by_notific[col].notna().sum()
-            diff = total - BASELINE_2023
-            pct = 100 * diff / BASELINE_2023
-            print(f"[INFO] dedup por (NU_NOTIFIC,ID_MUNICIP,DT_NOTIFIC) | contagem por {col}: {total} (diff={diff:+d}, {pct:+.2f}%)")
-
-# Amostra de uma possível duplicata para inspeção visual
-if "NU_NOTIFIC" in df.columns:
-    sample_dup = df[df.duplicated(subset=["NU_NOTIFIC", "ID_MUNICIP", "DT_NOTIFIC"], keep=False)]
-    print(f"\n[INFO] total de linhas envolvidas em duplicatas (NU_NOTIFIC,ID_MUNICIP,DT_NOTIFIC): {len(sample_dup)}")
-    if len(sample_dup) > 0:
-        first_key = sample_dup[["NU_NOTIFIC", "ID_MUNICIP", "DT_NOTIFIC"]].iloc[0]
-        mask = (
-            (df["NU_NOTIFIC"] == first_key["NU_NOTIFIC"]) &
-            (df["ID_MUNICIP"] == first_key["ID_MUNICIP"]) &
-            (df["DT_NOTIFIC"] == first_key["DT_NOTIFIC"])
-        )
-        cols_show = [c for c in ["NU_NOTIFIC", "ID_MUNICIP", "ID_MN_RESI", "DT_NOTIFIC", "CLASSI_FIN", "DT_DIGITA"] if c in df.columns]
-        print(df[mask][cols_show].to_string())
+# Testa se agrupar por (ID_MN_RESI, DT_SIN_PRI, ANO_NASC, CS_SEXO) reduz para perto do baseline
+chave = [c for c in ["ID_MN_RESI", "DT_SIN_PRI", "ANO_NASC", "CS_SEXO", "DT_NOTIFIC"] if c in df.columns]
+print(f"\n[INFO] chave candidata para 1 caso = 1 linha: {chave}")
+if chave:
+    dedup_chave = df.drop_duplicates(subset=chave)
+    total = len(dedup_chave)
+    diff = total - BASELINE_2023
+    pct = 100 * diff / BASELINE_2023
+    print(f"[INFO] linhas após dedup por {chave}: {total} (diff={diff:+d}, {pct:+.2f}%)")
