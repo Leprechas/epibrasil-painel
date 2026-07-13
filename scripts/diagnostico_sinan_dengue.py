@@ -1,34 +1,18 @@
 """
-Script de diagnóstico: baixa uma pequena amostra de dados de Dengue via PySUS
-e imprime a estrutura real (colunas, tipos, valores de exemplo) para confirmar
-o formato antes de escrever a lógica de agregação definitiva.
+Etapa 1 do diagnóstico: apenas introspecciona o pacote pysus instalado para
+descobrir a API real (a versão instalada é muito mais nova que a documentação
+encontrada, que descrevia uma API antiga baseada em função `sinan()`).
 
-Não escreve nenhum CSV do painel. Apenas para investigação.
+Não baixa nenhum dado ainda. Só imprime a estrutura do pacote.
 """
-from pysus.online_data.SINAN import sinan
+import pysus
 
+print(f"[INFO] pysus.__version__ = {getattr(pysus, '__version__', '?')}")
+print(f"[INFO] pysus.__file__ = {pysus.__file__}")
+print(f"[INFO] dir(pysus) = {[n for n in dir(pysus) if not n.startswith('_')]}")
 
-def main():
-    print("[INFO] Baixando amostra de Dengue (ano 2023) via PySUS...")
-    df = sinan(disease="dengue", year=2023, as_dataframe=True)
+import pkgutil
 
-    print(f"[INFO] Linhas: {len(df)}")
-    print(f"[INFO] Colunas ({len(df.columns)}): {list(df.columns)}")
-
-    candidatos_municipio = [c for c in df.columns if "MUNI" in c.upper() or "MUN_" in c.upper()]
-    candidatos_ano = [c for c in df.columns if "ANO" in c.upper() or c.upper().startswith("DT_")]
-
-    print(f"[INFO] Colunas candidatas a município: {candidatos_municipio}")
-    print(f"[INFO] Colunas candidatas a ano/data: {candidatos_ano}")
-
-    print("\n[INFO] Amostra de 5 linhas (colunas relevantes):")
-    cols_relevantes = list(dict.fromkeys(candidatos_municipio + candidatos_ano))
-    if cols_relevantes:
-        print(df[cols_relevantes].head(5).to_string())
-
-    for col in candidatos_municipio:
-        print(f"\n[INFO] {col}: {df[col].dropna().unique()[:10]}")
-
-
-if __name__ == "__main__":
-    main()
+print("\n[INFO] Submódulos de pysus:")
+for mod in pkgutil.walk_packages(pysus.__path__, prefix="pysus."):
+    print(" -", mod.name)
