@@ -28,12 +28,20 @@ def limpar_populacao(valor):
 
 def extrair_codigo_municipio(row):
     """
-    Procura automaticamente o código municipal de 7 dígitos no retorno do SIDRA.
-    Converte para código de 6 dígitos, compatível com os arquivos do painel.
+    Usa o campo "Município (Código)" retornado pelo SIDRA. Se essa chave não
+    existir (formato de resposta diferente), cai para uma busca heurística por
+    qualquer valor de 7 dígitos, excluindo explicitamente o campo "Valor" —
+    a população de cidades entre 1 e 10 milhões de habitantes também tem 7
+    dígitos e pode ser confundida com o código do município.
     """
-    candidatos = []
+    direto = str(row.get("Município (Código)", "")).strip()
+    if re.fullmatch(r"\d{7}", direto):
+        return direto, direto[:6]
 
-    for _, value in row.items():
+    candidatos = []
+    for key, value in row.items():
+        if key in ("Valor", "V"):
+            continue
         value = str(value).strip()
         if re.fullmatch(r"\d{7}", value):
             candidatos.append(value)
@@ -48,9 +56,13 @@ def extrair_codigo_municipio(row):
 
 def extrair_nome_municipio(row, cod_mun7):
     """
-    Procura o nome do município associado ao código.
-    O SIDRA costuma retornar campos como D1C/D1N, D2C/D2N etc.
+    Usa o campo "Município" retornado pelo SIDRA. Faz fallback para a busca
+    pela chave irmã do campo onde o código foi encontrado (formato D1C/D1N).
     """
+    direto = str(row.get("Município", "")).strip()
+    if direto:
+        return direto
+
     for key, value in row.items():
         if str(value).strip() == str(cod_mun7):
             nome_key = key[:-1] + "N"
@@ -85,6 +97,10 @@ def baixar_ano(ano, tentativas=3, pausa=1.5):
         if not data or len(data) <= 1:
             print(f"[AVISO] Ano {ano} sem dados.")
             return []
+
+        import json as _json
+        print(f"[DEBUG] header: {_json.dumps(data[0], ensure_ascii=False)}")
+        print(f"[DEBUG] row1: {_json.dumps(data[1], ensure_ascii=False)}")
 
         registros = []
 
