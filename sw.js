@@ -1,4 +1,4 @@
-const CACHE_NAME = "epibrasil-v1783908200";
+const CACHE_NAME = "epibrasil-v1783915000";
 const STATIC_ASSETS = [
   "/",
   "/index.html",

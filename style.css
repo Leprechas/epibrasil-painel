@@ -503,7 +503,7 @@ button:hover{background:var(--accent2)}
   z-index:20;
 }
 
-.info-icon:hover::after,.info-icon:focus-visible::after{opacity:1}
+.info-icon:hover::after,.info-icon:focus-visible::after,.info-icon.is-open::after{opacity:1}
 
 /* ── Grid ── */
 .grid{

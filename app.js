@@ -1,4 +1,4 @@
-const VERSION="20260713b";
+const VERSION="20260713c";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -1761,6 +1761,17 @@ $("copy-citation").onclick=()=>{
 
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape")closeModal();
+});
+
+document.addEventListener("click",e=>{
+  const icon=e.target.closest(".info-icon");
+  document.querySelectorAll(".info-icon.is-open").forEach(el=>{
+    if(el!==icon)el.classList.remove("is-open");
+  });
+  if(icon){
+    e.stopPropagation();
+    icon.classList.toggle("is-open");
+  }
 });
 
 document.querySelectorAll(".segmented button").forEach(btn=>{
