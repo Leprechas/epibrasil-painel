@@ -51,7 +51,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/epibrasil-favicon-180.png">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=20260704">
+  <link rel="stylesheet" href="style.css?v=20260708">
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -139,6 +139,12 @@
       <p class="hint">Selecione doenças para comparar séries temporais. Use Ctrl para múltiplas.</p>
 
       <label>
+        Comparar municípios
+        <select id="compare-mun" multiple size="4"></select>
+      </label>
+      <p class="hint">Selecione até 6 municípios para comparar séries temporais da doença atual. Use Ctrl para múltiplas.</p>
+
+      <label>
         Indicador
         <select id="indicator">
           <option value="casos">Casos</option>
@@ -180,15 +186,15 @@
 
     <section class="content">
       <section class="cards">
-        <article class="card"><span>Casos nos anos selecionados</span><strong id="card-casos">—</strong></article>
-        <article class="card"><span>População-ano somada</span><strong id="card-pop">—</strong></article>
-        <article class="card"><span>População-ano média</span><strong id="card-pop-media">—</strong></article>
-        <article class="card"><span>Incidência / 100 mil</span><strong id="card-inc">—</strong></article>
-        <article class="card"><span>Municípios com notificações</span><strong id="card-muns">—</strong></article>
-        <article class="card"><span>Período selecionado</span><strong id="card-periodo">—</strong></article>
-        <article class="card"><span>UFs com notificações</span><strong id="card-ufs">—</strong></article>
-        <article class="card"><span>Cobertura populacional</span><strong id="card-cobertura">—</strong></article>
-        <article class="card"><span>Tendência temporal</span><strong id="card-tendencia">—</strong></article>
+        <article class="card"><span>Casos nos anos selecionados<button type="button" class="info-icon" tabindex="0" data-tip="Soma de casos notificados nos anos e filtros geográficos selecionados.">i</button></span><strong id="card-casos">—</strong></article>
+        <article class="card"><span>População-ano somada<button type="button" class="info-icon" tabindex="0" data-tip="Soma da população de cada ano selecionado. Para múltiplos anos, os valores anuais são somados, não é a população atual.">i</button></span><strong id="card-pop">—</strong></article>
+        <article class="card"><span>População-ano média<button type="button" class="info-icon" tabindex="0" data-tip="População-ano somada dividida pelo número de anos selecionados.">i</button></span><strong id="card-pop-media">—</strong></article>
+        <article class="card"><span>Incidência / 100 mil<button type="button" class="info-icon" tabindex="0" data-tip="Casos ÷ população-ano somada × 100.000. Sensível a instabilidade em municípios pequenos.">i</button></span><strong id="card-inc">—</strong></article>
+        <article class="card"><span>Municípios com notificações<button type="button" class="info-icon" tabindex="0" data-tip="Número de municípios distintos com pelo menos 1 caso notificado no período selecionado.">i</button></span><strong id="card-muns">—</strong></article>
+        <article class="card"><span>Período selecionado<button type="button" class="info-icon" tabindex="0" data-tip="Anos incluídos na seleção atual.">i</button></span><strong id="card-periodo">—</strong></article>
+        <article class="card"><span>UFs com notificações<button type="button" class="info-icon" tabindex="0" data-tip="Número de Unidades Federativas com pelo menos 1 caso notificado no período selecionado.">i</button></span><strong id="card-ufs">—</strong></article>
+        <article class="card"><span>Cobertura populacional<button type="button" class="info-icon" tabindex="0" data-tip="Percentual de municípios com notificação que também têm dado populacional válido (exato ou estimado) disponível.">i</button></span><strong id="card-cobertura">—</strong></article>
+        <article class="card"><span>Tendência temporal<button type="button" class="info-icon" tabindex="0" data-tip="Compara o primeiro e o último ano da série: Alta/Queda se a variação for maior que 10%, Estável caso contrário.">i</button></span><strong id="card-tendencia">—</strong></article>
       </section>
 
       <section class="grid">
@@ -198,7 +204,9 @@
           <div class="chart-toolbar">
             <button id="download-series-png" type="button" class="download-btn secondary-download">Baixar série (PNG)</button>
           </div>
-          <div id="series" class="chart"></div>
+          <div id="series" class="chart">
+            <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
         </article>
 
         <article id="compare-panel" class="panel wide" style="display:none">
@@ -207,7 +215,20 @@
           <div class="chart-toolbar">
             <button id="download-compare-png" type="button" class="download-btn secondary-download">Baixar comparação (PNG)</button>
           </div>
-          <div id="compare-chart" class="chart"></div>
+          <div id="compare-chart" class="chart">
+            <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </article>
+
+        <article id="compare-mun-panel" class="panel wide" style="display:none">
+          <h2>Comparação entre municípios</h2>
+          <p class="subtle">Séries temporais dos municípios selecionados, para a doença e o indicador ativos.</p>
+          <div class="chart-toolbar">
+            <button id="download-compare-mun-png" type="button" class="download-btn secondary-download">Baixar comparação municipal (PNG)</button>
+          </div>
+          <div id="compare-mun-chart" class="chart">
+            <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
         </article>
 
         <article id="region-panel" class="panel wide">
@@ -216,7 +237,9 @@
           <div class="chart-toolbar">
             <button id="download-region-png" type="button" class="download-btn secondary-download">Baixar regiões (PNG)</button>
           </div>
-          <div id="region-chart" class="chart"></div>
+          <div id="region-chart" class="chart">
+            <div class="chart-skeleton"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
         </article>
 
         <article class="panel">
@@ -225,7 +248,9 @@
           <div class="chart-toolbar">
             <button id="download-uf-png" type="button" class="download-btn secondary-download">Baixar ranking UFs (PNG)</button>
           </div>
-          <div id="ufs" class="chart uf-chart"></div>
+          <div id="ufs" class="chart uf-chart">
+            <div class="chart-skeleton chart-skeleton-h"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
         </article>
 
         <article class="panel">
@@ -329,6 +354,6 @@
     Protótipo técnico-científico para visualização epidemiológica exploratória. Não substitui sistemas oficiais de vigilância.
   </footer>
 
-  <script src="app.js?v=20260704"></script>
+  <script src="app.js?v=20260708"></script>
 </body>
 </html>

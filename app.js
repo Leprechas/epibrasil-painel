@@ -1,4 +1,4 @@
-const VERSION="20260704";
+const VERSION="20260708";
 const MANIFEST_URL=`data/manifest.json?v=${VERSION}`;
 const GEO_UF_URL=`data/ufs.geojson?v=${VERSION}`;
 const GEO_MUN_URL=`data/municipios.geojson?v=${VERSION}`;
@@ -114,6 +114,7 @@ function replotTheme(){
   try{Plotly.relayout("ufs",base);}catch(e){}
   try{Plotly.relayout("compare-chart",{...base,"legend.font.color":t.font});}catch(e){}
   try{Plotly.relayout("region-chart",{...base,"legend.font.color":t.font});}catch(e){}
+  try{Plotly.relayout("compare-mun-chart",{...base,"legend.font.color":t.font});}catch(e){}
 }
 
 initTheme();
@@ -578,9 +579,25 @@ function populateCompareSelect(){
   el.innerHTML=MANIFEST.filter(d=>d.codigo!==current).map(d=>`<option value="${escapeHtml(d.codigo)}">${escapeHtml(d.doenca)}</option>`).join("");
 }
 
+function populateMunCompareSelect(){
+  const el=$("compare-mun");
+  if(!el)return;
+
+  const prevSelected=new Set([...el.selectedOptions].map(o=>o.value));
+  const seen=new Map();
+  for(const r of DATA){
+    if(r.cod_mun6&&!seen.has(r.cod_mun6))seen.set(r.cod_mun6,r);
+  }
+
+  const list=[...seen.values()].sort((a,b)=>a.municipio.localeCompare(b.municipio,"pt-BR"));
+  el.innerHTML=list.map(r=>`<option value="${escapeHtml(r.cod_mun6)}" ${prevSelected.has(r.cod_mun6)?"selected":""}>${escapeHtml(r.municipio)} (${escapeHtml(r.uf)})</option>`).join("");
+}
+
 function setupFilters(){
   const oldYears=selectedYears();
   const oldUf=$("uf").value;
+
+  populateMunCompareSelect();
 
   const years=[...new Set(DATA.map(r=>r.ano))].sort((a,b)=>a-b);
   const totalMuns=new Set(DATA.map(r=>r.cod_mun6)).size;
@@ -889,6 +906,13 @@ function computeTrend(series){
   return "Estável";
 }
 
+function updateFiltersScrollHint(){
+  const el=document.querySelector(".filters");
+  if(!el)return;
+  const hasMore=el.scrollHeight-el.scrollTop-el.clientHeight>4;
+  el.classList.toggle("has-more",hasMore);
+}
+
 function updateSegmentedButtons(){
   const ind=$("indicator").value;
   document.querySelectorAll(".segmented button").forEach(btn=>{
@@ -957,6 +981,8 @@ async function refresh(){
   const comparisons=await loadComparisonDiseases();
   if(gen!==refreshGen)return;
   renderComparisonChart(comparisons);
+  renderMunComparisonChart();
+  updateFiltersScrollHint();
 }
 
 const debouncedRefresh=debounce(()=>refresh(),300);
@@ -1196,6 +1222,48 @@ function renderComparisonChart(comparisons){
   });
 
   Plotly.newPlot("compare-chart",traces,{
+    margin:{t:20,r:30,b:45,l:60},
+    xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
+    yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
+    legend:baseLegend(theme),
+    ...baseChartLayout(theme)
+  },{responsive:true,displayModeBar:false});
+}
+
+function renderMunComparisonChart(){
+  const panel=$("compare-mun-panel");
+  const el=$("compare-mun-chart");
+  if(!panel||!el)return;
+
+  const sel=$("compare-mun");
+  const codes=sel?[...sel.selectedOptions].map(o=>o.value):[];
+
+  if(codes.length===0){
+    panel.style.display="none";
+    return;
+  }
+
+  panel.style.display="";
+  if(typeof Plotly==="undefined")return;
+
+  const theme=getPlotlyTheme();
+  const ind=$("indicator").value;
+  const colors=["#0ea5e9","#f97316","#22c55e","#a855f7","#ef4444","#eab308"];
+
+  const traces=codes.map((code,i)=>{
+    const rows=DATA.filter(r=>r.cod_mun6===code);
+    const ser=group(rows,["ano"]).sort((a,b)=>a.ano-b.ano);
+    const label=rows[0]?`${rows[0].municipio} (${rows[0].uf})`:code;
+    return{
+      x:ser.map(r=>String(r.ano)),
+      y:ser.map(r=>r[ind]||0),
+      type:"scatter",mode:"lines+markers",
+      name:label,
+      line:{color:colors[i%colors.length],width:2.5}
+    };
+  });
+
+  Plotly.newPlot("compare-mun-chart",traces,{
     margin:{t:20,r:30,b:45,l:60},
     xaxis:{title:"Ano",type:"category",color:theme.font,gridcolor:theme.grid},
     yaxis:{title:indicatorLabel(),color:theme.font,gridcolor:theme.grid},
@@ -1552,6 +1620,7 @@ $("clear").onclick=()=>{
   if($("inc-min"))$("inc-min").value="";
   if($("inc-max"))$("inc-max").value="";
   if($("compare"))[...$("compare").options].forEach(o=>o.selected=false);
+  if($("compare-mun"))[...$("compare-mun").options].forEach(o=>o.selected=false);
   const ys=allAvailableYears();
   if(ys.length)setSelectedYears([ys.at(-1)]);
   setupFilters();
@@ -1573,6 +1642,8 @@ $("download-series-png").onclick=()=>downloadPlotlyChart("series","serie",`${dis
 $("download-uf-png").onclick=()=>downloadPlotlyChart("ufs","ranking_ufs",`${diseaseLabel()} — Ranking de UFs | ${yearsLabel()}`);
 $("download-compare-png").onclick=()=>downloadPlotlyChart("compare-chart","comparacao",`Comparação de doenças — ${indicatorLabel()} | ${yearsLabel()}`);
 $("download-region-png").onclick=()=>downloadPlotlyChart("region-chart","regioes",`${diseaseLabel()} — Casos por região | ${yearsLabel()}`);
+$("download-compare-mun-png").onclick=()=>downloadPlotlyChart("compare-mun-chart","comparacao_municipios",`${diseaseLabel()} — Comparação entre municípios | ${indicatorLabel()}`);
+$("compare-mun").onchange=debouncedRefresh;
 $("about-panel-btn").onclick=openModal;
 $("close-about-modal").onclick=closeModal;
 $("lep-about-modal").addEventListener("click",e=>{if(e.target.id==="lep-about-modal")closeModal();});
@@ -1617,12 +1688,16 @@ document.querySelectorAll(".segmented button").forEach(btn=>{
 });
 
 window.addEventListener("resize",debounce(()=>{
-  if(typeof Plotly==="undefined")return;
-  ["series","ufs","compare-chart","region-chart"].forEach(id=>{
-    const el=$(id);
-    if(el&&el.data)Plotly.Plots.resize(el);
-  });
+  if(typeof Plotly!=="undefined"){
+    ["series","ufs","compare-chart","region-chart","compare-mun-chart"].forEach(id=>{
+      const el=$(id);
+      if(el&&el.data)Plotly.Plots.resize(el);
+    });
+  }
+  updateFiltersScrollHint();
 },250));
+
+document.querySelector(".filters")?.addEventListener("scroll",debounce(updateFiltersScrollHint,50));
 
 window.addEventListener("popstate",()=>{
   const state=readURLState();
