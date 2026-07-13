@@ -28,19 +28,21 @@ def limpar_populacao(valor):
 
 def extrair_codigo_municipio(row):
     """
-    Usa o campo "Município (Código)" retornado pelo SIDRA. Se essa chave não
-    existir (formato de resposta diferente), cai para uma busca heurística por
-    qualquer valor de 7 dígitos, excluindo explicitamente o campo "Valor" —
-    a população de cidades entre 1 e 10 milhões de habitantes também tem 7
-    dígitos e pode ser confundida com o código do município.
+    Usa o campo "D1C" (Município (Código)), confirmado como o formato real
+    retornado pelo endpoint em lote do SIDRA (values/t/.../n6/all/...). Se essa
+    chave não existir (ex.: resposta de outro formato), cai para uma busca
+    heurística por qualquer valor de 7 dígitos, excluindo explicitamente os
+    campos de valor ("V"/"Valor") — a população de cidades entre 1 e 10
+    milhões de habitantes também tem 7 dígitos e pode ser confundida com o
+    código do município.
     """
-    direto = str(row.get("Município (Código)", "")).strip()
+    direto = str(row.get("D1C", "")).strip()
     if re.fullmatch(r"\d{7}", direto):
         return direto, direto[:6]
 
     candidatos = []
     for key, value in row.items():
-        if key in ("Valor", "V"):
+        if key in ("V", "Valor"):
             continue
         value = str(value).strip()
         if re.fullmatch(r"\d{7}", value):
@@ -56,10 +58,11 @@ def extrair_codigo_municipio(row):
 
 def extrair_nome_municipio(row, cod_mun7):
     """
-    Usa o campo "Município" retornado pelo SIDRA. Faz fallback para a busca
-    pela chave irmã do campo onde o código foi encontrado (formato D1C/D1N).
+    Usa o campo "D1N" (Município), confirmado como o formato real do SIDRA.
+    Faz fallback para a busca pela chave irmã do campo onde o código foi
+    encontrado (formato genérico DxC/DxN) caso a chave direta não exista.
     """
-    direto = str(row.get("Município", "")).strip()
+    direto = str(row.get("D1N", "")).strip()
     if direto:
         return direto
 
@@ -97,10 +100,6 @@ def baixar_ano(ano, tentativas=3, pausa=1.5):
         if not data or len(data) <= 1:
             print(f"[AVISO] Ano {ano} sem dados.")
             return []
-
-        import json as _json
-        print(f"[DEBUG] header: {_json.dumps(data[0], ensure_ascii=False)}")
-        print(f"[DEBUG] row1: {_json.dumps(data[1], ensure_ascii=False)}")
 
         registros = []
 
