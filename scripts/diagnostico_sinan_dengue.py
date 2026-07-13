@@ -1,24 +1,19 @@
 """
-Etapa 2 do diagnóstico: introspecciona o objeto pysus.sinan (API nova, versão
-2.6.5) para descobrir os métodos disponíveis e suas assinaturas, antes de
-tentar baixar qualquer dado.
+Etapa 3 do diagnóstico: pysus.sinan é uma função de nível superior.
+Inspeciona sua assinatura/docstring e tenta uma chamada pequena e controlada.
 """
 import inspect
 import pysus
 
-print(f"[INFO] type(pysus.sinan) = {type(pysus.sinan)}")
-print(f"[INFO] dir(pysus.sinan) = {[n for n in dir(pysus.sinan) if not n.startswith('_')]}")
+sig = inspect.signature(pysus.sinan)
+doc = inspect.getdoc(pysus.sinan) or "(sem docstring)"
+print(f"[INFO] assinatura: pysus.sinan{sig}")
+print(f"[INFO] docstring:\n{doc}")
 
-for name in dir(pysus.sinan):
-    if name.startswith("_"):
-        continue
-    attr = getattr(pysus.sinan, name)
-    if callable(attr):
-        try:
-            sig = inspect.signature(attr)
-        except (TypeError, ValueError):
-            sig = "?"
-        doc = (inspect.getdoc(attr) or "").split("\n")[0]
-        print(f"\n[MÉTODO] {name}{sig}\n  doc: {doc}")
-    else:
-        print(f"\n[ATRIBUTO] {name} = {attr!r}")
+print("\n[INFO] Tentando chamada pequena: pysus.sinan(disease='dengue', year=2023)...")
+try:
+    result = pysus.sinan(disease="dengue", year=2023)
+    print(f"[INFO] tipo do retorno: {type(result)}")
+    print(f"[INFO] repr (truncado): {repr(result)[:2000]}")
+except Exception as exc:
+    print(f"[ERRO] {type(exc).__name__}: {exc}")
